@@ -1,11 +1,7 @@
 package com.example.swordfight;
 
-import android.app.Activity;
 import android.content.Context;
 import android.graphics.Canvas;
-import android.util.DisplayMetrics;
-import android.util.Log;
-import android.view.Display;
 import android.view.MotionEvent;
 import android.view.SurfaceHolder;
 import android.view.SurfaceView;
@@ -21,13 +17,13 @@ import android.view.SurfaceView;
 //import com.example.androidstudio2dgamedevelopment.graphics.SpriteSheet;
 //import com.example.androidstudio2dgamedevelopment.map.Tilemap;
 
-import java.util.ArrayList;
-import java.util.Iterator;
-import java.util.List;
+import com.example.swordfight.object.Enemy;
+import com.example.swordfight.object.Player;
 
 class Game extends SurfaceView implements SurfaceHolder.Callback {
     private final Player player;
     private final Joystick joystick;
+    private final Enemy enemy;
     private GameLoop gameLoop;
 
     public Game(Context context) {
@@ -38,8 +34,8 @@ class Game extends SurfaceView implements SurfaceHolder.Callback {
 
         gameLoop = new GameLoop(this, surfaceHolder);
         joystick = new Joystick(275, 700, 70, 40);
-
-        player = new Player(getContext(), 500, 500, 30);
+        player = new Player(getContext(), joystick,500, 500, 30);
+        enemy = new Enemy(getContext(), player,100, 100, 15);
 
 
         setFocusable(true);
@@ -89,11 +85,13 @@ class Game extends SurfaceView implements SurfaceHolder.Callback {
         super.draw(canvas);
         player.draw(canvas);
         joystick.draw(canvas);
+        enemy.draw(canvas);
     }
 
     public void update() {
         joystick.update();
-        player.update(joystick);
+        player.update();
+        enemy.update();
     }
 
 //    public void drawFPS(Canvas canvas) {
