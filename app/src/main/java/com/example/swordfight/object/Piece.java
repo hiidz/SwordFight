@@ -24,6 +24,20 @@ public abstract class Piece extends GameObject{
         paint.setColor(color);
     }
 
+    public static boolean isColliding(Piece obj1, Piece obj2) {
+        double distance = obj1.getDistanceBetweenObjects(obj1, obj2);
+        double distanceToCollision = obj1.getRadius() + obj2.getRadius();
+
+        if (distance < distanceToCollision) {
+            return true;
+        }
+        return false;
+    }
+
+    private double getRadius() {
+        return radius;
+    }
+
     public void draw(Canvas canvas) {
         canvas.drawCircle((float)positionX, (float)positionY, (float)radius, paint);
     }

@@ -15,11 +15,27 @@ import com.example.swordfight.R;
 public class Enemy extends Piece{
     private final Player player;
     private static final double MAX_SPEED = 10;
+    private static int totalEnemySpawn = 0;
+    private static int maxEnemy = 10;
 
     public Enemy(Context context, Player player, double positionX, double positionY, double radius) {
         super(context, ContextCompat.getColor(context, R.color.enemy), positionX, positionY, radius);
 
         this.player = player;
+    }
+
+    public Enemy(Context context, Player player) {
+        super(context, ContextCompat.getColor(context, R.color.enemy),  Math.random()*1000,
+                Math.random()*1000, 15);
+        this.player = player;
+    }
+
+    public static boolean readyToSpawn() {
+        if (totalEnemySpawn < maxEnemy) {
+            totalEnemySpawn++;
+            return true;
+        }
+        return false;
     }
 
     @Override

@@ -18,13 +18,20 @@ import android.view.SurfaceView;
 //import com.example.androidstudio2dgamedevelopment.map.Tilemap;
 
 import com.example.swordfight.object.Enemy;
+import com.example.swordfight.object.Piece;
 import com.example.swordfight.object.Player;
+
+import java.util.ArrayList;
+import java.util.Iterator;
+import java.util.List;
 
 class Game extends SurfaceView implements SurfaceHolder.Callback {
     private final Player player;
     private final Joystick joystick;
     private final Enemy enemy;
     private GameLoop gameLoop;
+
+    private List<Enemy> enemyList = new ArrayList<Enemy>();
 
     public Game(Context context) {
         super(context);
@@ -85,13 +92,30 @@ class Game extends SurfaceView implements SurfaceHolder.Callback {
         super.draw(canvas);
         player.draw(canvas);
         joystick.draw(canvas);
-        enemy.draw(canvas);
+        for(Enemy enemy: enemyList) {
+            enemy.draw(canvas);
+        }
     }
 
     public void update() {
         joystick.update();
         player.update();
         enemy.update();
+        if (Enemy.readyToSpawn()) {
+            enemyList.add(new Enemy(getContext(), player));
+        }
+
+        for (Enemy enemy: enemyList) {
+            enemy.update();
+        }
+
+        Iterator<Enemy> iteratorEnemy = enemyList.iterator();
+        while (iteratorEnemy.hasNext()) {
+            // Remove enemy if it collides with a spell
+            if (Piece.isColliding(iteratorEnemy.next(), player)) {
+                iteratorEnemy.remove();
+            }
+        }
     }
 
 //    public void drawFPS(Canvas canvas) {
