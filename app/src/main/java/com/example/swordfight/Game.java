@@ -6,17 +6,6 @@ import android.view.MotionEvent;
 import android.view.SurfaceHolder;
 import android.view.SurfaceView;
 
-//import com.example.androidstudio2dgamedevelopment.gameobject.Circle;
-//import com.example.androidstudio2dgamedevelopment.gameobject.Enemy;
-//import com.example.androidstudio2dgamedevelopment.gameobject.Player;
-//import com.example.androidstudio2dgamedevelopment.gameobject.Spell;
-//import com.example.androidstudio2dgamedevelopment.gamepanel.GameOver;
-//import com.example.androidstudio2dgamedevelopment.gamepanel.Joystick;
-//import com.example.androidstudio2dgamedevelopment.gamepanel.Performance;
-//import com.example.androidstudio2dgamedevelopment.graphics.Animator;
-//import com.example.androidstudio2dgamedevelopment.graphics.SpriteSheet;
-//import com.example.androidstudio2dgamedevelopment.map.Tilemap;
-
 import com.example.swordfight.object.Bullet;
 import com.example.swordfight.object.Enemy;
 import com.example.swordfight.object.Piece;
@@ -72,6 +61,7 @@ class Game extends SurfaceView implements SurfaceHolder.Callback {
                 }
                 return true;
             case MotionEvent.ACTION_UP:
+            case MotionEvent.ACTION_POINTER_UP:
                 joystick.setIsPressed(false);
                 joystick.resetActuator();
                 return true;
