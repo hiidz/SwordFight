@@ -11,4 +11,6 @@
     <color name="player">#FF0000</color>
     <color name="enemy">#0040FF</color>
     <color name="bullet">#9D00FF</color>
+    <color name="healthBarBorder">#818181</color>
+    <color name="healthBarColor">#00FF40</color>
 </resources>

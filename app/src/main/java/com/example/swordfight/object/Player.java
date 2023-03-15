@@ -1,6 +1,7 @@
 package com.example.swordfight.object;
 
 import android.content.Context;
+import android.graphics.Canvas;
 import android.graphics.Paint;
 
 import androidx.core.content.ContextCompat;
@@ -22,10 +23,12 @@ public class Player extends Piece{
     private double velocityX;
     private double velocityY;
     private Joystick joystick;
+    private HealthBar healthBar;
 
-    public Player(Context context, Joystick joystick, double positionX, double positionY, double radius) {
-        super(context, ContextCompat.getColor(context, R.color.player), positionX, positionY, radius);
+    public Player(Context context, Joystick joystick, double positionX, double positionY, double radius, int maxHealth) {
+        super(context, ContextCompat.getColor(context, R.color.player), positionX, positionY, radius, maxHealth);
         this.joystick = joystick;
+        this.healthBar = new HealthBar(context,this);
     }
 
     public void update() {
@@ -49,5 +52,10 @@ public class Player extends Piece{
     public void setPosition(double positionX, double positionY) {
         this.positionX = positionX;
         this.positionY = positionY;
+    }
+
+    public void draw(Canvas canvas) {
+        super.draw(canvas);
+        healthBar.draw(canvas);
     }
 }

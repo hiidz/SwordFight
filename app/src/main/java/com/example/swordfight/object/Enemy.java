@@ -19,15 +19,15 @@ public class Enemy extends Piece{
     private static int totalEnemySpawn = 0;
     private static int maxEnemy = 10;
 
-    public Enemy(Context context, Player player, double positionX, double positionY, double radius) {
-        super(context, ContextCompat.getColor(context, R.color.enemy), positionX, positionY, radius);
+    public Enemy(Context context, Player player, double positionX, double positionY, double radius, int maxHealth) {
+        super(context, ContextCompat.getColor(context, R.color.enemy), positionX, positionY, radius, maxHealth);
 
         this.player = player;
     }
 
     public Enemy(Context context, Player player) {
         super(context, ContextCompat.getColor(context, R.color.enemy),  Math.random()*1000,
-                Math.random()*1000, 15);
+                Math.random()*1000, 15, 100);
         this.player = player;
     }
 
@@ -80,6 +80,7 @@ public class Enemy extends Piece{
         if (isColliding(this, player)) {
             velocityX = -(directionX) * KNOCKBACK_SPEED;
             velocityY = -(directionY) * KNOCKBACK_SPEED;
+            player.setDamageDealt(10);
         }
         setPosition(positionX + velocityX, positionY + velocityY);
     }

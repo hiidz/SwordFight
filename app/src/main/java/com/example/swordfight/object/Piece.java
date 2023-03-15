@@ -13,12 +13,15 @@ import android.graphics.Paint;
 public abstract class Piece extends GameObject{
     protected double radius;
     protected Paint paint;
+    protected int maxHealth;
+    protected int currentHealth;
 
-    public Piece(Context context, int color, double positionX, double positionY, double radius) {
+    public Piece(Context context, int color, double positionX, double positionY, double radius, int maxHealth) {
         super(positionX, positionY);
 
         this.radius = radius;
-
+        this.maxHealth = maxHealth;
+        this.currentHealth = maxHealth;
         // Set color of Piece
         paint = new Paint();
         paint.setColor(color);
@@ -34,11 +37,25 @@ public abstract class Piece extends GameObject{
         return false;
     }
 
+    public void setDamageDealt(int damageDealt) {
+        if (currentHealth > 0) {
+            this.currentHealth -= damageDealt;
+        }
+    }
+
     private double getRadius() {
         return radius;
     }
 
     public void draw(Canvas canvas) {
         canvas.drawCircle((float)positionX, (float)positionY, (float)radius, paint);
+    }
+
+    public int getHealthPoints() {
+        return currentHealth;
+    }
+
+    public int getMaxHealth() {
+        return maxHealth;
     }
 }

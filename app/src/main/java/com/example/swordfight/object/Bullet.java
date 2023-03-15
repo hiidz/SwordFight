@@ -14,7 +14,7 @@ public class Bullet extends Piece {
 
     public Bullet(Context context, Player shooter) {
         super(context, ContextCompat.getColor(context, R.color.bullet),  shooter.getPositionX(),
-                shooter.getPositionY(), 10);
+                shooter.getPositionY(), 10,  0);
         this.shooter = shooter;
         velocityX = shooter.getDirectionX() * MAX_SPEED;
         velocityY = shooter.getDirectionY() * MAX_SPEED;
