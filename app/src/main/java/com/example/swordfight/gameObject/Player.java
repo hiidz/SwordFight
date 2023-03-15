@@ -6,6 +6,7 @@ import android.graphics.Paint;
 
 import androidx.core.content.ContextCompat;
 
+import com.example.swordfight.GameDisplay;
 import com.example.swordfight.gamepanel.HealthBar;
 import com.example.swordfight.gamepanel.Joystick;
 import com.example.swordfight.R;
@@ -55,8 +56,8 @@ public class Player extends Piece{
         this.positionY = positionY;
     }
 
-    public void draw(Canvas canvas) {
-        super.draw(canvas);
-        healthBar.draw(canvas);
+    public void draw(Canvas canvas, GameDisplay gameDisplay) {
+        super.draw(canvas, gameDisplay);
+        healthBar.draw(canvas, gameDisplay);
     }
 }

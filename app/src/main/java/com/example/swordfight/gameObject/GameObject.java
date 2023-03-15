@@ -2,6 +2,8 @@ package com.example.swordfight.gameObject;
 
 import android.graphics.Canvas;
 
+import com.example.swordfight.GameDisplay;
+
 /*
 GameObject is an abstract class that acts as foundation for all objects in the game
  */
@@ -19,7 +21,7 @@ public abstract class GameObject {
         this.positionY = positionY;
     }
 
-    public abstract void draw(Canvas canvas);
+    public abstract void draw(Canvas canvas, GameDisplay gameDisplay);
 
     public abstract void update();
 

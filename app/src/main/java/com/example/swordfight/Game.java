@@ -1,7 +1,9 @@
 package com.example.swordfight;
 
+import android.app.Activity;
 import android.content.Context;
 import android.graphics.Canvas;
+import android.util.DisplayMetrics;
 import android.util.Log;
 import android.view.MotionEvent;
 import android.view.SurfaceHolder;
@@ -27,6 +29,7 @@ class Game extends SurfaceView implements SurfaceHolder.Callback {
     private List<Bullet> bulletList = new ArrayList<Bullet>();
     private int joystickPointerId = 0;
     private GameOver gameOver;
+    private GameDisplay gameDisplay;
 
     public Game(Context context) {
         super(context);
@@ -41,6 +44,10 @@ class Game extends SurfaceView implements SurfaceHolder.Callback {
         joystick = new Joystick(275, 700, 70, 40);
         player = new Player(getContext(), joystick,500, 500, 30, 5000);
 
+        // Initialize display and center it around the player
+        DisplayMetrics displayMetrics = new DisplayMetrics();
+        ((Activity) getContext()).getWindowManager().getDefaultDisplay().getMetrics(displayMetrics);
+        gameDisplay = new GameDisplay(displayMetrics.widthPixels, displayMetrics.heightPixels, player);
 
         setFocusable(true);
     }
@@ -103,13 +110,13 @@ class Game extends SurfaceView implements SurfaceHolder.Callback {
     @Override
     public void draw(Canvas canvas) {
         super.draw(canvas);
-        player.draw(canvas);
+        player.draw(canvas, gameDisplay);
         joystick.draw(canvas);
         for(Enemy enemy: enemyList) {
-            enemy.draw(canvas);
+            enemy.draw(canvas, gameDisplay);
         }
         for(Bullet bullet: bulletList) {
-            bullet.draw(canvas);
+            bullet.draw(canvas, gameDisplay);
         }
 
         if (player.getHealthPoints() <= 0) {
@@ -168,6 +175,7 @@ class Game extends SurfaceView implements SurfaceHolder.Callback {
                     break;
                 }
             }
+            gameDisplay.update();
         }
 
 
