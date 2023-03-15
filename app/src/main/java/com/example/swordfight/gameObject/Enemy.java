@@ -13,6 +13,9 @@ import com.example.swordfight.R;
 import com.example.swordfight.Utils;
 import com.example.swordfight.Vector2;
 
+import java.util.Timer;
+import java.util.TimerTask;
+
 
 public class Enemy extends Piece{
     enum EnemyState {
@@ -24,6 +27,7 @@ public class Enemy extends Piece{
         DEAD
     }
 
+    private float attackRange;
     private float enemyDetectionRange;
     private Vector2 startingLocation;
     private Vector2 currentPosition;
@@ -61,17 +65,33 @@ public class Enemy extends Piece{
                 // when player is within certain range ... attack
                 break;
             case DEAD:
-                // do nothing and de-active thread and ... wait to be revive // reset all settings .. and prepare to be resued 
+                // do nothing and de-active thread and ... wait to be revive // reset all settings .. and prepare to be resued
                 break;
 
         }
     }
 
-    public void chase(Vector2 target){
-        // move towards target .... after all place change to vector 2
+    public void chase(Vector2 target, EnemyState previousState){
+        Vector2 direction = target.subtract(target).normalized();
+        float distance = target.subtract(target).magnitude();
+        currentPosition = currentPosition.add(direction.multiply(MAX_SPEED));
+        if (distance > attackRange && target != startingLocation){
+            // maybe check if can cast skill first
+            setState(EnemyState.ATTACK);
+        }else if(target == startingLocation && distance <= 0.1f) {
+            // some small value
+            setState(EnemyState.IDLE);
+        }
     }
-    public void stun(float duration){
-        // free the enemy after this duration
+    public void stun(float duration) {
+        setState(EnemyState.STUN);
+        Timer timer = new Timer();
+        timer.schedule(new TimerTask() {
+            @Override
+            public void run() {
+                setState(EnemyState.STUN);
+            }
+        }, (long) (duration * 1000));
     }
 
     // argument skill object
@@ -87,8 +107,8 @@ public class Enemy extends Piece{
 
 
     private final Player player;
-    private static final double MAX_SPEED = 10;
-    private static final double KNOCKBACK_SPEED = 15;
+    private static final float MAX_SPEED = 10;
+    private static final float KNOCKBACK_SPEED = 15;
     private static int totalEnemySpawn = 0;
     private static int maxEnemy = 10;
 
