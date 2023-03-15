@@ -28,6 +28,7 @@ public class GameLoop extends Thread {
 //    }
 
     public void startLoop() {
+        Log.d("GameLoop.java", "startLoop()");
         isRunning = true;
         start();
     }
@@ -70,6 +71,16 @@ public class GameLoop extends Thread {
             }
 
 
+        }
+    }
+
+    public void stopLoop() {
+        Log.d("GameLoop.java", "stopLoop()");
+        isRunning = false;
+        try {
+            join();
+        } catch (InterruptedException e) {
+            e.printStackTrace();
         }
     }
 }
