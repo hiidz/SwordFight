@@ -11,6 +11,7 @@ import com.example.swordfight.gamepanel.HealthBar;
 import com.example.swordfight.gamepanel.Joystick;
 import com.example.swordfight.R;
 import com.example.swordfight.Utils;
+import com.example.swordfight.graphics.Sprite;
 
 /*
 * Player is the main character of the game, that can be controlled via a joystick
@@ -26,11 +27,13 @@ public class Player extends Piece{
     private double velocityY;
     private Joystick joystick;
     private HealthBar healthBar;
+    private Sprite sprite;
 
-    public Player(Context context, Joystick joystick, double positionX, double positionY, double radius, int maxHealth) {
+    public Player(Context context, Joystick joystick, double positionX, double positionY, double radius, Sprite sprite, int maxHealth) {
         super(context, ContextCompat.getColor(context, R.color.player), positionX, positionY, radius, maxHealth);
         this.joystick = joystick;
         this.healthBar = new HealthBar(context,this);
+        this.sprite = sprite;
     }
 
     public void update() {
@@ -57,7 +60,7 @@ public class Player extends Piece{
     }
 
     public void draw(Canvas canvas, GameDisplay gameDisplay) {
-        super.draw(canvas, gameDisplay);
+        sprite.draw(canvas, (int) gameDisplay.gameToDisplayCoordinatesX(getPositionX()) - sprite.getWidth()/2, (int) gameDisplay.gameToDisplayCoordinatesY(getPositionY()) - sprite.getHeight()/2);
         healthBar.draw(canvas, gameDisplay);
     }
 }

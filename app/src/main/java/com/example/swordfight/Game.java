@@ -15,6 +15,7 @@ import com.example.swordfight.gameObject.Piece;
 import com.example.swordfight.gameObject.Player;
 import com.example.swordfight.gamepanel.GameOver;
 import com.example.swordfight.gamepanel.Joystick;
+import com.example.swordfight.graphics.SpriteSheet;
 
 import java.util.ArrayList;
 import java.util.Iterator;
@@ -36,13 +37,14 @@ class Game extends SurfaceView implements SurfaceHolder.Callback {
 
         SurfaceHolder surfaceHolder = getHolder();
         surfaceHolder.addCallback(this);
+        SpriteSheet spriteSheet = new SpriteSheet(context);
 
         gameLoop = new GameLoop(this, surfaceHolder);
 
         gameOver = new GameOver(getContext());
 
         joystick = new Joystick(275, 700, 70, 40);
-        player = new Player(getContext(), joystick,500, 500, 30, 5000);
+        player = new Player(getContext(), joystick,500, 500, 30, spriteSheet.getPlayerSprite(), 5000);
 
         // Initialize display and center it around the player
         DisplayMetrics displayMetrics = new DisplayMetrics();
