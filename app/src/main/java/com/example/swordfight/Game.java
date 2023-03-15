@@ -17,12 +17,12 @@ import android.view.SurfaceView;
 //import com.example.androidstudio2dgamedevelopment.graphics.SpriteSheet;
 //import com.example.androidstudio2dgamedevelopment.map.Tilemap;
 
+import com.example.swordfight.object.Bullet;
 import com.example.swordfight.object.Enemy;
 import com.example.swordfight.object.Piece;
 import com.example.swordfight.object.Player;
 
 import java.util.ArrayList;
-import java.util.Iterator;
 import java.util.List;
 
 class Game extends SurfaceView implements SurfaceHolder.Callback {
@@ -32,6 +32,7 @@ class Game extends SurfaceView implements SurfaceHolder.Callback {
     private GameLoop gameLoop;
 
     private List<Enemy> enemyList = new ArrayList<Enemy>();
+    private List<Bullet> bulletList = new ArrayList<Bullet>();
 
     public Game(Context context) {
         super(context);
@@ -53,8 +54,15 @@ class Game extends SurfaceView implements SurfaceHolder.Callback {
 
         switch (event.getAction()) {
             case MotionEvent.ACTION_DOWN:
-                if (joystick.isPressed((double) event.getX(), (double) event.getY())) {
+                if (joystick.getIsPressed()) {
+                    // Joystick was pressed before this event -> cast spell
+                    bulletList.add(new Bullet(getContext(), player));
+                } else if(joystick.isPressed((double) event.getX(), (double) event.getY())) {
+                    // Joystick is being pressed during this event -> cast spell
                     joystick.setIsPressed(true);
+                } else {
+                    // Joystick was never pressed -> cast spell
+                    bulletList.add(new Bullet(getContext(), player));
                 }
                 return true;
             case MotionEvent.ACTION_MOVE:
@@ -95,6 +103,9 @@ class Game extends SurfaceView implements SurfaceHolder.Callback {
         for(Enemy enemy: enemyList) {
             enemy.draw(canvas);
         }
+        for(Bullet bullet: bulletList) {
+            bullet.draw(canvas);
+        }
     }
 
     public void update() {
@@ -117,6 +128,10 @@ class Game extends SurfaceView implements SurfaceHolder.Callback {
                     }
                 }
             }
+        }
+
+        for (Bullet bullet: bulletList) {
+            bullet.update();
         }
 
 

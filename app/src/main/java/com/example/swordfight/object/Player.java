@@ -7,6 +7,7 @@ import androidx.core.content.ContextCompat;
 
 import com.example.swordfight.Joystick;
 import com.example.swordfight.R;
+import com.example.swordfight.Utils;
 
 /*
 * Player is the main character of the game, that can be controlled via a joystick
@@ -35,6 +36,14 @@ public class Player extends Piece{
         // Update position
         positionX += velocityX;
         positionY += velocityY;
+
+        // Update direction
+        if (velocityX != 0 || velocityY != 0) {
+            // Normalize velocity to get direction (unit vector of velocity)
+            double distance = Utils.getDistanceBetweenPoints(0, 0, velocityX, velocityY);
+            directionX = velocityX/distance;
+            directionY = velocityY/distance;
+        }
     }
 
     public void setPosition(double positionX, double positionY) {
