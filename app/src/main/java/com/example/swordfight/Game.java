@@ -23,6 +23,7 @@ class Game extends SurfaceView implements SurfaceHolder.Callback {
 
     private List<Enemy> enemyList = new ArrayList<Enemy>();
     private List<Bullet> bulletList = new ArrayList<Bullet>();
+    private int joystickPointerId = 0;
 
     public Game(Context context) {
         super(context);
@@ -49,6 +50,7 @@ class Game extends SurfaceView implements SurfaceHolder.Callback {
                     bulletList.add(new Bullet(getContext(), player));
                 } else if(joystick.isPressed((double) event.getX(), (double) event.getY())) {
                     // Joystick is being pressed during this event -> cast spell
+                    joystickPointerId = event.getPointerId(event.getActionIndex());
                     joystick.setIsPressed(true);
                 } else {
                     // Joystick was never pressed -> cast spell
@@ -62,8 +64,11 @@ class Game extends SurfaceView implements SurfaceHolder.Callback {
                 return true;
             case MotionEvent.ACTION_UP:
             case MotionEvent.ACTION_POINTER_UP:
-                joystick.setIsPressed(false);
-                joystick.resetActuator();
+                if (joystickPointerId == event.getPointerId(event.getActionIndex())) {
+                    // joystick pointer was let go off -> setIsPressed(false) and resetActuator()
+                    joystick.setIsPressed(false);
+                    joystick.resetActuator();
+                }
                 return true;
         }
 
