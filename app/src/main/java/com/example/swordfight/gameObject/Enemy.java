@@ -21,8 +21,7 @@ public class Enemy extends Piece{
         STUN,
         CAST_SKILL,
         ATTACK,
-        DEAD,
-        OUT_OF_RANGE
+        DEAD
     }
 
     private float enemyDetectionRange;
@@ -42,17 +41,18 @@ public class Enemy extends Piece{
         switch (currentState) {
             case IDLE:
                 // PLAY animation
+                // check if player within range ... if so change to chasing
                 break;
             case CHASING:
                 // if player within certain range - pathing finding algo ....
                 // if(Utils.getDistanceBetweenPoints(enemy and user) <= enemy detection){
                 //chase(player.pos);
                 //} else {
-                //chase(startingLocation);
+                //chase(startingLocation); // once reach location go back to idle
                 //}
                 break;
             case STUN:
-                // if stun ... stop moving and ... un stun after sometime
+                // if stun ... stop moving and ... un stun after sometime // after done go to chasing state
                 break;
             case CAST_SKILL:
                 // when player is within certain range && skill cool down complete ... perform action
@@ -60,11 +60,8 @@ public class Enemy extends Piece{
             case ATTACK:
                 // when player is within certain range ... attack
                 break;
-            case OUT_OF_RANGE:
-                // when player out of range ... go back to original spot
-                break;
             case DEAD:
-                // do nothing and de-active thread and ... wait to be revive
+                // do nothing and de-active thread and ... wait to be revive // reset all settings .. and prepare to be resued 
                 break;
 
         }
@@ -73,9 +70,20 @@ public class Enemy extends Piece{
     public void chase(Vector2 target){
         // move towards target .... after all place change to vector 2
     }
-    public void Stun(float duration){
+    public void stun(float duration){
+        // free the enemy after this duration
+    }
+
+    // argument skill object
+    // public void castSkill( skill object){}
+
+    // to be override by all kind of enemy, regular just attack
+    public void attack(){
 
     }
+
+    public  void dead(){ }
+
 
 
     private final Player player;
