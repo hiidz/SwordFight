@@ -23,6 +23,7 @@ import com.example.swordfight.object.Piece;
 import com.example.swordfight.object.Player;
 
 import java.util.ArrayList;
+import java.util.Iterator;
 import java.util.List;
 
 class Game extends SurfaceView implements SurfaceHolder.Callback {
@@ -51,9 +52,9 @@ class Game extends SurfaceView implements SurfaceHolder.Callback {
 
     @Override
     public boolean onTouchEvent(MotionEvent event) {
-
-        switch (event.getAction()) {
+        switch (event.getActionMasked()) {
             case MotionEvent.ACTION_DOWN:
+            case MotionEvent.ACTION_POINTER_DOWN:
                 if (joystick.getIsPressed()) {
                     // Joystick was pressed before this event -> cast spell
                     bulletList.add(new Bullet(getContext(), player));
@@ -132,6 +133,28 @@ class Game extends SurfaceView implements SurfaceHolder.Callback {
 
         for (Bullet bullet: bulletList) {
             bullet.update();
+        }
+
+        Iterator<Enemy> iteratorEnemy = enemyList.iterator();
+        while (iteratorEnemy.hasNext()) {
+            Piece enemy = iteratorEnemy.next();
+//            if (Piece.isColliding(enemy, player)) {
+//                // Remove enemy if it collides with the player
+//                iteratorEnemy.remove();
+//                player.setHealthPoint(player.getHealthPoint() - 1);
+//                continue;
+//            }
+
+            Iterator<Bullet> iteratorBullet = bulletList.iterator();
+            while (iteratorBullet.hasNext()) {
+                Piece bullet = iteratorBullet.next();
+                // Remove enemy if it collides with a spell
+                if (Piece.isColliding(bullet, enemy)) {
+                    iteratorBullet.remove();
+//                    iteratorEnemy.remove();
+                    break;
+                }
+            }
         }
 
 
