@@ -6,10 +6,12 @@ import android.view.MotionEvent;
 import android.view.SurfaceHolder;
 import android.view.SurfaceView;
 
-import com.example.swordfight.object.Bullet;
-import com.example.swordfight.object.Enemy;
-import com.example.swordfight.object.Piece;
-import com.example.swordfight.object.Player;
+import com.example.swordfight.gameObject.Bullet;
+import com.example.swordfight.gameObject.Enemy;
+import com.example.swordfight.gameObject.Piece;
+import com.example.swordfight.gameObject.Player;
+import com.example.swordfight.gamepanel.GameOver;
+import com.example.swordfight.gamepanel.Joystick;
 
 import java.util.ArrayList;
 import java.util.Iterator;
@@ -18,12 +20,12 @@ import java.util.List;
 class Game extends SurfaceView implements SurfaceHolder.Callback {
     private final Player player;
     private final Joystick joystick;
-    private final Enemy enemy;
     private GameLoop gameLoop;
 
     private List<Enemy> enemyList = new ArrayList<Enemy>();
     private List<Bullet> bulletList = new ArrayList<Bullet>();
     private int joystickPointerId = 0;
+    private GameOver gameOver;
 
     public Game(Context context) {
         super(context);
@@ -32,9 +34,11 @@ class Game extends SurfaceView implements SurfaceHolder.Callback {
         surfaceHolder.addCallback(this);
 
         gameLoop = new GameLoop(this, surfaceHolder);
+
+        gameOver = new GameOver(getContext());
+
         joystick = new Joystick(275, 700, 70, 40);
         player = new Player(getContext(), joystick,500, 500, 30, 5000);
-        enemy = new Enemy(getContext(), player,100, 100, 15, 100);
 
 
         setFocusable(true);
@@ -102,9 +106,18 @@ class Game extends SurfaceView implements SurfaceHolder.Callback {
         for(Bullet bullet: bulletList) {
             bullet.draw(canvas);
         }
+
+        if (player.getHealthPoints() <= 0) {
+            gameOver.draw(canvas);
+        }
     }
 
     public void update() {
+
+        if (player.getHealthPoints() <= 0) {
+            return;
+        }
+
         joystick.update();
         player.update();
         if (Enemy.readyToSpawn()) {

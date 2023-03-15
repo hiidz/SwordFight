@@ -1,4 +1,4 @@
-package com.example.swordfight.object;
+package com.example.swordfight.gameObject;
 
 import android.content.Context;
 import android.graphics.Canvas;
@@ -6,7 +6,8 @@ import android.graphics.Paint;
 
 import androidx.core.content.ContextCompat;
 
-import com.example.swordfight.Joystick;
+import com.example.swordfight.gamepanel.HealthBar;
+import com.example.swordfight.gamepanel.Joystick;
 import com.example.swordfight.R;
 import com.example.swordfight.Utils;
 

@@ -1,12 +1,10 @@
-package com.example.swordfight.object;
+package com.example.swordfight.gameObject;
 
 import android.content.Context;
 
 import androidx.core.content.ContextCompat;
 
 import com.example.swordfight.R;
-import com.example.swordfight.object.Piece;
-import com.example.swordfight.object.Player;
 
 public class Bullet extends Piece {
     private static final double MAX_SPEED = 30;

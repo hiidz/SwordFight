@@ -1,8 +1,10 @@
-package com.example.swordfight;
+package com.example.swordfight.gamepanel;
 
 import android.graphics.Canvas;
 import android.graphics.Color;
 import android.graphics.Paint;
+
+import com.example.swordfight.Utils;
 
 public class Joystick {
 

@@ -1,4 +1,4 @@
-package com.example.swordfight.object;
+package com.example.swordfight.gamepanel;
 
 import android.content.Context;
 import android.graphics.Canvas;
@@ -7,6 +7,7 @@ import android.graphics.Paint;
 import androidx.core.content.ContextCompat;
 
 import com.example.swordfight.R;
+import com.example.swordfight.gameObject.Piece;
 
 public class HealthBar {
 

@@ -1,4 +1,4 @@
-package com.example.swordfight.object;
+package com.example.swordfight.gameObject;
 
 import android.content.Context;
 import android.graphics.Canvas;

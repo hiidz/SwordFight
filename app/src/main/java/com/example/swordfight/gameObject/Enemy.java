@@ -1,4 +1,4 @@
-package com.example.swordfight.object;
+package com.example.swordfight.gameObject;
 
 /*
 * Enemy is a character that chases the Player when within range
