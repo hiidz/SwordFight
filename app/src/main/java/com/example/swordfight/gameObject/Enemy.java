@@ -10,9 +10,74 @@ import android.content.Context;
 import androidx.core.content.ContextCompat;
 
 import com.example.swordfight.R;
+import com.example.swordfight.Utils;
+import com.example.swordfight.Vector2;
 
 
 public class Enemy extends Piece{
+    enum EnemyState {
+        IDLE,
+        CHASING,
+        STUN,
+        CAST_SKILL,
+        ATTACK,
+        DEAD,
+        OUT_OF_RANGE
+    }
+
+    private float enemyDetectionRange;
+    private Vector2 startingLocation;
+    private Vector2 currentPosition;
+    private EnemyState currentState = EnemyState.IDLE;
+
+    public void setState(EnemyState state) {
+        currentState = state;
+    }
+
+    public EnemyState getState() {
+        return currentState;
+    }
+
+    public void performAction(){
+        switch (currentState) {
+            case IDLE:
+                // PLAY animation
+                break;
+            case CHASING:
+                // if player within certain range - pathing finding algo ....
+                // if(Utils.getDistanceBetweenPoints(enemy and user) <= enemy detection){
+                //chase(player.pos);
+                //} else {
+                //chase(startingLocation);
+                //}
+                break;
+            case STUN:
+                // if stun ... stop moving and ... un stun after sometime
+                break;
+            case CAST_SKILL:
+                // when player is within certain range && skill cool down complete ... perform action
+                break;
+            case ATTACK:
+                // when player is within certain range ... attack
+                break;
+            case OUT_OF_RANGE:
+                // when player out of range ... go back to original spot
+                break;
+            case DEAD:
+                // do nothing and de-active thread and ... wait to be revive
+                break;
+
+        }
+    }
+
+    public void chase(Vector2 target){
+        // move towards target .... after all place change to vector 2
+    }
+    public void Stun(float duration){
+
+    }
+
+
     private final Player player;
     private static final double MAX_SPEED = 10;
     private static final double KNOCKBACK_SPEED = 15;
