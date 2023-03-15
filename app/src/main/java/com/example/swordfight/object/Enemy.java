@@ -19,6 +19,9 @@ public class Enemy extends Piece{
     private static int totalEnemySpawn = 0;
     private static int maxEnemy = 10;
 
+    public boolean isFreeze = false;
+    public Enemy stopMovementBy = null;
+
     public Enemy(Context context, Player player, double positionX, double positionY, double radius) {
         super(context, ContextCompat.getColor(context, R.color.enemy), positionX, positionY, radius);
 
@@ -45,7 +48,11 @@ public class Enemy extends Piece{
         this.positionY = positionY;
     }
 
-    public void knockback(Enemy otherEnemy) {
+    public void freezeMovement(Enemy otherEnemy) {
+
+    }
+
+    public void knockBack(Enemy otherEnemy) {
         double distanceToOtherEnemyX = otherEnemy.getPositionX() - this.positionX;
         double distanceToOtherEnemyY = otherEnemy.getPositionY() - this.positionY;
 
@@ -59,8 +66,13 @@ public class Enemy extends Piece{
         setPosition(positionX + velocityX, positionY + velocityY);
     }
 
+
     @Override
     public void update() {
+        if(isFreeze)
+            // check if still colliding with orginal gameObject that froze it
+            
+            return;
         double distanceToPlayerX = player.getPositionX() - positionX;
         double distanceToPlayerY = player.getPositionY() - positionY;
 

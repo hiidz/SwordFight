@@ -34,7 +34,7 @@ public abstract class Piece extends GameObject{
         return false;
     }
 
-    private double getRadius() {
+    public double getRadius() {
         return radius;
     }
 

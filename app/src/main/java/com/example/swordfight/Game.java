@@ -119,8 +119,14 @@ class Game extends SurfaceView implements SurfaceHolder.Callback {
             for (Enemy enemy2: enemyList) {
                 if (enemy1 != enemy2) {
                     if(Piece.isColliding(enemy1, enemy2)) {
-                        enemy1.knockback(enemy2);
-                        enemy2.knockback(enemy1);
+                        double distance1 = Math.sqrt(Math.pow(enemy1.getPositionX() - player.getPositionX(), 2) + Math.pow(enemy1.getPositionY() - player.getPositionY(), 2));
+                        double distance2 = Math.sqrt(Math.pow(enemy2.getPositionX() - player.getPositionX(), 2) + Math.pow(enemy2.getPositionY() - player.getPositionY(), 2));
+                        if(distance1 >= distance2){
+                            // freeze movement for enemy1
+                            enemy1.isFreeze = true;
+                        }else{
+                            enemy2.isFreeze = true;
+                        }
                     }
                 }
             }

@@ -23,10 +23,10 @@ public abstract class GameObject {
 
     public abstract void update();
 
-    protected double getPositionX() {
+    public double getPositionX() {
         return positionX;
     }
-    protected double getPositionY() {
+    public double getPositionY() {
         return positionY;
     }
 
