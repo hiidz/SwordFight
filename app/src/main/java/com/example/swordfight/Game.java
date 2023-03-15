@@ -100,7 +100,6 @@ class Game extends SurfaceView implements SurfaceHolder.Callback {
     public void update() {
         joystick.update();
         player.update();
-        enemy.update();
         if (Enemy.readyToSpawn()) {
             enemyList.add(new Enemy(getContext(), player));
         }
@@ -109,13 +108,25 @@ class Game extends SurfaceView implements SurfaceHolder.Callback {
             enemy.update();
         }
 
-        Iterator<Enemy> iteratorEnemy = enemyList.iterator();
-        while (iteratorEnemy.hasNext()) {
-            // Remove enemy if it collides with a spell
-            if (Piece.isColliding(iteratorEnemy.next(), player)) {
-                iteratorEnemy.remove();
+        for (Enemy enemy1: enemyList) {
+            for (Enemy enemy2: enemyList) {
+                if (enemy1 != enemy2) {
+                    if(Piece.isColliding(enemy1, enemy2)) {
+                        enemy1.knockback(enemy2);
+                        enemy2.knockback(enemy1);
+                    }
+                }
             }
         }
+
+
+//        Iterator<Enemy> iteratorEnemy = enemyList.iterator();
+//        while (iteratorEnemy.hasNext()) {
+//            // Remove enemy if it collides with a spell
+//            if (Piece.isColliding(iteratorEnemy.next(), player)) {
+//                iteratorEnemy.remove();
+//            }
+//        }
     }
 
 //    public void drawFPS(Canvas canvas) {
