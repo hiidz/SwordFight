@@ -39,27 +39,6 @@ public class Enemy extends Piece{
         return false;
     }
 
-//    public static void knockback(Enemy enemy1, Enemy enemy2) {
-//        double distanceX = enemy1.getPositionX() - enemy2.getPositionX();
-//        double distanceY = enemy1.getPositionY() - enemy2.getPositionY();
-//
-//        double distanceBetweenEnemies = getDistanceBetweenObjects(enemy1, enemy2);
-//
-//        double directionX = distanceX/distanceBetweenEnemies;
-//        double directionY = distanceY/distanceBetweenEnemies;
-//
-//        double velocityX = 0.0;
-//        double velocityY = 0.0;
-//
-//        if (distanceToPlayer > 0) {
-//            velocityX = directionX * KNOCKBACK_SPEED;
-//            velocityY = directionY * KNOCKBACK_SPEED;
-//        } else {
-//            velocityX = 0;
-//            velocityY = 0;
-//        }
-//        enemy1.setPosition(enemy1.getPositionX() + velocityX, enemy2.getPositionY() + velocityY);
-//    }
 
     public void setPosition(double positionX, double positionY) {
         this.positionX = positionX;
