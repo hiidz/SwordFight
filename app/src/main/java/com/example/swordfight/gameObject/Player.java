@@ -3,6 +3,7 @@ package com.example.swordfight.gameObject;
 import android.content.Context;
 import android.graphics.Canvas;
 import android.graphics.Paint;
+import android.util.Log;
 
 import androidx.core.content.ContextCompat;
 
@@ -25,7 +26,7 @@ public class Player extends Piece{
     private double radius;
     private Paint paint;
 
-    private Vector2 velocity;
+    private Vector2 velocity = new Vector2(0, 0);
 
     private Joystick joystick;
     private HealthBar healthBar;
@@ -43,7 +44,7 @@ public class Player extends Piece{
         velocity.set((float)joystick.getActuatorX()*MAX_SPEED, (float)joystick.getActuatorY()*MAX_SPEED);
 
         // Update position
-        position.add(velocity);
+        position = position.add(velocity);
 
         // Update direction
         if (velocity.getX() != 0 || velocity.getY() != 0) {

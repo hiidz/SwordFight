@@ -3,6 +3,7 @@ package com.example.swordfight.gamepanel;
 import android.graphics.Canvas;
 import android.graphics.Color;
 import android.graphics.Paint;
+import android.util.Log;
 
 import com.example.swordfight.Utils;
 
@@ -96,7 +97,6 @@ public class Joystick {
         float deltaX = touchPositionX - outerCircleCenterPositionX;
         float deltaY = touchPositionY - outerCircleCenterPositionY;
         float deltaDistance = (float) Utils.getDistanceBetweenPoints(0,0, deltaX, deltaY);
-
 
         if(deltaDistance < outerCircleRadius) {
             actuatorX = deltaX/outerCircleRadius;
