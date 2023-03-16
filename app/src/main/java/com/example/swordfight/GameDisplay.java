@@ -2,15 +2,18 @@ package com.example.swordfight;
 
 import com.example.swordfight.gameObject.GameObject;
 
+import java.util.Vector;
+
 public class GameDisplay {
     private final int widthPixels;
     private final int heightPixels;
-    private double gameToDisplayCoordinatesX;
-    private double gameToDisplayCoordinatesY;
-    private double displayCenterX;
-    private double displayCenterY;
-    private double gameCenterX;
-    private double gameCenterY;
+
+    private Vector2 gameToDisplayCoordinates;
+
+    private Vector2 displayCenter;
+
+    private Vector2 gameCenter;
+
     private GameObject centerObject;
 
     public GameDisplay(int widthPixels, int heightPixels, GameObject centerObject) {
@@ -19,26 +22,21 @@ public class GameDisplay {
 //        DISPLAY_RECT = new Rect(0, 0, widthPixels, heightPixels);
 
         this.centerObject = centerObject;
-
-        displayCenterX = widthPixels/2.0;
-        displayCenterY = heightPixels/2.0;
+        displayCenter = new Vector2((float) (widthPixels/2.0), (float) (heightPixels/2.0));
 
         update();
     }
 
     public void update() {
-        gameCenterX = centerObject.getPositionX();
-        gameCenterY = centerObject.getPositionY();
-
-        gameToDisplayCoordinatesX = displayCenterX - gameCenterX;
-        gameToDisplayCoordinatesY = displayCenterY - gameCenterY;
+        gameCenter = new Vector2(centerObject.getPositionX(), centerObject.getPositionY());
+        gameToDisplayCoordinates = displayCenter.subtract(gameCenter);
     }
 
     public double gameToDisplayCoordinatesX(double positionX) {
-        return positionX + gameToDisplayCoordinatesX;
+        return positionX + gameToDisplayCoordinates.getX();
     }
 
     public double gameToDisplayCoordinatesY(double positionY) {
-        return positionY + gameToDisplayCoordinatesY;
+        return positionY + gameToDisplayCoordinates.getY();
     }
 }
