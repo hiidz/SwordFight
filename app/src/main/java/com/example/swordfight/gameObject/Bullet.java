@@ -20,6 +20,6 @@ public class Bullet extends Piece {
 
     @Override
     public void update() {
-        position.add(velocity);
+        position = position.add(velocity);
     }
 }

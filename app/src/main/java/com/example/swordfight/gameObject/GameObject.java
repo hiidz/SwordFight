@@ -10,7 +10,7 @@ GameObject is an abstract class that acts as foundation for all objects in the g
  */
 
 public abstract class GameObject {
-    public Vector2 position = new Vector2(0, 0);
+    public Vector2 position;
 
     public Vector2 velocity = new Vector2(0, 0);
 

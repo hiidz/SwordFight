@@ -6,13 +6,13 @@ import android.graphics.Paint;
 import android.util.Log;
 
 import com.example.swordfight.Utils;
+import com.example.swordfight.Vector2;
 
 public class Joystick {
 
-    private float outerCircleCenterPositionX;
-    private float outerCircleCenterPositionY;
-    private float innerCircleCenterPositionX;
-    private float innerCircleCenterPositionY;
+    private Vector2 outerCircleCenterPosition;
+
+    private Vector2 innerCircleCenterPosition;
 
     private float outerCircleRadius;
     private float innerCircleRadius;
@@ -21,15 +21,12 @@ public class Joystick {
     private Paint outerCirclePaint;
     private double joystickCenterToTouchDistance;
     private boolean isPressed = false;
-    private float actuatorX;
-    private float actuatorY;
+    private Vector2 actuator = new Vector2(0, 0);
 
     public Joystick(float centerPositionX, float centerPositionY, float outerCircleRadius, float innerCircleRadius) {
         // Outer and inner circle make up the joystick
-        outerCircleCenterPositionX = centerPositionX;
-        outerCircleCenterPositionY = centerPositionY;
-        innerCircleCenterPositionX = centerPositionX;
-        innerCircleCenterPositionY = centerPositionY;
+        outerCircleCenterPosition = new Vector2(centerPositionX, centerPositionY);
+        innerCircleCenterPosition = new Vector2(centerPositionX, centerPositionY);
 
         // radii of circles
         this.outerCircleRadius = outerCircleRadius;
@@ -48,16 +45,16 @@ public class Joystick {
     public void draw(Canvas canvas) {
         // Draw outer circle
         canvas.drawCircle(
-                outerCircleCenterPositionX,
-                outerCircleCenterPositionY,
+                outerCircleCenterPosition.getX(),
+                outerCircleCenterPosition.getY(),
                 outerCircleRadius,
                 outerCirclePaint
         );
 
         // Draw inner circle
         canvas.drawCircle(
-                innerCircleCenterPositionX,
-                innerCircleCenterPositionY,
+                innerCircleCenterPosition.getX(),
+                innerCircleCenterPosition.getY(),
                 innerCircleRadius,
                 innerCirclePaint
         );
@@ -68,12 +65,12 @@ public class Joystick {
     }
 
     private void updateInnerCirclePosition() {
-        innerCircleCenterPositionX = (int) (outerCircleCenterPositionX + actuatorX*outerCircleRadius);
-        innerCircleCenterPositionY = (int) (outerCircleCenterPositionY + actuatorY*outerCircleRadius);
+        innerCircleCenterPosition.setX(outerCircleCenterPosition.getX() + actuator.getX()*outerCircleRadius);
+        innerCircleCenterPosition.setY(outerCircleCenterPosition.getY() + actuator.getY()*outerCircleRadius);
     }
 
     public boolean isPressed(float touchPositionX, float touchPositionY) {
-        joystickCenterToTouchDistance = Utils.getDistanceBetweenPoints(outerCircleCenterPositionX, outerCircleCenterPositionY, touchPositionX, touchPositionY);
+        joystickCenterToTouchDistance = Utils.getDistanceBetweenPoints(outerCircleCenterPosition.getX(), outerCircleCenterPosition.getY(), touchPositionX, touchPositionY);
         return joystickCenterToTouchDistance < outerCircleRadius;
     }
 
@@ -86,29 +83,26 @@ public class Joystick {
     }
 
     public double getActuatorX() {
-        return actuatorX;
+        return actuator.getX();
     }
 
     public double getActuatorY() {
-        return actuatorY;
+        return actuator.getY();
     }
 
     public void setActuator(float touchPositionX, float touchPositionY) {
-        float deltaX = touchPositionX - outerCircleCenterPositionX;
-        float deltaY = touchPositionY - outerCircleCenterPositionY;
+        float deltaX = touchPositionX - outerCircleCenterPosition.getX();
+        float deltaY = touchPositionY - outerCircleCenterPosition.getY();
         float deltaDistance = (float) Utils.getDistanceBetweenPoints(0,0, deltaX, deltaY);
 
         if(deltaDistance < outerCircleRadius) {
-            actuatorX = deltaX/outerCircleRadius;
-            actuatorY = deltaY/outerCircleRadius;
+            actuator = new Vector2(deltaX/outerCircleRadius, deltaY/outerCircleRadius);
         } else {
-            actuatorX = deltaX/deltaDistance;
-            actuatorY = deltaY/deltaDistance;
+            actuator = new Vector2(deltaX/deltaDistance, deltaY/deltaDistance);
         }
     }
 
     public void resetActuator() {
-        actuatorX = 0.0f;
-        actuatorY = 0.0f;
+        actuator = new Vector2(0,0);
     }
 }
