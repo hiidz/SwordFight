@@ -13,6 +13,7 @@ import com.example.swordfight.gamepanel.HealthBar;
 import com.example.swordfight.gamepanel.Joystick;
 import com.example.swordfight.R;
 import com.example.swordfight.Utils;
+import com.example.swordfight.graphics.Animator;
 import com.example.swordfight.graphics.Sprite;
 
 /*
@@ -32,11 +33,17 @@ public class Player extends Piece{
     private HealthBar healthBar;
     private Sprite sprite;
 
-    public Player(Context context, Joystick joystick, float positionX, float positionY, double radius, Sprite sprite, int maxHealth) {
+    private Animator animator;
+
+    private PlayerState playerState;
+
+    public Player(Context context, Joystick joystick, float positionX, float positionY, double radius, Sprite sprite, int maxHealth, Animator animator) {
         super(context, ContextCompat.getColor(context, R.color.player), positionX, positionY, radius, maxHealth);
         this.joystick = joystick;
         this.healthBar = new HealthBar(context,this);
         this.sprite = sprite;
+        this.playerState = new PlayerState(this);
+        this.animator = animator;
     }
 
     public void update() {
@@ -52,6 +59,8 @@ public class Player extends Piece{
             float distance = (float)Utils.getDistanceBetweenPoints(0.0f, 0.0f, velocity.getX(), velocity.getY());
             direction.set(velocity.getX()/distance, velocity.getY()/distance);
         }
+
+        playerState.update();
     }
 
     public void setPosition(float positionX, float positionY) {
@@ -59,8 +68,19 @@ public class Player extends Piece{
     }
 
     public void draw(Canvas canvas, GameDisplay gameDisplay) {
-        sprite.draw(canvas, (int) gameDisplay.gameToDisplayCoordinatesX(getPositionX()) - sprite.getWidth()/2, (int) gameDisplay.gameToDisplayCoordinatesY(getPositionY()) - sprite.getHeight()/2);
+//        sprite.draw(canvas, (int) gameDisplay.gameToDisplayCoordinatesX(getPositionX()) - sprite.getWidth()/2, (int) gameDisplay.gameToDisplayCoordinatesY(getPositionY()) - sprite.getHeight()/2);
+        animator.draw(canvas, gameDisplay, this);
         healthBar.draw(canvas, gameDisplay);
+    }
+
+    //get velocity
+    public Vector2 getVelocity() {
+        return velocity;
+    }
+
+    //get playerstate
+    public PlayerState getPlayerState() {
+        return playerState;
     }
 
 }

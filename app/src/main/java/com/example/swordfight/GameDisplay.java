@@ -1,5 +1,7 @@
 package com.example.swordfight;
 
+import android.util.Log;
+
 import com.example.swordfight.gameObject.GameObject;
 
 import java.util.Vector;

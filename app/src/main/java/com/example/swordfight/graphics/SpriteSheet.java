@@ -8,12 +8,43 @@ import android.graphics.Rect;
 import com.example.swordfight.R;
 
 public class SpriteSheet {
+
+    private static final int SPRITE_WIDTH_PIXELS = 64;
+    private static final int SPRITE_HEIGHT_PIXELS = 64;
+
     private Bitmap bitmap;
 
     public SpriteSheet(Context context) {
         BitmapFactory.Options bitmapOptions = new BitmapFactory.Options();
         bitmapOptions.inScaled = false;
-        bitmap = BitmapFactory.decodeResource(context.getResources(), R.drawable.sprite_sheet, bitmapOptions);
+        bitmap = BitmapFactory.decodeResource(context.getResources(), R.drawable.player_sprite_sheet, bitmapOptions);
+    }
+
+    public Sprite[] getPlayerSpriteArray() {
+        Sprite[] spriteArray = new Sprite[9];
+        spriteArray[0] = new Sprite(this, new Rect(0, 11*64, 64, 12*64));
+        spriteArray[1] = new Sprite(this, new Rect(64, 11*64, 2*64, 12*64));
+        spriteArray[2] = new Sprite(this, new Rect(2*64, 11*64, 3*64, 12*64));
+        spriteArray[3] = new Sprite(this, new Rect(3*64, 11*64, 4*64, 12*64));
+        spriteArray[4] = new Sprite(this, new Rect(4*64, 11*64, 5*64, 12*64));
+        spriteArray[5] = new Sprite(this, new Rect(5*64, 11*64, 6*64, 12*64));
+        spriteArray[6] = new Sprite(this, new Rect(6*64, 11*64, 7*64, 12*64));
+        spriteArray[7] = new Sprite(this, new Rect(7*64, 11*64, 8*64, 12*64));
+        spriteArray[8] = new Sprite(this, new Rect(8*64, 11*64, 9*64, 12*64));
+        return spriteArray;
+    }
+
+    public Bitmap getBitmap() {
+        return bitmap;
+    }
+
+    private Sprite getSpriteByIndex(int idxRow, int idxCol) {
+        return new Sprite(this, new Rect(
+                idxCol*SPRITE_WIDTH_PIXELS,
+                idxRow*SPRITE_HEIGHT_PIXELS,
+                (idxCol + 1)*SPRITE_WIDTH_PIXELS,
+                (idxRow + 1)*SPRITE_HEIGHT_PIXELS
+        ));
     }
 
     public Sprite getPlayerSprite() {
@@ -25,7 +56,4 @@ public class SpriteSheet {
         return new Sprite(this, new Rect(0, 0, 64, 64));
     }
 
-    public Bitmap getBitmap() {
-        return bitmap;
-    }
 }

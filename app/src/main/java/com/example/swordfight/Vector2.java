@@ -54,4 +54,8 @@ public class Vector2 {
         }
         return new Vector2(x / mag, y / mag);
     }
+
+    public String toString() {
+        return "(" + x + ", " + y + ")";
+    }
 }
