@@ -44,7 +44,7 @@ class Game extends SurfaceView implements SurfaceHolder.Callback {
         gameOver = new GameOver(getContext());
 
         joystick = new Joystick(275, 700, 70, 40);
-        player = new Player(getContext(), joystick,500, 500, 30, spriteSheet.getPlayerSprite(), 5000);
+        player = new Player(getContext(), joystick,500.0f, 500.0f, 30.0, spriteSheet.getPlayerSprite(), 5000);
 
         // Initialize display and center it around the player
         DisplayMetrics displayMetrics = new DisplayMetrics();
@@ -62,7 +62,7 @@ class Game extends SurfaceView implements SurfaceHolder.Callback {
                 if (joystick.getIsPressed()) {
                     // Joystick was pressed before this event -> cast spell
                     bulletList.add(new Bullet(getContext(), player));
-                } else if(joystick.isPressed((double) event.getX(), (double) event.getY())) {
+                } else if(joystick.isPressed(event.getX(), event.getY())) {
                     // Joystick is being pressed during this event -> cast spell
                     joystickPointerId = event.getPointerId(event.getActionIndex());
                     joystick.setIsPressed(true);
@@ -73,7 +73,7 @@ class Game extends SurfaceView implements SurfaceHolder.Callback {
                 return true;
             case MotionEvent.ACTION_MOVE:
                 if(joystick.getIsPressed()) {
-                    joystick.setActuator((double) event.getX(), (double) event.getY());
+                    joystick.setActuator(event.getX(), event.getY());
                 }
                 return true;
             case MotionEvent.ACTION_UP:

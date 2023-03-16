@@ -18,7 +18,7 @@ public abstract class Piece extends GameObject{
     protected int maxHealth;
     protected int currentHealth;
 
-    public Piece(Context context, int color, double positionX, double positionY, double radius, int maxHealth) {
+    public Piece(Context context, int color, float positionX, float positionY, double radius, int maxHealth) {
         super(positionX, positionY);
 
         this.radius = radius;
@@ -50,8 +50,8 @@ public abstract class Piece extends GameObject{
     }
 
     public void draw(Canvas canvas, GameDisplay gameDisplay) {
-        canvas.drawCircle((float) gameDisplay.gameToDisplayCoordinatesX(positionX),
-                (float) gameDisplay.gameToDisplayCoordinatesY(positionY),
+        canvas.drawCircle((float) gameDisplay.gameToDisplayCoordinatesX(position.getX()),
+                (float) gameDisplay.gameToDisplayCoordinatesY(position.getY()),
                 (float) radius,
                 paint);
     }

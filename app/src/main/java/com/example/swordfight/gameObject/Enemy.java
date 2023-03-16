@@ -112,15 +112,15 @@ public class Enemy extends Piece{
     private static int totalEnemySpawn = 0;
     private static int maxEnemy = 10;
 
-    public Enemy(Context context, Player player, double positionX, double positionY, double radius, int maxHealth) {
+    public Enemy(Context context, Player player, float positionX, float positionY, double radius, int maxHealth) {
         super(context, ContextCompat.getColor(context, R.color.enemy), positionX, positionY, radius, maxHealth);
 
         this.player = player;
     }
 
     public Enemy(Context context, Player player) {
-        super(context, ContextCompat.getColor(context, R.color.enemy),  Math.random()*1000,
-                Math.random()*1000, 15, 100);
+        super(context, ContextCompat.getColor(context, R.color.enemy),  (float)Math.random()*1000,
+                (float)Math.random()*1000, 15, 100);
         this.player = player;
     }
 
@@ -133,48 +133,43 @@ public class Enemy extends Piece{
     }
 
 
-    public void setPosition(double positionX, double positionY) {
-        this.positionX = positionX;
-        this.positionY = positionY;
+    public void setPosition(float positionX, float positionY) {
+        position.set(positionX, positionY);
     }
 
     public void knockback(Enemy otherEnemy) {
-        double distanceToOtherEnemyX = otherEnemy.getPositionX() - this.positionX;
-        double distanceToOtherEnemyY = otherEnemy.getPositionY() - this.positionY;
+        float distanceToOtherEnemyX = otherEnemy.getPositionX() - position.getX();
+        float distanceToOtherEnemyY = otherEnemy.getPositionY() - position.getY();
 
-        double distanceToOtherEnemy = getDistanceBetweenObjects(this, otherEnemy);
+        float distanceToOtherEnemy = getDistanceBetweenObjects(this, otherEnemy);
 
-        double directionX = distanceToOtherEnemyX/distanceToOtherEnemy;
-        double directionY = distanceToOtherEnemyY/distanceToOtherEnemy;
+        float directionX = distanceToOtherEnemyX/distanceToOtherEnemy;
+        float directionY = distanceToOtherEnemyY/distanceToOtherEnemy;
 
-        velocityX = -(directionX) * KNOCKBACK_SPEED;
-        velocityY = -(directionY) * KNOCKBACK_SPEED;
-        setPosition(positionX + velocityX, positionY + velocityY);
+        velocity.set(-(directionX) * KNOCKBACK_SPEED, -(directionY) * KNOCKBACK_SPEED);
+        setPosition(position.getX() + velocity.getX(), position.getY() + velocity.getY());
     }
 
     @Override
     public void update() {
-        double distanceToPlayerX = player.getPositionX() - positionX;
-        double distanceToPlayerY = player.getPositionY() - positionY;
+        float distanceToPlayerX = player.getPositionX() - position.getX();
+        float distanceToPlayerY = player.getPositionY() - position.getY();
 
-        double distanceToPlayer = getDistanceBetweenObjects(this, player);
+        float distanceToPlayer = getDistanceBetweenObjects(this, player);
 
-        double directionX = distanceToPlayerX/distanceToPlayer;
-        double directionY = distanceToPlayerY/distanceToPlayer;
+        float directionX = distanceToPlayerX/distanceToPlayer;
+        float directionY = distanceToPlayerY/distanceToPlayer;
 
         if (distanceToPlayer > 0) {
-            velocityX = directionX * MAX_SPEED;
-            velocityY = directionY * MAX_SPEED;
+            velocity.set(directionX * MAX_SPEED, directionY * MAX_SPEED);
         } else {
-            velocityX = 0;
-            velocityY = 0;
+            velocity.set(0, 0);
         }
 
         if (isColliding(this, player)) {
-            velocityX = -(directionX) * KNOCKBACK_SPEED;
-            velocityY = -(directionY) * KNOCKBACK_SPEED;
+            velocity.set(-(directionX) * KNOCKBACK_SPEED, -(directionY) * KNOCKBACK_SPEED);
             player.setDamageDealt(10);
         }
-        setPosition(positionX + velocityX, positionY + velocityY);
+        setPosition(position.getX() + velocity.getX(), position.getY() + velocity.getY());
     }
 }

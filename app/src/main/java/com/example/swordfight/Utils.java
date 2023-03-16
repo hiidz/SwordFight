@@ -2,6 +2,6 @@ package com.example.swordfight;
 
 public class Utils {
     public static double getDistanceBetweenPoints(double p1x, double p1y, double p2x, double p2y) {
-        return Math.sqrt(Math.pow(p1x - p2x, 2) + Math.pow(p1y - p2y, 2));
+        return (double) Math.sqrt(Math.pow(p1x - p2x, 2) + Math.pow(p1y - p2y, 2));
     }
 }
