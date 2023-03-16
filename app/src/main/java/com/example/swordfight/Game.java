@@ -25,8 +25,7 @@ class Game extends SurfaceView implements SurfaceHolder.Callback {
     private final Player player;
     private final Joystick joystick;
     private GameLoop gameLoop;
-
-    private List<Enemy> enemyList = new ArrayList<Enemy>();
+    private EnemyManager enemyManager;
     private List<Bullet> bulletList = new ArrayList<Bullet>();
     private int joystickPointerId = 0;
     private GameOver gameOver;
@@ -45,7 +44,7 @@ class Game extends SurfaceView implements SurfaceHolder.Callback {
 
         joystick = new Joystick(275, 700, 70, 40);
         player = new Player(getContext(), joystick,500.0f, 500.0f, 30.0, spriteSheet.getPlayerSprite(), 5000);
-
+        enemyManager = new EnemyManager(context, player);
         // Initialize display and center it around the player
         DisplayMetrics displayMetrics = new DisplayMetrics();
         ((Activity) getContext()).getWindowManager().getDefaultDisplay().getMetrics(displayMetrics);
@@ -114,7 +113,7 @@ class Game extends SurfaceView implements SurfaceHolder.Callback {
         super.draw(canvas);
         player.draw(canvas, gameDisplay);
         joystick.draw(canvas);
-        for(Enemy enemy: enemyList) {
+        for(Enemy enemy: enemyManager.getEnemyList()) {
             enemy.draw(canvas, gameDisplay);
         }
         for(Bullet bullet: bulletList) {
@@ -134,30 +133,15 @@ class Game extends SurfaceView implements SurfaceHolder.Callback {
 
         joystick.update();
         player.update();
-        if (Enemy.readyToSpawn()) {
-            enemyList.add(new Enemy(getContext(), player));
-        }
+        enemyManager.update();
 
-        for (Enemy enemy: enemyList) {
-            enemy.update();
-        }
 
-        for (Enemy enemy1: enemyList) {
-            for (Enemy enemy2: enemyList) {
-                if (enemy1 != enemy2) {
-                    if(Piece.isColliding(enemy1, enemy2)) {
-                        enemy1.knockback(enemy2);
-                        enemy2.knockback(enemy1);
-                    }
-                }
-            }
-        }
 
         for (Bullet bullet: bulletList) {
             bullet.update();
         }
 
-        Iterator<Enemy> iteratorEnemy = enemyList.iterator();
+        Iterator<Enemy> iteratorEnemy = enemyManager.getEnemyList().iterator();
         while (iteratorEnemy.hasNext()) {
             Piece enemy = iteratorEnemy.next();
 //            if (Piece.isColliding(enemy, player)) {

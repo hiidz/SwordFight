@@ -16,6 +16,7 @@ public abstract class GameObject {
 
     public Vector2 direction = new Vector2(1, 0);
 
+    public GameObject(){}
     public GameObject(float positionX, float positionY) {
         position = new Vector2(positionX, positionY);
     }

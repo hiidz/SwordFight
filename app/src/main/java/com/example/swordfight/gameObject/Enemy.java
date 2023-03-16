@@ -24,14 +24,15 @@ public class Enemy extends Piece{
         STUN,
         CAST_SKILL,
         ATTACK,
-        DEAD
+        DEAD,
+        SLEEPING
     }
 
-    private float attackRange;
-    private float enemyDetectionRange;
+    private float attackRange = 1f;
+    private float enemyDetectionRange = 5f;
     private Vector2 startingLocation;
     private Vector2 currentPosition;
-    private EnemyState currentState = EnemyState.IDLE;
+    private EnemyState currentState = EnemyState.SLEEPING;
 
     public void setState(EnemyState state) {
         currentState = state;
@@ -46,6 +47,7 @@ public class Enemy extends Piece{
             case IDLE:
                 // PLAY animation
                 // check if player within range ... if so change to chasing
+                //if(getDistanceBetweenPoints(this.currentPosition, player.))
                 break;
             case CHASING:
                 // if player within certain range - pathing finding algo ....
@@ -102,15 +104,24 @@ public class Enemy extends Piece{
 
     }
 
-    public  void dead(){ }
+    public void dead(){ }
+
+    public void resetAllSettings(){
+        setState(EnemyState.SLEEPING);
+        currentPosition = new Vector2(0,0);
+        // hp etc
+        //
+        //
+    }
 
 
-
-    private final Player player;
+    private Player player = null;
     private static final float MAX_SPEED = 10;
     private static final float KNOCKBACK_SPEED = 15;
     private static int totalEnemySpawn = 0;
     private static int maxEnemy = 10;
+
+    public Enemy(){setState(EnemyState.SLEEPING);}
 
     public Enemy(Context context, Player player, float positionX, float positionY, double radius, int maxHealth) {
         super(context, ContextCompat.getColor(context, R.color.enemy), positionX, positionY, radius, maxHealth);
@@ -122,14 +133,6 @@ public class Enemy extends Piece{
         super(context, ContextCompat.getColor(context, R.color.enemy),  (float)Math.random()*1000,
                 (float)Math.random()*1000, 15, 100);
         this.player = player;
-    }
-
-    public static boolean readyToSpawn() {
-        if (totalEnemySpawn < maxEnemy) {
-            totalEnemySpawn++;
-            return true;
-        }
-        return false;
     }
 
 
@@ -152,6 +155,8 @@ public class Enemy extends Piece{
 
     @Override
     public void update() {
+        // performAction(); need player to have v2 first
+//        if(currentState == EnemyState.SLEEPING) return;
         float distanceToPlayerX = player.getPositionX() - position.getX();
         float distanceToPlayerY = player.getPositionY() - position.getY();
 

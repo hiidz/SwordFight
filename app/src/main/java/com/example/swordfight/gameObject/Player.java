@@ -22,7 +22,7 @@ import com.example.swordfight.graphics.Sprite;
 
 public class Player extends Piece{
 //    private static double SPEED_PIXELS_PER_SECOND = 400;
-    private static final float MAX_SPEED = 20;
+    private static final float MAX_SPEED = 12;
     private double radius;
     private Paint paint;
 
