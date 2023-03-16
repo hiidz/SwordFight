@@ -38,14 +38,14 @@ class Game extends SurfaceView implements SurfaceHolder.Callback {
         SurfaceHolder surfaceHolder = getHolder();
         surfaceHolder.addCallback(this);
         SpriteSheet spriteSheet = new SpriteSheet(context);
-        Animator animator = new Animator(spriteSheet.getPlayerSpriteArray());
+        Animator playerAnimator = new Animator(spriteSheet.getSpriteArray(9, 11), spriteSheet.getSpriteArray(9, 9));
 
         gameLoop = new GameLoop(this, surfaceHolder);
 
         gameOver = new GameOver(getContext());
 
         joystick = new Joystick(275, 700, 70, 40);
-        player = new Player(getContext(), joystick,500.0f, 500.0f, 30.0, spriteSheet.getPlayerSprite(), 5000, animator);
+        player = new Player(getContext(), joystick,500.0f, 500.0f, 30.0, spriteSheet.getPlayerSprite(), 5000, playerAnimator);
         enemyManager = new EnemyManager(context, player);
         // Initialize display and center it around the player
         DisplayMetrics displayMetrics = new DisplayMetrics();

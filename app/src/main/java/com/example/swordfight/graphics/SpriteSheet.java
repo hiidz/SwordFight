@@ -34,6 +34,14 @@ public class SpriteSheet {
         return spriteArray;
     }
 
+    public Sprite[] getSpriteArray(int size, int row) {
+        Sprite[] spriteArray = new Sprite[size];
+        for (int i = 0; i < size; i++) {
+            spriteArray[i] = new Sprite(this, new Rect(i*SPRITE_WIDTH_PIXELS, row*SPRITE_HEIGHT_PIXELS, (i + 1)*SPRITE_WIDTH_PIXELS, (row + 1)*SPRITE_HEIGHT_PIXELS));
+        }
+        return spriteArray;
+    }
+
     public Bitmap getBitmap() {
         return bitmap;
     }
