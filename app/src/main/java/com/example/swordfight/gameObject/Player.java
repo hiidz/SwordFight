@@ -37,7 +37,7 @@ public class Player extends Piece{
 
     private PlayerState playerState;
 
-    public Player(Context context, Joystick joystick, float positionX, float positionY, double radius, Sprite sprite, int maxHealth, Animator animator) {
+    public Player(Context context, Joystick joystick, float positionX, float positionY, float radius, Sprite sprite, int maxHealth, Animator animator) {
         super(context, ContextCompat.getColor(context, R.color.player), positionX, positionY, radius, maxHealth);
         this.joystick = joystick;
         this.healthBar = new HealthBar(context,this);

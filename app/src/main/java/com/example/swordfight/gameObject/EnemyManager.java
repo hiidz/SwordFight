@@ -1,7 +1,8 @@
-package com.example.swordfight;
+package com.example.swordfight.gameObject;
 
 import android.content.Context;
 import android.os.Debug;
+import android.os.Handler;
 import android.util.Log;
 
 import com.example.swordfight.gameObject.Enemy;
@@ -11,6 +12,8 @@ import com.example.swordfight.gameObject.Player;
 import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
+import java.util.Timer;
+import java.util.TimerTask;
 
 // this class will handle enemy creation
 // and its life cycle
@@ -65,16 +68,17 @@ public class EnemyManager {
             enemy.update();
         }
 
-        for (Enemy enemy1: enemyList) {
-            for (Enemy enemy2: enemyList) {
-                if (enemy1 != enemy2) {
-                    if(Piece.isColliding(enemy1, enemy2)) {
-//                        enemy1.knockback(enemy2);
-//                        enemy2.knockback(enemy1);
-                    }
-                }
-            }
-        }
+//        for (Enemy enemy1: enemyList) {
+//            for (Enemy enemy2: enemyList) {
+//                if (enemy1 != enemy2) {
+//                    if(Piece.isColliding(enemy1, enemy2)) {
+//                        enemy1.setState(Enemy.EnemyState.CHASING);
+//                        enemy2.setState(Enemy.EnemyState.IDLE);
+//
+//                    }
+//                }
+//            }
+//        }
     }
 
 }

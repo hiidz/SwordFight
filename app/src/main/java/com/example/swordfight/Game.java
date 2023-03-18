@@ -11,6 +11,7 @@ import android.view.SurfaceView;
 
 import com.example.swordfight.gameObject.Bullet;
 import com.example.swordfight.gameObject.Enemy;
+import com.example.swordfight.gameObject.EnemyManager;
 import com.example.swordfight.gameObject.Piece;
 import com.example.swordfight.gameObject.Player;
 import com.example.swordfight.gamepanel.GameOver;
@@ -45,7 +46,7 @@ class Game extends SurfaceView implements SurfaceHolder.Callback {
         gameOver = new GameOver(getContext());
 
         joystick = new Joystick(275, 700, 70, 40);
-        player = new Player(getContext(), joystick,500.0f, 500.0f, 30.0, spriteSheet.getPlayerSprite(), 5000, playerAnimator);
+        player = new Player(getContext(), joystick,500.0f, 500.0f, 30.0f, spriteSheet.getPlayerSprite(), 5000, playerAnimator);
         enemyManager = new EnemyManager(context, player);
         // Initialize display and center it around the player
         DisplayMetrics displayMetrics = new DisplayMetrics();

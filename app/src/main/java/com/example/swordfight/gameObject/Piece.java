@@ -13,12 +13,12 @@ import com.example.swordfight.GameDisplay;
  * */
 
 public abstract class Piece extends GameObject{
-    protected double radius;
+    protected float radius;
     protected Paint paint;
     protected int maxHealth;
     protected int currentHealth;
 
-    public Piece(Context context, int color, float positionX, float positionY, double radius, int maxHealth) {
+    public Piece(Context context, int color, float positionX, float positionY, float radius, int maxHealth) {
         super(positionX, positionY);
 
         this.radius = radius;
@@ -47,7 +47,7 @@ public abstract class Piece extends GameObject{
         }
     }
 
-    private double getRadius() {
+    public float getRadius() {
         return radius;
     }
 

@@ -10,15 +10,15 @@ GameObject is an abstract class that acts as foundation for all objects in the g
  */
 
 public abstract class GameObject {
+    private Vector2 startingLocation = new Vector2(0,0);
     public Vector2 position;
-
     public Vector2 velocity = new Vector2(0, 0);
-
     public Vector2 direction = new Vector2(1, 0);
 
     public GameObject(){}
     public GameObject(float positionX, float positionY) {
         position = new Vector2(positionX, positionY);
+        startingLocation = position;
     }
 
     public abstract void draw(Canvas canvas, GameDisplay gameDisplay);
@@ -31,6 +31,10 @@ public abstract class GameObject {
     public float getPositionY() {
         return position.getY();
     }
+
+    public Vector2 getPosition() {return position;}
+    public void setPosition(Vector2 position){this.position = position;}
+    public Vector2 getStartingPosition() {return startingLocation;}
 
     public float getDistanceBetweenObjects(GameObject obj1, GameObject obj2) {
         return (float) Math.sqrt(
