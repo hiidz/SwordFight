@@ -161,16 +161,7 @@ public class Enemy extends Piece{
     }
 
     public void knockback(Enemy otherEnemy) {
-//        float distanceToOtherEnemyX = otherEnemy.getPositionX() - position.getX();
-//        float distanceToOtherEnemyY = otherEnemy.getPositionY() - position.getY();
-//
-//        float distanceToOtherEnemy = getDistanceBetweenObjects(this, otherEnemy);
-//
-//        float directionX = distanceToOtherEnemyX/distanceToOtherEnemy;
-//        float directionY = distanceToOtherEnemyY/distanceToOtherEnemy;
-//
-//        velocity.set(-(directionX) * KNOCKBACK_SPEED, -(directionY) * KNOCKBACK_SPEED);
-//        setPosition(position.getX() + velocity.getX(), position.getY() + velocity.getY());
+
     }
 
     @Override
@@ -178,25 +169,7 @@ public class Enemy extends Piece{
 //        Log.d("test", "" + this.getPosition().subtract(player.getPosition()).magnitude() + currentState);
 
         performAction(); // need player to have v2 first
-//        if(currentState == EnemyState.SLEEPING) return;
-//        float distanceToPlayerX = player.getPositionX() - position.getX();
-//        float distanceToPlayerY = player.getPositionY() - position.getY();
+
 //
-//        float distanceToPlayer = getDistanceBetweenObjects(this, player);
-//
-//        float directionX = distanceToPlayerX/distanceToPlayer;
-//        float directionY = distanceToPlayerY/distanceToPlayer;
-//
-//        if (distanceToPlayer > 0) {
-//            velocity.set(directionX * MAX_SPEED, directionY * MAX_SPEED);
-//        } else {
-//            velocity.set(0, 0);
-//        }
-//
-//        if (isColliding(this, player)) {
-//            velocity.set(-(directionX) * KNOCKBACK_SPEED, -(directionY) * KNOCKBACK_SPEED);
-//            player.setDamageDealt(10);
-//        }
-//        setPosition(position.getX() + velocity.getX(), position.getY() + velocity.getY());
     }
 }

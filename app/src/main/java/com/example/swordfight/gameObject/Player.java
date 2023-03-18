@@ -63,10 +63,6 @@ public class Player extends Piece{
         playerState.update();
     }
 
-    public void setPosition(float positionX, float positionY) {
-        position.set(positionX, positionY);
-    }
-
     public void draw(Canvas canvas, GameDisplay gameDisplay) {
 //        sprite.draw(canvas, (int) gameDisplay.gameToDisplayCoordinatesX(getPositionX()) - sprite.getWidth()/2, (int) gameDisplay.gameToDisplayCoordinatesY(getPositionY()) - sprite.getHeight()/2);
         animator.draw(canvas, gameDisplay, this, joystick);
