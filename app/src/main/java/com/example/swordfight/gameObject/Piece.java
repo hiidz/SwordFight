@@ -5,6 +5,9 @@ import android.graphics.Canvas;
 import android.graphics.Paint;
 
 import com.example.swordfight.GameDisplay;
+import com.example.swordfight.Vector2;
+import com.example.swordfight.graphics.Animator;
+import com.example.swordfight.graphics.SpriteSheet;
 
 /*
  * Piece is an abstract class, extended by the GameObject,
@@ -17,6 +20,10 @@ public abstract class Piece extends GameObject{
     protected Paint paint;
     protected int maxHealth;
     protected int currentHealth;
+    protected SpriteSheet spriteSheet;
+    protected Animator animator;
+
+    protected Vector2 velocity = new Vector2(0, 0);
 
     public Piece(Context context, int color, float positionX, float positionY, float radius, int maxHealth) {
         super(positionX, positionY);
@@ -64,5 +71,10 @@ public abstract class Piece extends GameObject{
 
     public int getMaxHealth() {
         return maxHealth;
+    }
+
+    //get velocity
+    public Vector2 getVelocity() {
+        return velocity;
     }
 }

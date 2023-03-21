@@ -4,6 +4,8 @@ import android.graphics.Canvas;
 
 import com.example.swordfight.GameDisplay;
 import com.example.swordfight.Vector2;
+import com.example.swordfight.graphics.Animator;
+import com.example.swordfight.graphics.SpriteSheet;
 
 /*
 GameObject is an abstract class that acts as foundation for all objects in the game

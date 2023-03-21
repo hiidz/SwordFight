@@ -15,6 +15,7 @@ import com.example.swordfight.R;
 import com.example.swordfight.Utils;
 import com.example.swordfight.graphics.Animator;
 import com.example.swordfight.graphics.Sprite;
+import com.example.swordfight.graphics.SpriteSheet;
 
 /*
 * Player is the main character of the game, that can be controlled via a joystick
@@ -24,26 +25,22 @@ import com.example.swordfight.graphics.Sprite;
 public class Player extends Piece{
 //    private static double SPEED_PIXELS_PER_SECOND = 400;
     private static final float MAX_SPEED = 12;
-    private double radius;
-    private Paint paint;
 
     private Vector2 velocity = new Vector2(0, 0);
 
     private Joystick joystick;
     private HealthBar healthBar;
-    private Sprite sprite;
 
-    private Animator animator;
 
     private PlayerState playerState;
 
-    public Player(Context context, Joystick joystick, float positionX, float positionY, float radius, Sprite sprite, int maxHealth, Animator animator) {
+    public Player(Context context, Joystick joystick, float positionX, float positionY, float radius, int maxHealth) {
         super(context, ContextCompat.getColor(context, R.color.player), positionX, positionY, radius, maxHealth);
         this.joystick = joystick;
         this.healthBar = new HealthBar(context,this);
-        this.sprite = sprite;
         this.playerState = new PlayerState(this);
-        this.animator = animator;
+        this.spriteSheet = new SpriteSheet(context);
+        this.animator = new Animator(spriteSheet.getSpriteArray(9, 11), spriteSheet.getSpriteArray(9, 9));
     }
 
     public void update() {
@@ -63,6 +60,7 @@ public class Player extends Piece{
         playerState.update();
     }
 
+    @Override
     public void draw(Canvas canvas, GameDisplay gameDisplay) {
 //        sprite.draw(canvas, (int) gameDisplay.gameToDisplayCoordinatesX(getPositionX()) - sprite.getWidth()/2, (int) gameDisplay.gameToDisplayCoordinatesY(getPositionY()) - sprite.getHeight()/2);
         animator.draw(canvas, gameDisplay, this, joystick);

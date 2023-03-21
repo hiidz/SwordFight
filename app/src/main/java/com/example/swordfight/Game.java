@@ -24,12 +24,16 @@ import java.util.Iterator;
 import java.util.List;
 
 class Game extends SurfaceView implements SurfaceHolder.Callback {
+
+    // Game Objects
     private final Player player;
     private final Joystick joystick;
+    private int joystickPointerId = 0;
+    private List<Bullet> bulletList = new ArrayList<Bullet>();
+
+    // Game Logic/Services/HUD
     private GameLoop gameLoop;
     private EnemyManager enemyManager;
-    private List<Bullet> bulletList = new ArrayList<Bullet>();
-    private int joystickPointerId = 0;
     private GameOver gameOver;
     private GameDisplay gameDisplay;
 
@@ -46,7 +50,7 @@ class Game extends SurfaceView implements SurfaceHolder.Callback {
         gameOver = new GameOver(getContext());
 
         joystick = new Joystick(275, 700, 70, 40);
-        player = new Player(getContext(), joystick,500.0f, 500.0f, 30.0f, spriteSheet.getPlayerSprite(), 5000, playerAnimator);
+        player = new Player(getContext(), joystick,500.0f, 500.0f, 30.0f, 5000);
         enemyManager = new EnemyManager(context, player);
         // Initialize display and center it around the player
         DisplayMetrics displayMetrics = new DisplayMetrics();
@@ -160,6 +164,7 @@ class Game extends SurfaceView implements SurfaceHolder.Callback {
                 // Remove enemy if it collides with a spell
                 if (Piece.isColliding(bullet, enemy)) {
                     iteratorBullet.remove();
+                    enemy.setDamageDealt(10);
 //                    iteratorEnemy.remove();
                     break;
                 }
