@@ -46,14 +46,6 @@ public class SpriteSheet {
         return bitmap;
     }
 
-    private Sprite getSpriteByIndex(int idxRow, int idxCol) {
-        return new Sprite(this, new Rect(
-                idxCol*SPRITE_WIDTH_PIXELS,
-                idxRow*SPRITE_HEIGHT_PIXELS,
-                (idxCol + 1)*SPRITE_WIDTH_PIXELS,
-                (idxRow + 1)*SPRITE_HEIGHT_PIXELS
-        ));
-    }
 
     public Sprite getPlayerSprite() {
 //        Sprite[] spriteArray = new Sprite[3];
@@ -64,4 +56,20 @@ public class SpriteSheet {
         return new Sprite(this, new Rect(0, 0, 64, 64));
     }
 
+    private Sprite getSpriteByIndex(int idxRow, int idxCol) {
+        return new Sprite(this, new Rect(
+                idxCol*SPRITE_WIDTH_PIXELS,
+                idxRow*SPRITE_HEIGHT_PIXELS,
+                (idxCol + 1)*SPRITE_WIDTH_PIXELS,
+                (idxRow + 1)*SPRITE_HEIGHT_PIXELS
+        ));
+    }
+
+    public Sprite getLavaSprite() {
+        return getSpriteByIndex(1, 1);
+    }
+
+    public Sprite getGroundSprite() {
+        return getSpriteByIndex(1, 2);
+    }
 }

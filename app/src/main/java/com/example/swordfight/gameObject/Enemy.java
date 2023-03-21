@@ -25,7 +25,7 @@ import java.util.TimerTask;
 
 
 public class Enemy extends Piece{
-    enum EnemyState {
+    public enum EnemyState {
         IDLE,
         CHASING,
         STUN,

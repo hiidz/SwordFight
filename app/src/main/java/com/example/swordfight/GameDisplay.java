@@ -1,5 +1,6 @@
 package com.example.swordfight;
 
+import android.graphics.Rect;
 import android.util.Log;
 
 import com.example.swordfight.gameObject.GameObject;
@@ -7,6 +8,7 @@ import com.example.swordfight.gameObject.GameObject;
 import java.util.Vector;
 
 public class GameDisplay {
+    public final Rect DISPLAY_RECT;
     private final int widthPixels;
     private final int heightPixels;
 
@@ -21,7 +23,7 @@ public class GameDisplay {
     public GameDisplay(int widthPixels, int heightPixels, GameObject centerObject) {
         this.widthPixels = widthPixels;
         this.heightPixels = heightPixels;
-//        DISPLAY_RECT = new Rect(0, 0, widthPixels, heightPixels);
+        DISPLAY_RECT = new Rect(0, 0, widthPixels, heightPixels);
 
         this.centerObject = centerObject;
         displayCenter = new Vector2((float) (widthPixels/2.0), (float) (heightPixels/2.0));
@@ -40,5 +42,14 @@ public class GameDisplay {
 
     public double gameToDisplayCoordinatesY(double positionY) {
         return positionY + gameToDisplayCoordinates.getY();
+    }
+
+    public Rect getGameRect() {
+        return new Rect(
+                (int) (centerObject.getPositionX() - widthPixels/2),
+                (int) (centerObject.getPositionY() - heightPixels/2),
+                (int) (centerObject.getPositionX() + widthPixels/2),
+                (int) (centerObject.getPositionY() + heightPixels/2)
+        );
     }
 }
