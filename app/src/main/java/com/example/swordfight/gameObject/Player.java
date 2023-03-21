@@ -16,6 +16,7 @@ import com.example.swordfight.Utils;
 import com.example.swordfight.graphics.Animator;
 import com.example.swordfight.graphics.Sprite;
 import com.example.swordfight.graphics.SpriteSheet;
+import com.example.swordfight.map.MapLayout;
 
 /*
 * Player is the main character of the game, that can be controlled via a joystick
@@ -30,6 +31,7 @@ public class Player extends Piece{
 
     private Joystick joystick;
     private HealthBar healthBar;
+    private MapLayout maplayout;
 
 
     private PlayerState playerState;
@@ -44,11 +46,26 @@ public class Player extends Piece{
     }
 
     public void update() {
+        float velocityX = (float)joystick.getActuatorX()*MAX_SPEED;
+        float velocityY = (float)joystick.getActuatorY()*MAX_SPEED;
+        if (this.getPositionX() > maplayout.TILE_WIDTH_PIXELS * maplayout.NUMBER_OF_ROW_TILES) {
+            this.getPosition().setX(maplayout.TILE_WIDTH_PIXELS * maplayout.NUMBER_OF_ROW_TILES);
+        }
+        if(this.getPositionX() < 0) {
+            this.getPosition().setX(0);
+        }
+        if (this.getPositionY() > maplayout.TILE_WIDTH_PIXELS * maplayout.NUMBER_OF_ROW_TILES) {
+            this.getPosition().setY(maplayout.TILE_WIDTH_PIXELS * maplayout.NUMBER_OF_ROW_TILES);
+        }
+        if(this.getPositionY() < 0) {
+            this.getPosition().setY(0);
+        }
         // Update velocity based on actuator of joystick
-        velocity.set((float)joystick.getActuatorX()*MAX_SPEED, (float)joystick.getActuatorY()*MAX_SPEED);
+        velocity.set(velocityX, velocityY);
 
         // Update position
         position = position.add(velocity);
+
 
         // Update direction
         if (velocity.getX() != 0 || velocity.getY() != 0) {
