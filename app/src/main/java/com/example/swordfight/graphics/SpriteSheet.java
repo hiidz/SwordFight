@@ -17,30 +17,24 @@ public class SpriteSheet {
     public SpriteSheet(Context context) {
         BitmapFactory.Options bitmapOptions = new BitmapFactory.Options();
         bitmapOptions.inScaled = false;
-        bitmap = BitmapFactory.decodeResource(context.getResources(), R.drawable.player_sprite_sheet, bitmapOptions);
+        bitmap = BitmapFactory.decodeResource(context.getResources(), R.drawable.javier_spritesheet_1, bitmapOptions);
     }
 
-    public Sprite[] getPlayerSpriteArray() {
-        Sprite[] spriteArray = new Sprite[9];
-        spriteArray[0] = new Sprite(this, new Rect(0, 11*64, 64, 12*64));
-        spriteArray[1] = new Sprite(this, new Rect(64, 11*64, 2*64, 12*64));
-        spriteArray[2] = new Sprite(this, new Rect(2*64, 11*64, 3*64, 12*64));
-        spriteArray[3] = new Sprite(this, new Rect(3*64, 11*64, 4*64, 12*64));
-        spriteArray[4] = new Sprite(this, new Rect(4*64, 11*64, 5*64, 12*64));
-        spriteArray[5] = new Sprite(this, new Rect(5*64, 11*64, 6*64, 12*64));
-        spriteArray[6] = new Sprite(this, new Rect(6*64, 11*64, 7*64, 12*64));
-        spriteArray[7] = new Sprite(this, new Rect(7*64, 11*64, 8*64, 12*64));
-        spriteArray[8] = new Sprite(this, new Rect(8*64, 11*64, 9*64, 12*64));
-        return spriteArray;
-    }
-
-    public Sprite[] getSpriteArray(int size, int row) {
+    public Sprite[] getPlayerSpriteArray(int size, int row) {
         Sprite[] spriteArray = new Sprite[size];
         for (int i = 0; i < size; i++) {
             spriteArray[i] = new Sprite(this, new Rect(i*SPRITE_WIDTH_PIXELS, row*SPRITE_HEIGHT_PIXELS, (i + 1)*SPRITE_WIDTH_PIXELS, (row + 1)*SPRITE_HEIGHT_PIXELS));
         }
         return spriteArray;
     }
+
+//    public Sprite[] getSpriteArray(int size, int row) {
+//        Sprite[] spriteArray = new Sprite[size];
+//        for (int i = 0; i < size; i++) {
+//            spriteArray[i] = new Sprite(this, new Rect(i*SPRITE_WIDTH_PIXELS, row*SPRITE_HEIGHT_PIXELS, (i + 1)*SPRITE_WIDTH_PIXELS, (row + 1)*SPRITE_HEIGHT_PIXELS));
+//        }
+//        return spriteArray;
+//    }
 
     public Bitmap getBitmap() {
         return bitmap;
@@ -70,6 +64,22 @@ public class SpriteSheet {
     }
 
     public Sprite getGroundSprite() {
-        return getSpriteByIndex(1, 2);
+        return getSpriteByIndex(1, 0);
+    }
+
+    public Sprite getLeftWallSprite() {
+        return getSpriteByIndex(2, 4);
+    }
+
+    public Sprite getTopWallSprite() {
+        return getSpriteByIndex(2, 0);
+    }
+
+    public Sprite getBottomWallSprite() {
+        return getSpriteByIndex(2, 3);
+    }
+
+    public Sprite getRightWallSprite() {
+        return getSpriteByIndex(2, 1);
     }
 }

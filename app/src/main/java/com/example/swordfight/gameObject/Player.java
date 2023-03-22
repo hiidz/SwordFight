@@ -42,7 +42,7 @@ public class Player extends Piece{
         this.healthBar = new HealthBar(context,this);
         this.playerState = new PlayerState(this);
         this.spriteSheet = new SpriteSheet(context);
-        this.animator = new Animator(spriteSheet.getSpriteArray(9, 11), spriteSheet.getSpriteArray(9, 9));
+        this.animator = new Animator(spriteSheet.getPlayerSpriteArray(9, 4), spriteSheet.getPlayerSpriteArray(9, 3));
     }
 
     public void update() {

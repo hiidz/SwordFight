@@ -18,6 +18,7 @@ import com.example.swordfight.gamepanel.GameOver;
 import com.example.swordfight.gamepanel.Joystick;
 import com.example.swordfight.graphics.Animator;
 import com.example.swordfight.graphics.SpriteSheet;
+import com.example.swordfight.map.Tilemap;
 
 import java.util.ArrayList;
 import java.util.Iterator;
@@ -36,27 +37,25 @@ class Game extends SurfaceView implements SurfaceHolder.Callback {
     private EnemyManager enemyManager;
     private GameOver gameOver;
     private GameDisplay gameDisplay;
-
+    private final Tilemap tilemap;
     public Game(Context context) {
         super(context);
-
         SurfaceHolder surfaceHolder = getHolder();
         surfaceHolder.addCallback(this);
-        SpriteSheet spriteSheet = new SpriteSheet(context);
-        Animator playerAnimator = new Animator(spriteSheet.getSpriteArray(9, 11), spriteSheet.getSpriteArray(9, 9));
 
         gameLoop = new GameLoop(this, surfaceHolder);
-
         gameOver = new GameOver(getContext());
 
         joystick = new Joystick(275, 700, 70, 40);
         player = new Player(getContext(), joystick,500.0f, 500.0f, 30.0f, 5000);
         enemyManager = new EnemyManager(context, player);
+
         // Initialize display and center it around the player
         DisplayMetrics displayMetrics = new DisplayMetrics();
         ((Activity) getContext()).getWindowManager().getDefaultDisplay().getMetrics(displayMetrics);
         gameDisplay = new GameDisplay(displayMetrics.widthPixels, displayMetrics.heightPixels, player);
-
+        SpriteSheet spriteSheet = new SpriteSheet(context);
+        tilemap = new Tilemap(spriteSheet);
         setFocusable(true);
     }
 
@@ -118,10 +117,16 @@ class Game extends SurfaceView implements SurfaceHolder.Callback {
     @Override
     public void draw(Canvas canvas) {
         super.draw(canvas);
+//        tilemap.draw(canvas, gameDisplay);
         player.draw(canvas, gameDisplay);
         joystick.draw(canvas);
         for(Enemy enemy: enemyManager.getEnemyList()) {
-            enemy.draw(canvas, gameDisplay);
+            if (enemy.getHealthPoints() <= 0) {
+                enemy.setState(Enemy.EnemyState.DEAD);
+            }
+                enemy.draw(canvas, gameDisplay);
+
+
         }
         for(Bullet bullet: bulletList) {
             bullet.draw(canvas, gameDisplay);
