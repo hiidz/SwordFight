@@ -48,8 +48,6 @@ public class GameLoop extends Thread {
 
         while (isRunning) {
 
-            super.run();
-
             long now = System.nanoTime();
             long elapsedUpdateTime = now - lastUpdateTime;
             long elapsedRenderTime = now - lastRenderTime;
