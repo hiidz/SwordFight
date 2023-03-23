@@ -35,6 +35,5 @@ public class Bullet extends Piece {
     public void update() {
         position = position.add(velocity);
         distanceTraveled+= velocity.magnitude();
-        Log.d("Bullet.class", "Total distances traveled - " + distanceTraveled);
     }
 }
