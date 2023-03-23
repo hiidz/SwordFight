@@ -10,6 +10,7 @@ import android.view.SurfaceHolder;
 import android.view.SurfaceView;
 
 import com.example.swordfight.gameObject.Bullet;
+import com.example.swordfight.gameObject.BulletManager;
 import com.example.swordfight.gameObject.Enemy;
 import com.example.swordfight.gameObject.EnemyManager;
 import com.example.swordfight.gameObject.Piece;
@@ -30,7 +31,8 @@ class Game extends SurfaceView implements SurfaceHolder.Callback {
     private final Player player;
     private final Joystick joystick;
     private int joystickPointerId = 0;
-    private List<Bullet> bulletList = new ArrayList<Bullet>();
+
+    private BulletManager bulletManager;
 
     // Game Logic/Services/HUD
     private GameLoop gameLoop;
@@ -49,6 +51,7 @@ class Game extends SurfaceView implements SurfaceHolder.Callback {
         joystick = new Joystick(275, 700, 70, 40);
         player = new Player(getContext(), joystick,500.0f, 500.0f, 30.0f, 5000);
         enemyManager = new EnemyManager(context, player);
+        bulletManager = new BulletManager(context, player, enemyManager);
 
         // Initialize display and center it around the player
         DisplayMetrics displayMetrics = new DisplayMetrics();
@@ -66,14 +69,14 @@ class Game extends SurfaceView implements SurfaceHolder.Callback {
             case MotionEvent.ACTION_POINTER_DOWN:
                 if (joystick.getIsPressed()) {
                     // Joystick was pressed before this event -> cast spell
-                    bulletList.add(new Bullet(getContext(), player));
+                    bulletManager.addBullet();
                 } else if(joystick.isPressed(event.getX(), event.getY())) {
                     // Joystick is being pressed during this event -> cast spell
                     joystickPointerId = event.getPointerId(event.getActionIndex());
                     joystick.setIsPressed(true);
                 } else {
                     // Joystick was never pressed -> cast spell
-                    bulletList.add(new Bullet(getContext(), player));
+                    bulletManager.addBullet();
                 }
                 return true;
             case MotionEvent.ACTION_MOVE:
@@ -125,10 +128,8 @@ class Game extends SurfaceView implements SurfaceHolder.Callback {
                 enemy.setState(Enemy.EnemyState.DEAD);
             }
                 enemy.draw(canvas, gameDisplay);
-
-
         }
-        for(Bullet bullet: bulletList) {
+        for(Bullet bullet: bulletManager.getBulletList()) {
             bullet.draw(canvas, gameDisplay);
         }
 
@@ -146,16 +147,17 @@ class Game extends SurfaceView implements SurfaceHolder.Callback {
         joystick.update();
         player.update();
         enemyManager.update();
+        bulletManager.update();
 
 
+//        for (Bullet bullet: bulletList) {
+//            bullet.update();
+//        }
 
-        for (Bullet bullet: bulletList) {
-            bullet.update();
-        }
-
-        Iterator<Enemy> iteratorEnemy = enemyManager.getEnemyList().iterator();
-        while (iteratorEnemy.hasNext()) {
-            Piece enemy = iteratorEnemy.next();
+//
+//        Iterator<Enemy> iteratorEnemy = enemyManager.getEnemyList().iterator();
+//        while (iteratorEnemy.hasNext()) {
+//            Piece enemy = iteratorEnemy.next();
 //            if (Piece.isColliding(enemy, player)) {
 //                // Remove enemy if it collides with the player
 //                iteratorEnemy.remove();
@@ -163,19 +165,19 @@ class Game extends SurfaceView implements SurfaceHolder.Callback {
 //                continue;
 //            }
 
-            Iterator<Bullet> iteratorBullet = bulletList.iterator();
-            while (iteratorBullet.hasNext()) {
-                Piece bullet = iteratorBullet.next();
-                // Remove enemy if it collides with a spell
-                if (Piece.isColliding(bullet, enemy)) {
-                    iteratorBullet.remove();
-                    enemy.setDamageDealt(10);
-//                    iteratorEnemy.remove();
-                    break;
-                }
-            }
-            gameDisplay.update();
-        }
+//            Iterator<Bullet> iteratorBullet = bulletList.iterator();
+//            while (iteratorBullet != null && iteratorBullet.hasNext()) {
+//                Piece bullet = iteratorBullet.next();
+//                // Remove enemy if it collides with a spell
+//                if (Piece.isColliding(bullet, enemy)) {
+//                    iteratorBullet.remove();
+//                    enemy.setDamageDealt(10);
+////                    iteratorEnemy.remove();
+//                    break;
+//                }
+//            }
+//            gameDisplay.update();
+//        }
 
 
 //        Iterator<Enemy> iteratorEnemy = enemyList.iterator();

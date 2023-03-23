@@ -38,7 +38,7 @@ public abstract class Piece extends GameObject{
 
     public Piece(){}
 
-    public static boolean isColliding(Piece obj1, Piece obj2) {
+    public boolean isColliding(Piece obj1, Piece obj2) {
         double distance = obj1.getDistanceBetweenObjects(obj1, obj2);
         double distanceToCollision = obj1.getRadius() + obj2.getRadius();
 

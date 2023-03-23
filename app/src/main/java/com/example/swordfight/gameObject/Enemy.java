@@ -93,7 +93,6 @@ public class Enemy extends Piece{
 
         float distance = target.subtract(getPosition()).magnitude();
         setPosition(getPosition().add(direction.multiply(currentSpeed)));
-        Log.d("direction", "" + direction.multiply(currentSpeed));
         if (targetState == EnemyState.ATTACK){
             if(distance < this.getRadius() * 1.5)
             {
@@ -108,7 +107,6 @@ public class Enemy extends Piece{
                 setState(EnemyState.IDLE);
             }
         }else {
-            Log.d("moving", "" );
         }
     }
     public void stun(float duration) {

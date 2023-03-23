@@ -20,37 +20,43 @@ import java.util.TimerTask;
 public class EnemyManager {
     private Player player;
     private Context context;
-    public EnemyManager(Context context, Player player){
-        this.context = context;
-        this.player = player;
-        // set up all the enemy but without using them ...
-        // setUpEnemyPool();
-    }
-
-    private void setUpEnemyPool(){
-        for(int i = 0; i < enemyPool; i++){
-            poolOfSleepingEnemy.add(new Enemy());
-        }
-    }
 
     private final static int maxEnemy = 5;
     private final static int enemyPool = 10;
 
     private final static int minEnemyCount = 3;
     private List<Enemy> enemyList = new ArrayList<Enemy>();
-    private List<Enemy> poolOfSleepingEnemy = new ArrayList<>(); // create default amount of base enemy
+    private List<Enemy> poolOfSleepingEnemy = new ArrayList<>();
+
+    public EnemyManager(Context context, Player player){
+        this.context = context;
+        this.player = player;
+        // set up all the enemy but without using them ...
+        setUpEnemyPool();
+    }
+
+    private void setUpEnemyPool(){
+        for(int i = 0; i < enemyPool; i++){
+            poolOfSleepingEnemy.add( new Enemy(this.context, player));
+        }
+    }
 
     public void removeEnemy(Enemy enemy){
-//        enemy.resetAllSettings();
-//        poolOfSleepingEnemy.add(enemy);
+        enemy.resetAllSettings();
+        poolOfSleepingEnemy.add(enemy);
         enemyList.remove(enemy);
     }
-    public void addEnemy(Enemy enemy){
-//        if(poolOfSleepingEnemy.size() <= Math.floor(enemyPool/3)){
-//            setUpEnemyPool();
-//        }
-        enemyList.add(enemy); // poolOfSleepingEnemy.get(0)
+
+    public void addEnemy(){
+        if(poolOfSleepingEnemy.size() < minEnemyCount) {
+            Enemy enemy = poolOfSleepingEnemy.remove(0);
+            enemyList.add(enemy);
+        }else {
+            Enemy enemy = new Enemy(context, player);
+            enemyList.add(enemy);
+        }
     }
+
     public List<Enemy> getEnemyList(){return enemyList;}
 
     public boolean readyToSpawn() {
@@ -61,7 +67,7 @@ public class EnemyManager {
     }
     public void update(){
         if (readyToSpawn()) {
-            this.addEnemy(new Enemy(context, player));
+            this.addEnemy();
         }
 
         for (Enemy enemy: getEnemyList()) {
