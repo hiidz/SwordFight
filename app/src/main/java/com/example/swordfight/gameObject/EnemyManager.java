@@ -48,12 +48,16 @@ public class EnemyManager {
     }
 
     public void addEnemy(){
+        Log.d("Enemy ", "size " + poolOfSleepingEnemy.size() );
+
         if(poolOfSleepingEnemy.size() < minEnemyCount) {
             Enemy enemy = poolOfSleepingEnemy.remove(0);
             enemyList.add(enemy);
+            enemy.activeEnemy();
         }else {
             Enemy enemy = new Enemy(context, player);
             enemyList.add(enemy);
+            enemy.activeEnemy();
         }
     }
 
@@ -72,8 +76,14 @@ public class EnemyManager {
 
         Iterator<Enemy> iterator = getEnemyList().iterator();
         while (iterator.hasNext()) {
-            iterator.next().update();
+            Enemy e = iterator.next();
+            if(e.getEnemyState().getState() == EnemyState.State.DEAD){
+
+            }else {
+                e.update();
+            }
         }
+
 //        for (Enemy enemy1: enemyList) {
 //            for (Enemy enemy2: enemyList) {
 //                if (enemy1 != enemy2) {

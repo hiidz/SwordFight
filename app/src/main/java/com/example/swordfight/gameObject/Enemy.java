@@ -20,49 +20,36 @@ import com.example.swordfight.gamepanel.HealthBar;
 import com.example.swordfight.graphics.Animator;
 import com.example.swordfight.graphics.SpriteSheet;
 
+import java.security.PublicKey;
 import java.util.Timer;
 import java.util.TimerTask;
 
 
 public class Enemy extends Piece{
-    public enum EnemyState {
-        IDLE,
-        CHASING,
-        STUN,
-        CAST_SKILL,
-        ATTACK,
-        DEAD,
-        SLEEPING
-    }
+
+    private EnemyState enemyState;
+
+    public EnemyState getEnemyState(){return enemyState;}
 
     private float enemyDetectionRange = 200f; // 2 * for chasing range
-    private EnemyState currentState = EnemyState.IDLE;
-
-    public void setState(EnemyState state) {
-        currentState = state;
-    }
-
-    public EnemyState getState() {
-        return currentState;
-    }
 
     public void performAction(){
-        switch (currentState) {
+        switch (enemyState.getState()) {
             case IDLE:
                 // PLAY animation
                 // check if player within range ... if so change to chasing
                 if(this.getPosition().subtract(player.getPosition()).magnitude()<= enemyDetectionRange){
-                    this.setState(EnemyState.CHASING);
+                    enemyState.setState (EnemyState.State.CHASING);
                 }
                 break;
             case CHASING:
                 if(this.getPosition().subtract(player.getPosition()).magnitude() <= enemyDetectionRange * 2){
                     // continue chasing
-                    chase(player.getPosition(), EnemyState.ATTACK);
+                    chase(player.getPosition(), EnemyState.State.ATTACK);
 
                 }else {
                     // move back to original spot
-                    chase(getStartingPosition(), EnemyState.IDLE);
+                    chase(getStartingPosition(), EnemyState.State.IDLE);
                 }
                 break;
             case STUN:
@@ -76,7 +63,7 @@ public class Enemy extends Piece{
                     // do nothing attack
                     //player.setHealthPoint(player.getHealthPoint() - 1);
                 }else {
-                    this.setState(EnemyState.CHASING);
+                    enemyState.setState (EnemyState.State.CHASING);
                 }
 
                     // when player is within certain range ... attack
@@ -88,34 +75,34 @@ public class Enemy extends Piece{
         }
     }
 
-    public void chase(Vector2 target, EnemyState targetState){
+    public void chase(Vector2 target, EnemyState.State targetState){
         Vector2 direction = target.subtract(getPosition()).normalized();
 
         float distance = target.subtract(getPosition()).magnitude();
         setPosition(getPosition().add(direction.multiply(currentSpeed)));
-        if (targetState == EnemyState.ATTACK){
+        if (targetState == EnemyState.State.ATTACK){
             if(distance < this.getRadius() * 1.5)
             {
-                setState(EnemyState.ATTACK);
+                enemyState.setState(EnemyState.State.ATTACK);
             }
             // maybe check if can cast skill first
 
-        }else if(targetState == EnemyState.IDLE ) {
+        }else if(targetState == EnemyState.State.IDLE ) {
             // some small value
             if(distance <= this.getRadius())
             {
-                setState(EnemyState.IDLE);
+                enemyState.setState(EnemyState.State.IDLE);
             }
         }else {
         }
     }
     public void stun(float duration) {
-        setState(EnemyState.STUN);
+        enemyState.setState(EnemyState.State.STUN);
         Timer timer = new Timer();
         timer.schedule(new TimerTask() {
             @Override
             public void run() {
-                setState(EnemyState.STUN);
+                enemyState.setState(EnemyState.State.STUN);
             }
         }, (long) (duration * 1000));
     }
@@ -131,12 +118,13 @@ public class Enemy extends Piece{
     public void dead(){ }
 
     public void resetAllSettings(){
-        setState(EnemyState.SLEEPING);
+        enemyState.setState(EnemyState.State.SLEEPING);
         setPosition(new Vector2(0,0));
     }
 
     public void activeEnemy(){
-        setState(EnemyState.IDLE);
+        enemyState.setState(EnemyState.State.IDLE);
+
     }
 
 
@@ -155,17 +143,19 @@ public class Enemy extends Piece{
     public float getCurrentSpeed () { return currentSpeed;}
     public void setCurrentSpeed(float speed){this.currentSpeed = speed;}
 
-    public Enemy(){setState(EnemyState.SLEEPING);}
+    public Enemy(){enemyState.setState(EnemyState.State.SLEEPING);}
 
     public Enemy(Context context, Player player, float positionX, float positionY, float radius, int maxHealth) {
         super(context, ContextCompat.getColor(context, R.color.enemy), positionX, positionY, radius, maxHealth);
         this.player = player;
         this.healthBar = new HealthBar(context,this);
         this.spriteSheet = new SpriteSheet(context);
+        enemyState = new EnemyState(this);
     }
 
     public Enemy(Context context, Player player) {
         this(context, player, (float)Math.random()*1000, (float)Math.random()*1000, 15, 100);
+        enemyState = new EnemyState(this);
     }
 
     @Override
@@ -182,12 +172,18 @@ public class Enemy extends Piece{
 
     }
 
+    public void deathCert(){
+        if(this.getHealthPoints() <= 0){
+            enemyState.setState(EnemyState.State.DEAD);
+        }
+    }
+
     @Override
     public void update() {
 //        Log.d("test", "" + this.getPosition().subtract(player.getPosition()).magnitude() + currentState);
 
         performAction(); // need player to have v2 first
-
+        deathCert();
 //
     }
 }

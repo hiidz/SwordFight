@@ -13,6 +13,7 @@ import com.example.swordfight.gameObject.Bullet;
 import com.example.swordfight.gameObject.BulletManager;
 import com.example.swordfight.gameObject.Enemy;
 import com.example.swordfight.gameObject.EnemyManager;
+import com.example.swordfight.gameObject.EnemyState;
 import com.example.swordfight.gameObject.Piece;
 import com.example.swordfight.gameObject.Player;
 import com.example.swordfight.gamepanel.GameOver;
@@ -124,10 +125,7 @@ class Game extends SurfaceView implements SurfaceHolder.Callback {
         player.draw(canvas, gameDisplay);
         joystick.draw(canvas);
         for(Enemy enemy: enemyManager.getEnemyList()) {
-            if (enemy.getHealthPoints() <= 0) {
-                enemy.setState(Enemy.EnemyState.DEAD);
-            }
-                enemy.draw(canvas, gameDisplay);
+            enemy.draw(canvas, gameDisplay);
         }
         for(Bullet bullet: bulletManager.getBulletList()) {
             bullet.draw(canvas, gameDisplay);
