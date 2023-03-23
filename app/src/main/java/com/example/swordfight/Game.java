@@ -18,6 +18,7 @@ import com.example.swordfight.gameObject.Piece;
 import com.example.swordfight.gameObject.Player;
 import com.example.swordfight.gamepanel.GameOver;
 import com.example.swordfight.gamepanel.Joystick;
+import com.example.swordfight.gamepanel.Performance;
 import com.example.swordfight.graphics.Animator;
 import com.example.swordfight.graphics.SpriteSheet;
 import com.example.swordfight.map.Tilemap;
@@ -31,6 +32,8 @@ class Game extends SurfaceView implements SurfaceHolder.Callback {
     // Game Objects
     private final Player player;
     private final Joystick joystick;
+
+    private Performance performance;
     private int joystickPointerId = 0;
 
     private BulletManager bulletManager;
@@ -48,6 +51,7 @@ class Game extends SurfaceView implements SurfaceHolder.Callback {
 
         gameLoop = new GameLoop(this, surfaceHolder);
         gameOver = new GameOver(getContext());
+        performance = new Performance(context, gameLoop);
 
         joystick = new Joystick(275, 700, 70, 40);
         player = new Player(getContext(), joystick,500.0f, 500.0f, 30.0f, 5000);
@@ -122,6 +126,7 @@ class Game extends SurfaceView implements SurfaceHolder.Callback {
     public void draw(Canvas canvas) {
         super.draw(canvas);
 //        tilemap.draw(canvas, gameDisplay);
+        performance.draw(canvas);
         player.draw(canvas, gameDisplay);
         joystick.draw(canvas);
         for(Enemy enemy: enemyManager.getEnemyList()) {
@@ -146,6 +151,7 @@ class Game extends SurfaceView implements SurfaceHolder.Callback {
         player.update();
         enemyManager.update();
         bulletManager.update();
+        gameDisplay.update();
 
 
 //        for (Bullet bullet: bulletList) {
