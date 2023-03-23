@@ -1,9 +1,11 @@
 package com.example.swordfight.gameObject;
 
 import android.content.Context;
+import android.os.Debug;
 import android.util.Log;
 
 import java.util.ArrayList;
+import java.util.Iterator;
 import java.util.List;
 
 public class BulletManager {
@@ -54,10 +56,14 @@ public class BulletManager {
     }
 
     public void update() {
-        for (Bullet b : getBulletList()) {
-            b.update();
+        Iterator<Bullet> iterator = bulletList.iterator();
+        while (iterator.hasNext()) {
+            Bullet b = iterator.next();
             if(b.timeToGoBackPool() || currentBulletCollidingWithAnyEnemy(b)){
+                iterator.remove();
                 removeBullet(b);
+            }else {
+                b.update();
             }
         }
     }

@@ -70,10 +70,10 @@ public class EnemyManager {
             this.addEnemy();
         }
 
-        for (Enemy enemy: getEnemyList()) {
-            enemy.update();
+        Iterator<Enemy> iterator = getEnemyList().iterator();
+        while (iterator.hasNext()) {
+            iterator.next().update();
         }
-
 //        for (Enemy enemy1: enemyList) {
 //            for (Enemy enemy2: enemyList) {
 //                if (enemy1 != enemy2) {
