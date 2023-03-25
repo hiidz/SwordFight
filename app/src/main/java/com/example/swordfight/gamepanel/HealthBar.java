@@ -2,7 +2,9 @@ package com.example.swordfight.gamepanel;
 
 import android.content.Context;
 import android.graphics.Canvas;
+import android.graphics.Color;
 import android.graphics.Paint;
+import android.graphics.Typeface;
 
 import androidx.core.content.ContextCompat;
 
@@ -66,5 +68,23 @@ public class HealthBar {
                 (float) gameDisplay.gameToDisplayCoordinatesX(healthRight),
                 (float) gameDisplay.gameToDisplayCoordinatesY(healthBottom),
                 healthPaint);
+
+        // Draw Health Number
+        String healthText = piece.getHealthPoints() + "/" + piece.getMaxHealth();
+        Paint textPaint = new Paint();
+//        textPaint.setColor(ContextCompat.getColor(canvas.getContext(), R.color.healthBarText));
+        textPaint.setColor(Color.BLACK);
+        textPaint.setTextSize(height); // set the text size to half the height of the health bar
+        textPaint.setTypeface(Typeface.DEFAULT_BOLD);
+
+        // calculate the coordinates to draw the text in the center of the health bar
+        float textX = (borderLeft + borderRight - textPaint.measureText(healthText)) / 2;
+        float textY = borderBottom - height / 2 + textPaint.getTextSize() / 2;
+
+        canvas.drawText(
+                healthText,
+                (float) gameDisplay.gameToDisplayCoordinatesX(textX),
+                (float) gameDisplay.gameToDisplayCoordinatesY(textY),
+                textPaint);
     }
 }
