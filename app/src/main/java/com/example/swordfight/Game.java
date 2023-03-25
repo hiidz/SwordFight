@@ -125,7 +125,7 @@ class Game extends SurfaceView implements SurfaceHolder.Callback {
     @Override
     public void draw(Canvas canvas) {
         super.draw(canvas);
-//        tilemap.draw(canvas, gameDisplay);
+        tilemap.draw(canvas, gameDisplay);
         performance.draw(canvas);
         player.draw(canvas, gameDisplay);
         joystick.draw(canvas);
