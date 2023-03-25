@@ -186,4 +186,5 @@ public class Enemy extends Piece{
         deathCert();
 //
     }
+
 }

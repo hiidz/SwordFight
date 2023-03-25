@@ -51,4 +51,5 @@ public abstract class GameObject {
     protected float getDirectionY() {
         return direction.getY();
     }
+
 }

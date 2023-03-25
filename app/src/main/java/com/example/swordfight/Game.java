@@ -109,6 +109,15 @@ class Game extends SurfaceView implements SurfaceHolder.Callback {
             gameLoop = new GameLoop(this, holder);
         }
         gameLoop.startLoop();
+
+        Runnable updateEnemyHealthEvent = new Runnable() {
+            @Override
+            public void run() {
+                enemyManager.updateEnemyHealth();
+            }
+        };
+        EventThread enemyHealthUpdater = new EventThread(updateEnemyHealthEvent, 30000);
+        enemyHealthUpdater.start(); // start the thread
     }
 
     @Override

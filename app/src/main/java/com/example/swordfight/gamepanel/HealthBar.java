@@ -15,13 +15,14 @@ import com.example.swordfight.gameObject.Piece;
 public class HealthBar {
 
     private Piece piece;
-    private int width, height, margin; // pixel value
+    private int height, margin; // pixel value
     private Paint borderPaint;
     private Paint healthPaint;
 
+    private static final int maxWidth = 100;
+
     public HealthBar(Context context, Piece piece) {
         this.piece = piece;
-        this.width = 100;
         this.height = 20;
         this.margin = 2;
 
@@ -34,16 +35,19 @@ public class HealthBar {
         healthPaint.setColor(healthColor);
     }
 
-    public void draw (Canvas canvas, GameDisplay gameDisplay) {
+    public void draw(Canvas canvas, GameDisplay gameDisplay) {
         float x = (float) piece.getPositionX();
         float y = (float) piece.getPositionY();
         float distanceToPiece = 30;
-        float healthPointPercentage = (float) piece.getHealthPoints()/piece.getMaxHealth();
+        float healthPointPercentage = (float) piece.getHealthPoints() / piece.getMaxHealth();
+
+        // Calculate the actual width of the health bar
+        int actualWidth = Math.min(Math.round(maxWidth * healthPointPercentage), maxWidth);
 
         // Draw border
         float borderLeft, borderTop, borderRight, borderBottom;
-        borderLeft = x - width/2;
-        borderRight = x + width/2;
+        borderLeft = x - maxWidth / 2;
+        borderRight = borderLeft + maxWidth;
         borderBottom = y - distanceToPiece;
         borderTop = borderBottom - height;
         canvas.drawRect(
@@ -55,10 +59,10 @@ public class HealthBar {
 
         // Draw Health
         float healthLeft, healthTop, healthRight, healthBottom, healthWidth, healthHeight;
-        healthWidth = width - 2*margin;
-        healthHeight = height - 2*margin;
+        healthWidth = actualWidth - 2 * margin;
+        healthHeight = height - 2 * margin;
         healthLeft = borderLeft + margin;
-        healthRight = healthLeft + healthWidth*healthPointPercentage;
+        healthRight = healthLeft + healthWidth;
         healthBottom = borderBottom - margin;
         healthTop = healthBottom - healthHeight;
 
@@ -72,7 +76,6 @@ public class HealthBar {
         // Draw Health Number
         String healthText = piece.getHealthPoints() + "/" + piece.getMaxHealth();
         Paint textPaint = new Paint();
-//        textPaint.setColor(ContextCompat.getColor(canvas.getContext(), R.color.healthBarText));
         textPaint.setColor(Color.BLACK);
         textPaint.setTextSize(height); // set the text size to half the height of the health bar
         textPaint.setTypeface(Typeface.DEFAULT_BOLD);

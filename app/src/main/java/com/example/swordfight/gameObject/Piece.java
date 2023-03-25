@@ -77,4 +77,17 @@ public abstract class Piece extends GameObject{
     public Vector2 getVelocity() {
         return velocity;
     }
+
+    public void setHealthPoints(int healthPoints) {
+        this.currentHealth = healthPoints;
+    }
+
+    //multiply health
+    public void multiplyHealth(int multiplier) {
+        this.currentHealth *= multiplier;
+    }
+
+    public void multiplyMaxHealth(int i) {
+        this.maxHealth *= i;
+    }
 }

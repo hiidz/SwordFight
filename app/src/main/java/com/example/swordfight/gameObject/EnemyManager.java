@@ -97,4 +97,11 @@ public class EnemyManager {
 //        }
     }
 
+    public synchronized void updateEnemyHealth(){
+        for (Enemy enemy: enemyList) {
+            enemy.multiplyHealth(2);
+            enemy.multiplyMaxHealth(2);
+        }
+    }
+
 }
