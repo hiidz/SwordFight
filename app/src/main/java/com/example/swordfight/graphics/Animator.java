@@ -28,7 +28,6 @@ public class Animator {
         switch (player.getPlayerState().getState()) {
             case NOT_MOVING:
                 drawRotatedFrame(canvas, gameDisplay, player, playerSpriteArray[0], angle);
-//                drawFrame(canvas, gameDisplay, player, playerSpriteArray[0]);
                 break;
             case IS_MOVING:
                 updatesBeforeNextMoveFrame--;
@@ -46,12 +45,10 @@ public class Animator {
                     angle = previousAngle;
                 }
                 drawRotatedFrame(canvas, gameDisplay, player, playerSpriteArray[idxMovingFrame], angle);
-//                    drawFrame(canvas, gameDisplay, player, playerSpriteArray[idxMovingFrame]);
                 break;
             default:
                 break;
         }
-        Log.d("Animator", "angle: " + angle);
     }
 
     public void drawFrame(Canvas canvas, GameDisplay gameDisplay, Player player, Sprite sprite) {

@@ -13,20 +13,12 @@ public class Sprite {
     private final SpriteSheet spriteSheet;
     private final Rect rect;
 
-    private static final int PLAYER_SCALE = 3;
+    private static final int PLAYER_SCALE = 2;
 
     public Sprite(SpriteSheet spriteSheet, Rect rect) {
         this.spriteSheet = spriteSheet;
         this.rect = rect;
     }
-//    public void draw(Canvas canvas, int gameToDisplayCoordinatesX, int gameToDisplayCoordinatesY) {
-//        canvas.drawBitmap(
-//                spriteSheet.getBitmap(),
-//                rect,
-//                new Rect(gameToDisplayCoordinatesX, gameToDisplayCoordinatesY, gameToDisplayCoordinatesX+getWidth() * PLAYER_SCALE, gameToDisplayCoordinatesY+getHeight() * PLAYER_SCALE),
-//                null
-//        );
-//    }
 
     public void draw(Canvas canvas, int gameToDisplayCoordinatesX, int gameToDisplayCoordinatesY) {
         int scaledWidth = (int) (getWidth() * PLAYER_SCALE);
