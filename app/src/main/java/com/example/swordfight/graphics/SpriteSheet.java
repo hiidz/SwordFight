@@ -68,7 +68,7 @@ public class SpriteSheet {
     }
 
     public Sprite getLeftWallSprite() {
-        return getSpriteByIndex(2, 4);
+        return getSpriteByIndex(2, 3);
     }
 
     public Sprite getTopWallSprite() {
@@ -76,7 +76,7 @@ public class SpriteSheet {
     }
 
     public Sprite getBottomWallSprite() {
-        return getSpriteByIndex(2, 3);
+        return getSpriteByIndex(2, 2);
     }
 
     public Sprite getRightWallSprite() {

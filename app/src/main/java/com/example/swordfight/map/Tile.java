@@ -23,7 +23,6 @@ abstract class Tile {
     }
 
     public static Tile getTile(int idxTileType, SpriteSheet spriteSheet, Rect mapLocationRect) {
-
         switch(TileType.values()[idxTileType]) {
             case GROUND_TILE:
                 return new GroundTile(spriteSheet, mapLocationRect);

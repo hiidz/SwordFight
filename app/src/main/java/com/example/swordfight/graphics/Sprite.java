@@ -21,8 +21,8 @@ public class Sprite {
     }
 
     public void draw(Canvas canvas, int gameToDisplayCoordinatesX, int gameToDisplayCoordinatesY) {
-        int scaledWidth = (int) (getWidth() * PLAYER_SCALE);
-        int scaledHeight = (int) (getHeight() * PLAYER_SCALE);
+        int scaledWidth = (int) (getWidth());
+        int scaledHeight = (int) (getHeight());
         int scaledX = (int) (gameToDisplayCoordinatesX - (scaledWidth - getWidth()) / 2f);
         int scaledY = (int) (gameToDisplayCoordinatesY - (scaledHeight - getHeight()) / 2f);
 

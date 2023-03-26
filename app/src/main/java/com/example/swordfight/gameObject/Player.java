@@ -48,17 +48,25 @@ public class Player extends Piece{
     public void update() {
         float velocityX = (float)joystick.getActuatorX()*MAX_SPEED;
         float velocityY = (float)joystick.getActuatorY()*MAX_SPEED;
-        if (this.getPositionX() > maplayout.TILE_WIDTH_PIXELS * maplayout.NUMBER_OF_ROW_TILES) {
-            this.getPosition().setX(maplayout.TILE_WIDTH_PIXELS * maplayout.NUMBER_OF_ROW_TILES);
+
+        // Player cant exit right wall
+        if (this.getPositionX() > (maplayout.TILE_WIDTH_PIXELS * maplayout.NUMBER_OF_ROW_TILES) - maplayout.TILE_WIDTH_PIXELS) {
+            this.getPosition().setX((maplayout.TILE_WIDTH_PIXELS * maplayout.NUMBER_OF_ROW_TILES) - maplayout.TILE_WIDTH_PIXELS);
         }
-        if(this.getPositionX() < 0) {
-            this.getPosition().setX(0);
+
+        // Player cant exit left wall
+        if(this.getPositionX() < maplayout.TILE_WIDTH_PIXELS) {
+            this.getPosition().setX(maplayout.TILE_WIDTH_PIXELS);
         }
-        if (this.getPositionY() > maplayout.TILE_WIDTH_PIXELS * maplayout.NUMBER_OF_ROW_TILES) {
-            this.getPosition().setY(maplayout.TILE_WIDTH_PIXELS * maplayout.NUMBER_OF_ROW_TILES);
+
+        // Player cant exit top wall
+        if (this.getPositionY() > (maplayout.TILE_WIDTH_PIXELS * maplayout.NUMBER_OF_ROW_TILES) - maplayout.TILE_HEIGHT_PIXELS) {
+            this.getPosition().setY((maplayout.TILE_WIDTH_PIXELS * maplayout.NUMBER_OF_ROW_TILES) - maplayout.TILE_HEIGHT_PIXELS);
         }
-        if(this.getPositionY() < 0) {
-            this.getPosition().setY(0);
+
+        // Player cant exit bottom wall
+        if(this.getPositionY() < maplayout.TILE_HEIGHT_PIXELS) {
+            this.getPosition().setY(maplayout.TILE_HEIGHT_PIXELS);
         }
         // Update velocity based on actuator of joystick
         velocity.set(velocityX, velocityY);
