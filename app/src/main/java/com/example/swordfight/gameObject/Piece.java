@@ -2,6 +2,7 @@ package com.example.swordfight.gameObject;
 
 import android.content.Context;
 import android.graphics.Canvas;
+import android.graphics.Paint;
 
 import com.example.swordfight.GameDisplay;
 import com.example.swordfight.gamepanel.HealthBar;
@@ -25,7 +26,29 @@ public class Piece extends GameObject{
         this.healthBar = new HealthBar(context, this);
         this.maxHealth = maxHealth;
         setCurrentHealth(maxHealth);
+        this.currentHealth = maxHealth;
+        // Set color of Piece
     }
+
+    public boolean isColliding(Piece obj1, Piece obj2) {
+        double distance = obj1.getDistanceBetweenObjects(obj1, obj2);
+        double distanceToCollision = obj1.getRadius() + obj2.getRadius();
+
+        if (distance < distanceToCollision) {
+            return true;
+        }
+        return false;
+    }
+
+    public void setDamageDealt(int damageDealt) {
+        if (currentHealth > 0) {
+            this.currentHealth -= damageDealt;
+        }
+    }
+
+//    public float getRadius() {
+//        return radius;
+//    }
 
     @Override
     public void draw(Canvas canvas, GameDisplay gameDisplay) {

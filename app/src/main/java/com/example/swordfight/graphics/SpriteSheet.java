@@ -14,10 +14,10 @@ public class SpriteSheet {
 
     private Bitmap bitmap;
 
-    public SpriteSheet(Context context) {
+    public SpriteSheet(Context context, int id) {
         BitmapFactory.Options bitmapOptions = new BitmapFactory.Options();
         bitmapOptions.inScaled = false;
-        bitmap = BitmapFactory.decodeResource(context.getResources(), R.drawable.javier_spritesheet_1, bitmapOptions);
+        bitmap = BitmapFactory.decodeResource(context.getResources(), id, bitmapOptions);
     }
 
     public Sprite[] getPlayerSpriteArray() {
@@ -35,6 +35,30 @@ public class SpriteSheet {
         }
         return spriteArray;
     }
+
+    public Sprite[] getBossSpriteArray(int size, int row) {
+        Sprite[] spriteArray = new Sprite[size];
+        for (int i = 0; i < size; i++) {
+            spriteArray[i] = new Sprite(this, new Rect(i*120, row*100, (i + 1)*120, (row + 1)*100));
+        }
+        return spriteArray;
+    }
+
+    public Sprite[] getOrbSpriteArray(int size, int row) {
+        Sprite[] spriteArray = new Sprite[size];
+        for (int i = 0; i < size; i++) {
+            spriteArray[i] = new Sprite(this, new Rect(i*192, row*192, (i + 1)*192, (row + 1)*192));
+        }
+        return spriteArray;
+    }
+
+//    public Sprite[] getSpriteArray(int size, int row) {
+//        Sprite[] spriteArray = new Sprite[size];
+//        for (int i = 0; i < size; i++) {
+//            spriteArray[i] = new Sprite(this, new Rect(i*SPRITE_WIDTH_PIXELS, row*SPRITE_HEIGHT_PIXELS, (i + 1)*SPRITE_WIDTH_PIXELS, (row + 1)*SPRITE_HEIGHT_PIXELS));
+//        }
+//        return spriteArray;
+//    }
 
     public Bitmap getBitmap() {
         return bitmap;

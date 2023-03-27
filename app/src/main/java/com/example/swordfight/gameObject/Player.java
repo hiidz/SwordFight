@@ -12,6 +12,7 @@ import com.example.swordfight.R;
 import com.example.swordfight.Utils;
 import com.example.swordfight.graphics.Animator;
 import com.example.swordfight.graphics.PlayerAnimator;
+import com.example.swordfight.graphics.SpriteSheet;
 import com.example.swordfight.map.MapLayout;
 
 /*
@@ -32,6 +33,7 @@ public class Player extends Piece{
         this.joystick = joystick;
         this.playerState = new PlayerState(this);
         this.playerAnimator = new PlayerAnimator(spriteSheet.getPlayerSpriteArray());
+        this.spriteSheet = new SpriteSheet(context, R.drawable.javier_spritesheet_1);
     }
 
     @Override
