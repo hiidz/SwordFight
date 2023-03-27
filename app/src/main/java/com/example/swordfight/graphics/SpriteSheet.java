@@ -20,7 +20,15 @@ public class SpriteSheet {
         bitmap = BitmapFactory.decodeResource(context.getResources(), R.drawable.javier_spritesheet_1, bitmapOptions);
     }
 
-    public Sprite[] getPlayerSpriteArray(int size, int row) {
+    public Sprite[] getPlayerSpriteArray() {
+        return getSpriteArray(4, 4);
+    }
+
+    public Sprite[] getEnemySpriteArray() {
+        return getSpriteArray(4, 5);
+    }
+
+    public Sprite[] getSpriteArray(int size, int row) {
         Sprite[] spriteArray = new Sprite[size];
         for (int i = 0; i < size; i++) {
             spriteArray[i] = new Sprite(this, new Rect(i*SPRITE_WIDTH_PIXELS, row*SPRITE_HEIGHT_PIXELS, (i + 1)*SPRITE_WIDTH_PIXELS, (row + 1)*SPRITE_HEIGHT_PIXELS));
@@ -28,26 +36,8 @@ public class SpriteSheet {
         return spriteArray;
     }
 
-//    public Sprite[] getSpriteArray(int size, int row) {
-//        Sprite[] spriteArray = new Sprite[size];
-//        for (int i = 0; i < size; i++) {
-//            spriteArray[i] = new Sprite(this, new Rect(i*SPRITE_WIDTH_PIXELS, row*SPRITE_HEIGHT_PIXELS, (i + 1)*SPRITE_WIDTH_PIXELS, (row + 1)*SPRITE_HEIGHT_PIXELS));
-//        }
-//        return spriteArray;
-//    }
-
     public Bitmap getBitmap() {
         return bitmap;
-    }
-
-
-    public Sprite getPlayerSprite() {
-//        Sprite[] spriteArray = new Sprite[3];
-//        spriteArray[0] = new Sprite(this, new Rect(0*64, 0, 1*64, 64));
-//        spriteArray[1] = new Sprite(this, new Rect(1*64, 0, 2*64, 64));
-//        spriteArray[2] = new Sprite(this, new Rect(2*64, 0, 3*64, 64));
-//        return spriteArray;
-        return new Sprite(this, new Rect(0, 0, 64, 64));
     }
 
     private Sprite getSpriteByIndex(int idxRow, int idxCol) {

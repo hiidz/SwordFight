@@ -15,7 +15,8 @@ import androidx.core.content.ContextCompat;
 import com.example.swordfight.GameDisplay;
 import com.example.swordfight.R;
 import com.example.swordfight.Vector2;
-import com.example.swordfight.graphics.Animator;
+import com.example.swordfight.graphics.EnemyAnimator;
+import com.example.swordfight.graphics.PlayerAnimator;
 import com.example.swordfight.map.MapLayout;
 
 import java.util.Timer;
@@ -26,7 +27,7 @@ public class Enemy extends Piece{
 
     private static final float MAX_SPEED = 5;
     private float currentSpeed;
-    private Animator enemyAnimator;
+    private EnemyAnimator enemyAnimator;
     private EnemyState enemyState;
     private Player player;
 
@@ -42,6 +43,7 @@ public class Enemy extends Piece{
         this.player = player;
         setCurrentSpeed(MAX_SPEED);
         enemyState = new EnemyState(this);
+        this.enemyAnimator = new EnemyAnimator(spriteSheet.getEnemySpriteArray());
     }
 
     public Enemy(Context context, Player player) {
@@ -96,10 +98,10 @@ public class Enemy extends Piece{
     }
 
     public void chase(Vector2 target, EnemyState.State targetState){
-        Vector2 direction = target.subtract(getPosition()).normalized();
+        setDirection(target.subtract(getPosition()).normalized());
 
         float distance = target.subtract(getPosition()).magnitude();
-        setPosition(getPosition().add(direction.multiply(currentSpeed)));
+        setPosition(getPosition().add(getDirection().multiply(currentSpeed)));
         if (targetState == EnemyState.State.ATTACK){
             if(distance < this.getRadius() * 1.5)
             {
@@ -155,11 +157,11 @@ public class Enemy extends Piece{
     @Override
     public void draw(Canvas canvas, GameDisplay gameDisplay) {
         // CANVAS TO BE REPLACED BY ANIMATOR
-        canvas.drawCircle((float) gameDisplay.gameToDisplayCoordinatesX(getPositionX()),
-                (float) gameDisplay.gameToDisplayCoordinatesY(getPositionY()),
-                (float) getRadius(),
-                getPaint());
-        //        enemyAnimator.draw(canvas, gameDisplay, this);
+//        canvas.drawCircle((float) gameDisplay.gameToDisplayCoordinatesX(getPositionX()),
+//                (float) gameDisplay.gameToDisplayCoordinatesY(getPositionY()),
+//                (float) getRadius(),
+//                getPaint());
+        enemyAnimator.draw(canvas, gameDisplay, this);
         healthBar.draw(canvas, gameDisplay);
     }
 

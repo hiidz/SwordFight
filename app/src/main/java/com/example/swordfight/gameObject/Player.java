@@ -11,6 +11,7 @@ import com.example.swordfight.gamepanel.Joystick;
 import com.example.swordfight.R;
 import com.example.swordfight.Utils;
 import com.example.swordfight.graphics.Animator;
+import com.example.swordfight.graphics.PlayerAnimator;
 import com.example.swordfight.map.MapLayout;
 
 /*
@@ -24,13 +25,13 @@ public class Player extends Piece{
     private static final float MAX_SPEED = 12;
     private Joystick joystick;
     private PlayerState playerState;
-    private Animator playerAnimator;
+    private PlayerAnimator playerAnimator;
 
     public Player(Context context, Joystick joystick, float positionX, float positionY, float radius, int maxHealth) {
         super(context, positionX, positionY, ContextCompat.getColor(context, R.color.player),  radius, maxHealth);
         this.joystick = joystick;
         this.playerState = new PlayerState(this);
-        this.playerAnimator = new Animator(spriteSheet.getPlayerSpriteArray(4, 4));
+        this.playerAnimator = new PlayerAnimator(spriteSheet.getPlayerSpriteArray());
     }
 
     @Override

@@ -6,7 +6,6 @@ import android.graphics.Paint;
 
 import com.example.swordfight.GameDisplay;
 import com.example.swordfight.Vector2;
-import com.example.swordfight.graphics.Animator;
 import com.example.swordfight.graphics.SpriteSheet;
 
 /*
@@ -57,10 +56,10 @@ public class GameObject {
     protected Vector2 getPosition() {return position;}
     protected void setPosition(Vector2 position){this.position = position;}
 
-    protected float getDirectionX() {
+    public float getDirectionX() {
         return direction.getX();
     }
-    protected float getDirectionY() {
+    public float getDirectionY() {
         return direction.getY();
     }
     protected Vector2 getDirection() { return direction; }
@@ -68,8 +67,8 @@ public class GameObject {
 
     protected Vector2 getStartingPosition() {return startingLocation;}
 
-    protected float getVelocityX() { return velocity.getX(); };
-    protected float getVelocityY() { return velocity.getY(); };
+    public float getVelocityX() { return velocity.getX(); };
+    public float getVelocityY() { return velocity.getY(); };
     protected Vector2 getVelocity() { return velocity; }
 
     protected void setVelocity(Vector2 velocity) { this.velocity = velocity; }
