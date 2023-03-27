@@ -1,6 +1,8 @@
 package com.example.swordfight.gameObject;
 
+import android.content.Context;
 import android.graphics.Canvas;
+import android.graphics.Paint;
 
 import com.example.swordfight.GameDisplay;
 import com.example.swordfight.Vector2;
@@ -8,24 +10,43 @@ import com.example.swordfight.graphics.Animator;
 import com.example.swordfight.graphics.SpriteSheet;
 
 /*
-GameObject is an abstract class that acts as foundation for all objects in the game
+GameObject is an class that acts as foundation for all objects in the game (bullets, pieces, and possibly environment_objects)
+Contains position, velocity, direction fields
+Has isColliding() and getDistanceBetweenObjects();
  */
 
-public abstract class GameObject {
+public class GameObject {
     private Vector2 startingLocation = new Vector2(0,0);
-    public Vector2 position;
-    public Vector2 velocity = new Vector2(0, 0);
-    public Vector2 direction = new Vector2(1, 0);
+    private Vector2 position;
+    private Vector2 velocity = new Vector2(0, 0);
+    private Vector2 direction = new Vector2(1, 0);
+    protected SpriteSheet spriteSheet;
+    private float radius;
+    private Paint paint;
 
     public GameObject(){}
-    public GameObject(float positionX, float positionY) {
+    public GameObject(Context context, float positionX, float positionY, int color, float radius) {
         position = new Vector2(positionX, positionY);
         startingLocation = position;
+        this.radius = radius;
+        paint = new Paint();
+        paint.setColor(color);
+        this.spriteSheet = new SpriteSheet(context);
     }
 
-    public abstract void draw(Canvas canvas, GameDisplay gameDisplay);
+    public void draw(Canvas canvas, GameDisplay gameDisplay) {
+        canvas.drawCircle((float) gameDisplay.gameToDisplayCoordinatesX(position.getX()),
+                (float) gameDisplay.gameToDisplayCoordinatesY(position.getY()),
+                (float) radius,
+                paint);
+    }
 
-    public abstract void update();
+    public void update() {};
+
+    protected float getRadius() {
+        return radius;
+    }
+    protected Paint getPaint() { return paint; }
 
     public float getPositionX() {
         return position.getX();
@@ -33,17 +54,8 @@ public abstract class GameObject {
     public float getPositionY() {
         return position.getY();
     }
-
-    public Vector2 getPosition() {return position;}
-    public void setPosition(Vector2 position){this.position = position;}
-    public Vector2 getStartingPosition() {return startingLocation;}
-
-    public float getDistanceBetweenObjects(GameObject obj1, GameObject obj2) {
-        return (float) Math.sqrt(
-                Math.pow(obj2.getPositionX() - obj1.getPositionX(), 2) +
-                        Math.pow(obj2.getPositionY() - obj1.getPositionY(), 2)
-        );
-    }
+    protected Vector2 getPosition() {return position;}
+    protected void setPosition(Vector2 position){this.position = position;}
 
     protected float getDirectionX() {
         return direction.getX();
@@ -51,5 +63,31 @@ public abstract class GameObject {
     protected float getDirectionY() {
         return direction.getY();
     }
+    protected Vector2 getDirection() { return direction; }
+    protected void setDirection(Vector2 direction){this.direction = direction; }
 
+    protected Vector2 getStartingPosition() {return startingLocation;}
+
+    protected float getVelocityX() { return velocity.getX(); };
+    protected float getVelocityY() { return velocity.getY(); };
+    protected Vector2 getVelocity() { return velocity; }
+
+    protected void setVelocity(Vector2 velocity) { this.velocity = velocity; }
+
+    protected float getDistanceBetweenObjects(GameObject obj1, GameObject obj2) {
+        return (float) Math.sqrt(
+                Math.pow(obj2.getPositionX() - obj1.getPositionX(), 2) +
+                        Math.pow(obj2.getPositionY() - obj1.getPositionY(), 2)
+        );
+    }
+
+    protected boolean isColliding(GameObject obj1, GameObject obj2) {
+        double distance = obj1.getDistanceBetweenObjects(obj1, obj2);
+        double distanceToCollision = obj1.getRadius() + obj2.getRadius();
+
+        if (distance < distanceToCollision) {
+            return true;
+        }
+        return false;
+    }
 }

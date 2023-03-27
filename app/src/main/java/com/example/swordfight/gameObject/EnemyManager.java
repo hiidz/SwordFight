@@ -1,19 +1,11 @@
 package com.example.swordfight.gameObject;
 
 import android.content.Context;
-import android.os.Debug;
-import android.os.Handler;
 import android.util.Log;
-
-import com.example.swordfight.gameObject.Enemy;
-import com.example.swordfight.gameObject.Piece;
-import com.example.swordfight.gameObject.Player;
 
 import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
-import java.util.Timer;
-import java.util.TimerTask;
 
 // this class will handle enemy creation
 // and its life cycle
@@ -53,11 +45,11 @@ public class EnemyManager {
         if(poolOfSleepingEnemy.size() < minEnemyCount) {
             Enemy enemy = poolOfSleepingEnemy.remove(0);
             enemyList.add(enemy);
-            enemy.activeEnemy();
+            enemy.activateEnemy();
         }else {
             Enemy enemy = new Enemy(context, player);
             enemyList.add(enemy);
-            enemy.activeEnemy();
+            enemy.activateEnemy();
         }
     }
 

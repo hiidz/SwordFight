@@ -39,7 +39,7 @@ public class HealthBar {
         float x = (float) piece.getPositionX();
         float y = (float) piece.getPositionY();
         float distanceToPiece = 30;
-        float healthPointPercentage = (float) piece.getHealthPoints() / piece.getMaxHealth();
+        float healthPointPercentage = (float) piece.getCurrentHealth() / piece.getMaxHealth();
 
         // Calculate the actual width of the health bar
         int actualWidth = Math.min(Math.round(maxWidth * healthPointPercentage), maxWidth);
@@ -74,7 +74,7 @@ public class HealthBar {
                 healthPaint);
 
         // Draw Health Number
-        String healthText = piece.getHealthPoints() + "/" + piece.getMaxHealth();
+        String healthText = piece.getCurrentHealth() + "/" + piece.getMaxHealth();
         Paint textPaint = new Paint();
         textPaint.setColor(Color.BLACK);
         textPaint.setTextSize(height); // set the text size to half the height of the health bar

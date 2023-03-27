@@ -2,85 +2,44 @@ package com.example.swordfight.gameObject;
 
 import android.content.Context;
 import android.graphics.Canvas;
-import android.graphics.Paint;
 
 import com.example.swordfight.GameDisplay;
-import com.example.swordfight.Vector2;
-import com.example.swordfight.graphics.Animator;
-import com.example.swordfight.graphics.SpriteSheet;
+import com.example.swordfight.gamepanel.HealthBar;
 
 /*
- * Piece is an abstract class, extended by the GameObject,
- * which implements the draw method for drawing the Piece
- * onto the tileset/screen.
+ * Piece is a class, extended by the GameObject
+ * It will be extended/implemented by Player and Enemy classes
+ * All piece class will have an additional health and healthBar fields that gameObjects don't have
  * */
 
-public abstract class Piece extends GameObject{
-    protected float radius;
-    protected Paint paint;
-    protected int maxHealth;
-    protected int currentHealth;
-    protected SpriteSheet spriteSheet;
-    protected Animator animator;
+public class Piece extends GameObject{
+    private int maxHealth;
+    private int currentHealth;
+    protected HealthBar healthBar;
 
-    protected Vector2 velocity = new Vector2(0, 0);
+    public Piece(){};
 
-    public Piece(Context context, int color, float positionX, float positionY, float radius, int maxHealth) {
-        super(positionX, positionY);
+    public Piece(Context context, float positionX, float positionY, int color,  float radius, int maxHealth) {
+        super(context, positionX, positionY, color, radius);
 
-        this.radius = radius;
+        this.healthBar = new HealthBar(context, this);
         this.maxHealth = maxHealth;
-        this.currentHealth = maxHealth;
-        // Set color of Piece
-        paint = new Paint();
-        paint.setColor(color);
+        setCurrentHealth(maxHealth);
     }
 
-    public Piece(){}
-
-    public boolean isColliding(Piece obj1, Piece obj2) {
-        double distance = obj1.getDistanceBetweenObjects(obj1, obj2);
-        double distanceToCollision = obj1.getRadius() + obj2.getRadius();
-
-        if (distance < distanceToCollision) {
-            return true;
-        }
-        return false;
-    }
-
-    public void setDamageDealt(int damageDealt) {
-        if (currentHealth > 0) {
-            this.currentHealth -= damageDealt;
-        }
-    }
-
-    public float getRadius() {
-        return radius;
-    }
-
+    @Override
     public void draw(Canvas canvas, GameDisplay gameDisplay) {
-        canvas.drawCircle((float) gameDisplay.gameToDisplayCoordinatesX(position.getX()),
-                (float) gameDisplay.gameToDisplayCoordinatesY(position.getY()),
-                (float) radius,
-                paint);
+//        canvas.drawCircle((float) gameDisplay.gameToDisplayCoordinatesX(position.getX()),
+//                (float) gameDisplay.gameToDisplayCoordinatesY(position.getY()),
+//                (float) radius,
+//                paint);
+        healthBar.draw(canvas, gameDisplay);
     }
 
-    public int getHealthPoints() {
-        return currentHealth;
-    }
+    public int getMaxHealth() { return maxHealth; }
 
-    public int getMaxHealth() {
-        return maxHealth;
-    }
-
-    //get velocity
-    public Vector2 getVelocity() {
-        return velocity;
-    }
-
-    public void setHealthPoints(int healthPoints) {
-        this.currentHealth = healthPoints;
-    }
+    public int getCurrentHealth() { return currentHealth; }
+    protected void setCurrentHealth( int healthPoints) { this.currentHealth = healthPoints; }
 
     //multiply health
     public void multiplyHealth(int multiplier) {

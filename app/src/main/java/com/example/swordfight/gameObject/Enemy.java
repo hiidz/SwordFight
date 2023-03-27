@@ -3,35 +3,55 @@ package com.example.swordfight.gameObject;
 /*
 * Enemy is a character that chases the Player when within range
 * The Enemy class is an extension of a Piece, which is an extension of GameObject
+* Enemy will contain additional MAX_SPEED, currentSpeed, Animator, EnemyState and Player fields that Piece don't have
+* And other enemy detection fields
 */
 
 import android.content.Context;
 import android.graphics.Canvas;
-import android.os.Debug;
-import android.util.Log;
 
 import androidx.core.content.ContextCompat;
 
 import com.example.swordfight.GameDisplay;
 import com.example.swordfight.R;
-import com.example.swordfight.Utils;
 import com.example.swordfight.Vector2;
-import com.example.swordfight.gamepanel.HealthBar;
 import com.example.swordfight.graphics.Animator;
-import com.example.swordfight.graphics.SpriteSheet;
+import com.example.swordfight.map.MapLayout;
 
-import java.security.PublicKey;
 import java.util.Timer;
 import java.util.TimerTask;
 
 
 public class Enemy extends Piece{
 
+    private static final float MAX_SPEED = 5;
+    private float currentSpeed;
+    private Animator enemyAnimator;
     private EnemyState enemyState;
+    private Player player;
 
-    public EnemyState getEnemyState(){return enemyState;}
-
+    private static int totalEnemySpawn = 0;
+    private static int maxEnemy = 10;
     private float enemyDetectionRange = 200f; // 2 * for chasing range
+
+
+    public Enemy() { enemyState.setState(EnemyState.State.SLEEPING); }
+
+    public Enemy(Context context, Player player, float positionX, float positionY, float radius, int maxHealth) {
+        super(context, positionX, positionY, ContextCompat.getColor(context, R.color.enemy), radius, maxHealth);
+        this.player = player;
+        setCurrentSpeed(MAX_SPEED);
+        enemyState = new EnemyState(this);
+    }
+
+    public Enemy(Context context, Player player) {
+        this(context, player, (float)Math.random() * MapLayout.NUMBER_OF_ROW_TILES*MapLayout.TILE_WIDTH_PIXELS, (float)Math.random() * MapLayout.NUMBER_OF_COLUMN_TILES * MapLayout.TILE_HEIGHT_PIXELS, 15, 100);
+        enemyState = new EnemyState(this);
+    }
+
+    public EnemyState getEnemyState(){ return enemyState; }
+    public float getCurrentSpeed () { return currentSpeed; }
+    public void setCurrentSpeed(float speed) { this.currentSpeed = speed; }
 
     public void performAction(){
         switch (enemyState.getState()) {
@@ -122,60 +142,25 @@ public class Enemy extends Piece{
         setPosition(new Vector2(0,0));
     }
 
-    public void activeEnemy(){
+    public void activateEnemy(){
         enemyState.setState(EnemyState.State.IDLE);
-
     }
 
-
-    private Player player = null;
-    private static final float MAX_SPEED = 5;
-    private static final float KNOCKBACK_SPEED = 15;
-    private static int totalEnemySpawn = 0;
-    private static int maxEnemy = 10;
-    private HealthBar healthBar;
-    private Animator animator;
-
-    private static SpriteSheet spriteSheet;
-    private static Animator playerAnimator;
-
-    private float currentSpeed = MAX_SPEED;
-    public float getCurrentSpeed () { return currentSpeed;}
-    public void setCurrentSpeed(float speed){this.currentSpeed = speed;}
-
-    public Enemy(){enemyState.setState(EnemyState.State.SLEEPING);}
-
-    public Enemy(Context context, Player player, float positionX, float positionY, float radius, int maxHealth) {
-        super(context, ContextCompat.getColor(context, R.color.enemy), positionX, positionY, radius, maxHealth);
-        this.player = player;
-        this.healthBar = new HealthBar(context,this);
-        this.spriteSheet = new SpriteSheet(context);
-        enemyState = new EnemyState(this);
-    }
-
-    public Enemy(Context context, Player player) {
-        this(context, player, (float)Math.random()*1000, (float)Math.random()*1000, 15, 100);
-        enemyState = new EnemyState(this);
+    public void deathCert(){
+        if(this.getCurrentHealth() <= 0){
+            enemyState.setState(EnemyState.State.DEAD);
+        }
     }
 
     @Override
     public void draw(Canvas canvas, GameDisplay gameDisplay) {
-        canvas.drawCircle((float) gameDisplay.gameToDisplayCoordinatesX(position.getX()),
-                (float) gameDisplay.gameToDisplayCoordinatesY(position.getY()),
-                (float) radius,
-                paint);
-        //        animator.draw(canvas, gameDisplay, this, joystick);
+        // CANVAS TO BE REPLACED BY ANIMATOR
+        canvas.drawCircle((float) gameDisplay.gameToDisplayCoordinatesX(getPositionX()),
+                (float) gameDisplay.gameToDisplayCoordinatesY(getPositionY()),
+                (float) getRadius(),
+                getPaint());
+        //        enemyAnimator.draw(canvas, gameDisplay, this);
         healthBar.draw(canvas, gameDisplay);
-    }
-
-    public void knockback(Enemy otherEnemy) {
-
-    }
-
-    public void deathCert(){
-        if(this.getHealthPoints() <= 0){
-            enemyState.setState(EnemyState.State.DEAD);
-        }
     }
 
     @Override
@@ -184,7 +169,5 @@ public class Enemy extends Piece{
 
         performAction(); // need player to have v2 first
         deathCert();
-//
     }
-
 }
