@@ -6,12 +6,10 @@ import android.util.Log;
 import com.example.swordfight.GameDisplay;
 import com.example.swordfight.gameObject.BossOrb;
 import com.example.swordfight.gameObject.Enemy;
+import com.example.swordfight.gameObject.GameObject;
 import com.example.swordfight.gameObject.Projectile;
 
-public class OrbAnimator {
-
-    private Sprite[] orbSpriteArray;
-
+public class OrbAnimator extends Animator {
     private int index = 0;
     private long lastUpdateTime;
     private static final long ANIMATION_DELAY = 200; // 100 milliseconds delay between frames
@@ -19,30 +17,17 @@ public class OrbAnimator {
     private float scalingFactor = 0.5f; // Adjust this value to scale the sprite (0.5 = 50% size)
 
     public OrbAnimator(Sprite[] orbSpriteArray) {
-        this.orbSpriteArray = orbSpriteArray;
+        super(orbSpriteArray);
         lastUpdateTime = System.currentTimeMillis();
     }
 
-    public void draw(Canvas canvas, GameDisplay gameDisplay, Projectile projectile) {
+    public void draw(Canvas canvas, GameDisplay gameDisplay, GameObject gameObject) {
+        Projectile projectile = (Projectile) gameObject;
         long currentTime = System.currentTimeMillis();
         if (currentTime - lastUpdateTime >= ANIMATION_DELAY) {
             lastUpdateTime = currentTime;
             index = (++index % 5);
         }
-        drawFrame(canvas, gameDisplay, projectile, orbSpriteArray[index]);
-    }
-
-    public void drawFrame(Canvas canvas, GameDisplay gameDisplay, Projectile projectile, Sprite sprite) {
-        int scaledWidth = (int) (sprite.getWidth() * scalingFactor);
-        int scaledHeight = (int) (sprite.getHeight() * scalingFactor);
-
-        sprite.drawScaled(
-                canvas,
-                (int) gameDisplay.gameToDisplayCoordinatesX(projectile.getPositionX()) - scaledWidth / 2,
-                (int) gameDisplay.gameToDisplayCoordinatesY(projectile.getPositionY()) - scaledHeight / 2,
-                scaledWidth,
-                scaledHeight
-        );
-
+        drawScaledFrame(canvas, gameDisplay, projectile, spriteArray[index], scalingFactor);
     }
 }
