@@ -10,6 +10,7 @@ import java.util.Vector;
 public class GameDisplay {
     public final Rect DISPLAY_RECT;
     private final int widthPixels;
+
     private final int heightPixels;
 
     private Vector2 gameToDisplayCoordinates;
@@ -51,5 +52,13 @@ public class GameDisplay {
                 (int) (centerObject.getPositionX() + widthPixels/2),
                 (int) (centerObject.getPositionY() + heightPixels/2)
         );
+    }
+
+    public int getWidthPixels() {
+        return widthPixels;
+    }
+
+    public int getHeightPixels() {
+        return heightPixels;
     }
 }

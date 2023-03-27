@@ -34,6 +34,20 @@ public class Sprite {
         );
     }
 
+    public void drawScaled(Canvas canvas, int gameToDisplayCoordinatesX, int gameToDisplayCoordinatesY, int width, int height) {
+        int scaledWidth = (int) (getWidth() * 0.45);
+        int scaledHeight = (int) (getHeight() * 0.45);
+        int scaledX = (int) (gameToDisplayCoordinatesX - (scaledWidth - getWidth()) / 2f);
+        int scaledY = (int) (gameToDisplayCoordinatesY - (scaledHeight - getHeight()) / 2f);
+
+        canvas.drawBitmap(
+                spriteSheet.getBitmap(),
+                rect,
+                new Rect(scaledX, scaledY, scaledX + scaledWidth, scaledY + scaledHeight),
+                null
+        );
+    }
+
     public void drawRotatedAngle(Canvas canvas, int gameToDisplayCoordinatesX, int gameToDisplayCoordinatesY, float angle) {
         int scaledWidth = (int) (getWidth() * PLAYER_SCALE);
         int scaledHeight = (int) (getHeight() * PLAYER_SCALE);
