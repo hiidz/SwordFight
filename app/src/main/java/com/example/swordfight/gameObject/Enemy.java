@@ -46,7 +46,7 @@ public class Enemy extends Piece{
         this.enemyAnimator = new EnemyAnimator(spriteSheet.getEnemySpriteArray());
     }
 
-    public Enemy(Context context, Player player, int color) {
+    public Enemy(Context context, Player player) {
         this(context, player, (float)Math.random() * MapLayout.NUMBER_OF_ROW_TILES*MapLayout.TILE_WIDTH_PIXELS, (float)Math.random() * MapLayout.NUMBER_OF_COLUMN_TILES * MapLayout.TILE_HEIGHT_PIXELS, 15, 100);
         enemyState = new EnemyState(this);
     }

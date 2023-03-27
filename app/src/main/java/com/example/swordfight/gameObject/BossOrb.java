@@ -35,7 +35,7 @@ public class BossOrb extends GameObject {
     float minAngleDistance = 0.2f; // Define the minimum distance between angles (radians)
 
     public BossOrb(Context context, int color, float positionX, float positionY, float radius, Player player, Enemy enemy) {
-        super(context, positionX, positionY, 0, radius);
+        super(context, positionX, positionY, R.color.orbColor, radius);
         this.context = context;
         this.color = color;
         this.player = player;

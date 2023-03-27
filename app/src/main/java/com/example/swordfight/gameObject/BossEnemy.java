@@ -17,9 +17,6 @@ import java.util.Random;
 public class BossEnemy extends Enemy {
 
     private BossAnimator bossAnimator;
-
-    private SpriteSheet spriteSheet;
-
     private BossOrb bossOrb;
 
     private float oscillationAngle = 0.0f;
@@ -28,7 +25,7 @@ public class BossEnemy extends Enemy {
     private int zigzagCounter;
 
     public BossEnemy(Context context, Player player) {
-        super(context, player, ContextCompat.getColor(context, R.color.bossEnemy));
+        super(context, player);
         this.spriteSheet = new SpriteSheet(context, R.drawable.boss_spritesheet);
         this.bossAnimator = new BossAnimator(spriteSheet.getBossSpriteArray(5, 1));
         this.setCurrentSpeed(2f);

@@ -28,9 +28,10 @@ public class EnemyManager {
     }
 
     private void setUpEnemyPool(){
-        for(int i = 0; i < enemyPool; i++){
-            poolOfSleepingEnemy.add( new Enemy(this.context, player, 0));
+        for(int i = 0; i < enemyPool - 1; i++){
+            poolOfSleepingEnemy.add( new BossEnemy(this.context, player));
         }
+
     }
 
     public void removeEnemy(Enemy enemy){
@@ -47,7 +48,7 @@ public class EnemyManager {
             enemyList.add(enemy);
             enemy.activateEnemy();
         }else {
-            Enemy enemy = new Enemy(context, player, 0);
+            Enemy enemy = new Enemy(context, player);
             enemyList.add(enemy);
             enemy.activateEnemy();
         }
