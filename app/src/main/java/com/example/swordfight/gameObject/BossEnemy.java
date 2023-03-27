@@ -42,6 +42,7 @@ public class BossEnemy extends Enemy {
     public void draw(Canvas canvas, GameDisplay gameDisplay) {
         bossAnimator.draw(canvas, gameDisplay, this);
         bossOrb.draw(canvas, gameDisplay);
+        healthBar.draw(canvas, gameDisplay);
     }
 
     @Override
@@ -62,7 +63,7 @@ public class BossEnemy extends Enemy {
 //                int maxValue = 500;
 //                double skew = 0.8;
 //                int randomValue = generateSkewedRandomValue(maxValue, skew);
-                chase(player.getPosition(), EnemyState.State.ATTACK, 50);
+                chase(player.getPosition(), EnemyState.State.ATTACK, this.getRadius() + player.getRadius());
                 break;
             case STUN:
                 // if stun ... stop moving and ... un stun after sometime // after done go to chasing state
@@ -73,7 +74,7 @@ public class BossEnemy extends Enemy {
             case ATTACK:
                 if (this.getPosition().subtract(player.getPosition()).magnitude() <= this.getRadius()) {
                     // do nothing attack
-                    player.setCurrentHealth(player.getCurrentHealth() - 10);
+                    player.setDamageDealt(10);
                 } else {
                     getEnemyState().setState(EnemyState.State.CHASING);
                 }

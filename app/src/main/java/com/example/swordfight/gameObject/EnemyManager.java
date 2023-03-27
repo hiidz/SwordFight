@@ -19,17 +19,21 @@ public class EnemyManager {
     private final static int minEnemyCount = 3;
     private List<Enemy> enemyList = new ArrayList<Enemy>();
     private List<Enemy> poolOfSleepingEnemy = new ArrayList<>();
+    private BossEnemy bossEnemy;
 
     public EnemyManager(Context context, Player player){
         this.context = context;
         this.player = player;
+        this.bossEnemy = new BossEnemy(context, player);
+        enemyList.add(bossEnemy);
+        bossEnemy.activateEnemy();
         // set up all the enemy but without using them ...
         setUpEnemyPool();
     }
 
     private void setUpEnemyPool(){
         for(int i = 0; i < enemyPool - 1; i++){
-            poolOfSleepingEnemy.add( new BossEnemy(this.context, player));
+            poolOfSleepingEnemy.add( new Enemy(this.context, player));
         }
 
     }

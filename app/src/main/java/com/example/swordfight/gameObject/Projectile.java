@@ -8,7 +8,6 @@ import com.example.swordfight.Vector2;
 import com.example.swordfight.graphics.OrbAnimator;
 
 public class Projectile extends GameObject {
-    private Vector2 direction;
     private float speed;
     private int damage;
     private float maxX;
@@ -22,9 +21,9 @@ public class Projectile extends GameObject {
 
     public Projectile(Context context, int color, float positionX, float positionY, Vector2 direction, float speed, int damage) {
         super(context, positionX, positionY, color, 50);
-        this.direction = direction;
+        setDirection(direction);
         this.speed = speed;
-        this.damage = 500;
+        this.damage = 0;
 //        maxX = gameDisplay.getWidthPixels();
         maxX = 2560;
 //        maxY = gameDisplay.getHeightPixels();
@@ -33,7 +32,7 @@ public class Projectile extends GameObject {
 
     @Override
     public void update() {
-        setPosition(getPosition().add(direction.scale(speed)));
+        setPosition(getPosition().add(getDirection().scale(speed)));
     }
 
     public boolean isOutOfBounds() {
