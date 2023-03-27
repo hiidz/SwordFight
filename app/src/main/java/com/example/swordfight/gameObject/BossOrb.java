@@ -19,7 +19,7 @@ import java.util.concurrent.ConcurrentLinkedQueue;
 import java.util.concurrent.CopyOnWriteArrayList;
 import java.util.concurrent.LinkedBlockingQueue;
 
-public class BossOrb extends Piece {
+public class BossOrb extends GameObject {
 
     private Context context;
     private int color;
@@ -34,8 +34,8 @@ public class BossOrb extends Piece {
 
     float minAngleDistance = 0.2f; // Define the minimum distance between angles (radians)
 
-    public BossOrb(Context context, int color, float positionX, float positionY, float radius, int maxHealth, Player player, Enemy enemy) {
-        super(context, color, positionX, positionY, radius, maxHealth);
+    public BossOrb(Context context, int color, float positionX, float positionY, float radius, Player player, Enemy enemy) {
+        super(context, positionX, positionY, 0, radius);
         this.context = context;
         this.color = color;
         this.player = player;
@@ -62,7 +62,7 @@ public class BossOrb extends Piece {
                         float offsetX = (float) Math.cos(angle) * radius;
                         float offsetY = (float) Math.sin(angle) * radius - 120;
                         p.setSlotOffset(new Vector2(offsetX, offsetY));
-                        p.setPosition(new Vector2(position.getX() + offsetX, position.getY() + offsetY));
+                        p.setPosition(new Vector2(getPositionX() + offsetX, getPositionY() + offsetY));
                         projectileQueue.put(p);
                     }
                 } catch (InterruptedException e) {
@@ -105,24 +105,24 @@ public class BossOrb extends Piece {
                     if (!projectileQueue.isEmpty()) {
                         if (projectileQueue.size() == 5) {
                             // Perform a spread shot
-                            Vector2 direction1 = player.getPosition().subtract(position).normalize().rotate(30); // rotate the direction by 30 degrees
-                            Vector2 direction2 = player.getPosition().subtract(position).normalize().rotate(-30); // rotate the direction by -30 degrees
-                            Vector2 direction3 = player.getPosition().subtract(position).normalize().rotate(60); // rotate the direction by 60 degrees
-                            Vector2 direction4 = player.getPosition().subtract(position).normalize().rotate(-60); // rotate the direction by -60 degrees
-                            Vector2 direction5 = player.getPosition().subtract(position).normalize(); // original direction
+                            Vector2 direction1 = player.getPosition().subtract(getPosition()).normalize().rotate(30); // rotate the direction by 30 degrees
+                            Vector2 direction2 = player.getPosition().subtract(getPosition()).normalize().rotate(-30); // rotate the direction by -30 degrees
+                            Vector2 direction3 = player.getPosition().subtract(getPosition()).normalize().rotate(60); // rotate the direction by 60 degrees
+                            Vector2 direction4 = player.getPosition().subtract(getPosition()).normalize().rotate(-60); // rotate the direction by -60 degrees
+                            Vector2 direction5 = player.getPosition().subtract(getPosition()).normalize(); // original direction
 
                             projectileQueue.take();
-                            projectiles.add(new Projectile(context, color, position.getX(), position.getY(), direction1, 10, 50));
+                            projectiles.add(new Projectile(context, color, getPositionX(), getPositionY(), direction1, 10, 50));
                             projectileQueue.take();
-                            projectiles.add(new Projectile(context, color, position.getX(), position.getY(), direction2, 10, 50));
+                            projectiles.add(new Projectile(context, color, getPositionX(), getPositionY(), direction2, 10, 50));
                             projectileQueue.take();
-                            projectiles.add(new Projectile(context, color, position.getX(), position.getY(), direction3, 10, 50));
+                            projectiles.add(new Projectile(context, color, getPositionX(), getPositionY(), direction3, 10, 50));
                             projectileQueue.take();
-                            projectiles.add(new Projectile(context, color, position.getX(), position.getY(), direction4, 10, 50));
+                            projectiles.add(new Projectile(context, color, getPositionX(), getPositionY(), direction4, 10, 50));
                             projectileQueue.take();
-                            projectiles.add(new Projectile(context, color, position.getX(), position.getY(), direction5, 10, 50));
+                            projectiles.add(new Projectile(context, color, getPositionX(), getPositionY(), direction5, 10, 50));
                         } else {
-                            Vector2 direction = player.getPosition().subtract(position).normalize();
+                            Vector2 direction = player.getPosition().subtract(getPosition()).normalize();
                             Projectile p = projectileQueue.take();
                             projectiles.add(new Projectile(context, color, p.getPositionX(), p.getPositionY(), direction, 10, 50));
                         }
@@ -163,7 +163,7 @@ public class BossOrb extends Piece {
 
         for (Projectile projectile : projectileQueue) {
             Vector2 offset = projectile.getSlotOffset();
-            projectile.setPosition(enemy.position.add(offset));
+            projectile.setPosition(enemy.getPosition().add(offset));
         }
 
         Iterator<Projectile> iterator = projectiles.iterator();

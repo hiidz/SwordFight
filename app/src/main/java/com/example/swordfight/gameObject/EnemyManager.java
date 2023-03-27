@@ -29,7 +29,7 @@ public class EnemyManager {
 
     private void setUpEnemyPool(){
         for(int i = 0; i < enemyPool; i++){
-            poolOfSleepingEnemy.add( new Enemy(this.context, player));
+            poolOfSleepingEnemy.add( new Enemy(this.context, player, 0));
         }
     }
 
@@ -47,7 +47,7 @@ public class EnemyManager {
             enemyList.add(enemy);
             enemy.activateEnemy();
         }else {
-            Enemy enemy = new Enemy(context, player);
+            Enemy enemy = new Enemy(context, player, 0);
             enemyList.add(enemy);
             enemy.activateEnemy();
         }

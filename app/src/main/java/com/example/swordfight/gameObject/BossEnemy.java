@@ -34,7 +34,7 @@ public class BossEnemy extends Enemy {
         this.setCurrentSpeed(2f);
 
         // Initialize the BossOrb instance
-        this.bossOrb = new BossOrb(context, ContextCompat.getColor(context, R.color.orbColor), position.getX(), position.getY(), 15, 100, player, this);
+        this.bossOrb = new BossOrb(context, ContextCompat.getColor(context, R.color.orbColor), getPositionX(), getPositionY(), 15, player, this);
 
         // Initialize the zigzagDuration and zigzagCounter
         this.zigzagDuration = new Random().nextInt(60) + 30; // Random duration between 30 and 90 frames
@@ -65,7 +65,7 @@ public class BossEnemy extends Enemy {
 //                int maxValue = 500;
 //                double skew = 0.8;
 //                int randomValue = generateSkewedRandomValue(maxValue, skew);
-                chase(getPlayer().getPosition(), EnemyState.State.ATTACK, 50);
+                chase(player.getPosition(), EnemyState.State.ATTACK, 50);
                 break;
             case STUN:
                 // if stun ... stop moving and ... un stun after sometime // after done go to chasing state
@@ -74,9 +74,9 @@ public class BossEnemy extends Enemy {
                 // when player is within certain range && skill cool down complete ... perform action
                 break;
             case ATTACK:
-                if (this.getPosition().subtract(getPlayer().getPosition()).magnitude() <= this.getRadius()) {
+                if (this.getPosition().subtract(player.getPosition()).magnitude() <= this.getRadius()) {
                     // do nothing attack
-                    getPlayer().setHealthPoints(getPlayer().getHealthPoints() - 10);
+                    player.setCurrentHealth(player.getCurrentHealth() - 10);
                 } else {
                     getEnemyState().setState(EnemyState.State.CHASING);
                 }
@@ -142,7 +142,7 @@ public class BossEnemy extends Enemy {
 
     private Vector2 seek(Vector2 target) {
         Vector2 desiredVelocity = target.subtract(getPosition()).normalized().multiply(getCurrentSpeed());
-        return desiredVelocity.subtract(getCurrentVelocity());
+        return desiredVelocity.subtract(getVelocity());
     }
 
     private Vector2 arrive(Vector2 target) {
@@ -154,7 +154,7 @@ public class BossEnemy extends Enemy {
             float rampedSpeed = getCurrentSpeed() * (distance / slowingDistance);
             float clampedSpeed = Math.min(rampedSpeed, getCurrentSpeed());
             Vector2 desiredVelocity = toTarget.multiply(clampedSpeed / distance);
-            return desiredVelocity.subtract(getCurrentVelocity());
+            return desiredVelocity.subtract(getVelocity());
         } else {
             return new Vector2(0, 0);
         }

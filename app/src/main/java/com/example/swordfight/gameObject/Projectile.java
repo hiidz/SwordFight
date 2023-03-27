@@ -7,7 +7,7 @@ import com.example.swordfight.GameDisplay;
 import com.example.swordfight.Vector2;
 import com.example.swordfight.graphics.OrbAnimator;
 
-public class Projectile extends Piece {
+public class Projectile extends GameObject {
     private Vector2 direction;
     private float speed;
     private int damage;
@@ -21,7 +21,7 @@ public class Projectile extends Piece {
     }
 
     public Projectile(Context context, int color, float positionX, float positionY, Vector2 direction, float speed, int damage) {
-        super(context, color, positionX, positionY, 50, 1); // Adjust the radius (10) as needed
+        super(context, positionX, positionY, color, 50);
         this.direction = direction;
         this.speed = speed;
         this.damage = 500;
@@ -33,12 +33,11 @@ public class Projectile extends Piece {
 
     @Override
     public void update() {
-        Vector2 newPosition = position.add(direction.scale(speed));
-        setPosition(newPosition);
+        setPosition(getPosition().add(direction.scale(speed)));
     }
 
     public boolean isOutOfBounds() {
-        return position.getX() < 0 || position.getX() > maxX || position.getY() < 0 || position.getY() > maxY;
+        return getPositionX() < 0 || getPositionX() > maxX || getPositionY() < 0 || getPositionY() > maxY;
     }
 
     public int getDamage() {

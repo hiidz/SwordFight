@@ -5,6 +5,7 @@ import android.graphics.Canvas;
 import android.graphics.Paint;
 
 import com.example.swordfight.GameDisplay;
+import com.example.swordfight.R;
 import com.example.swordfight.Vector2;
 import com.example.swordfight.graphics.SpriteSheet;
 
@@ -30,7 +31,7 @@ public class GameObject {
         this.radius = radius;
         paint = new Paint();
         paint.setColor(color);
-        this.spriteSheet = new SpriteSheet(context);
+        this.spriteSheet = new SpriteSheet(context, R.drawable.javier_spritesheet_1);
     }
 
     public void draw(Canvas canvas, GameDisplay gameDisplay) {

@@ -29,7 +29,7 @@ public class Enemy extends Piece{
     private float currentSpeed;
     private EnemyAnimator enemyAnimator;
     private EnemyState enemyState;
-    private Player player;
+    protected Player player;
 
     private static int totalEnemySpawn = 0;
     private static int maxEnemy = 10;
@@ -46,7 +46,7 @@ public class Enemy extends Piece{
         this.enemyAnimator = new EnemyAnimator(spriteSheet.getEnemySpriteArray());
     }
 
-    public Enemy(Context context, Player player) {
+    public Enemy(Context context, Player player, int color) {
         this(context, player, (float)Math.random() * MapLayout.NUMBER_OF_ROW_TILES*MapLayout.TILE_WIDTH_PIXELS, (float)Math.random() * MapLayout.NUMBER_OF_COLUMN_TILES * MapLayout.TILE_HEIGHT_PIXELS, 15, 100);
         enemyState = new EnemyState(this);
     }
@@ -148,8 +148,8 @@ public class Enemy extends Piece{
         enemyState.setState(EnemyState.State.IDLE);
     }
 
-    public void deathCert(){
-        if(this.getCurrentHealth() <= 0){
+    public void deathCert() {
+        if (this.getCurrentHealth() <= 0) {
             enemyState.setState(EnemyState.State.DEAD);
         }
     }
