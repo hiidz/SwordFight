@@ -6,11 +6,17 @@ import android.graphics.BitmapFactory;
 import android.graphics.Rect;
 
 import com.example.swordfight.R;
+import com.example.swordfight.Utils;
 
 public class SpriteSheet {
 
     private static final int SPRITE_WIDTH_PIXELS = 64;
     private static final int SPRITE_HEIGHT_PIXELS = 64;
+    protected static final int ENEMY_ONE_ROW = 5;
+    protected static final int ENEMY_TWO_ROW = 6;
+    protected static final int ENEMY_SIZE = 2;
+    protected static final int PLAYER_ROW = 4;
+    protected static final int PLAYER_SIZE = 4;
 
     private Bitmap bitmap;
 
@@ -21,11 +27,11 @@ public class SpriteSheet {
     }
 
     public Sprite[] getPlayerSpriteArray() {
-        return getSpriteArray(4, 4);
+        return getSpriteArray(PLAYER_SIZE, PLAYER_ROW);
     }
 
     public Sprite[] getEnemySpriteArray() {
-        return getSpriteArray(2, 5);
+        return getSpriteArray(ENEMY_SIZE, Utils.randomBetween(ENEMY_ONE_ROW,ENEMY_TWO_ROW + 1));
     }
 
     public Sprite[] getSpriteArray(int size, int row) {

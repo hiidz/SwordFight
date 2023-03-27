@@ -18,6 +18,7 @@ import com.example.swordfight.gamepanel.GameOver;
 import com.example.swordfight.gamepanel.Joystick;
 import com.example.swordfight.gamepanel.Performance;
 import com.example.swordfight.graphics.SpriteSheet;
+import com.example.swordfight.map.MapLayout;
 import com.example.swordfight.map.Tilemap;
 
 class Game extends SurfaceView implements SurfaceHolder.Callback {
@@ -47,7 +48,7 @@ class Game extends SurfaceView implements SurfaceHolder.Callback {
         performance = new Performance(context, gameLoop);
 
         joystick = new Joystick(275, 700, 70, 40);
-        player = new Player(getContext(), joystick,500.0f, 500.0f, 30.0f, 5000);
+        player = new Player(getContext(), joystick, (MapLayout.NUMBER_OF_ROW_TILES * MapLayout.TILE_WIDTH_PIXELS)/2, (MapLayout.NUMBER_OF_COLUMN_TILES * MapLayout.TILE_HEIGHT_PIXELS)/2, 30.0f, 5000);
         enemyManager = new EnemyManager(context, player);
         bulletManager = new BulletManager(context, player, enemyManager);
 

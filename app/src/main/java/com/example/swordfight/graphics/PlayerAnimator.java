@@ -3,6 +3,7 @@ package com.example.swordfight.graphics;
 import android.graphics.Canvas;
 
 import com.example.swordfight.GameDisplay;
+import com.example.swordfight.gameObject.GameObject;
 import com.example.swordfight.gameObject.Piece;
 import com.example.swordfight.gameObject.Player;
 import com.example.swordfight.gamepanel.Joystick;
@@ -20,8 +21,9 @@ public class PlayerAnimator extends Animator {
         draw(canvas, gameDisplay, player);
     }
 
-    public void draw(Canvas canvas, GameDisplay gameDisplay, Piece piece) {
-        Player player = (Player) piece;
+    @Override
+    public void draw(Canvas canvas, GameDisplay gameDisplay, GameObject gameObject) {
+        Player player = (Player) gameObject;
         switch (player.getPlayerState().getState()) {
             case NOT_MOVING:
                 drawRotatedFrame(canvas, gameDisplay, player, spriteArray[idxNotMovingFrame], angle);
@@ -30,7 +32,7 @@ public class PlayerAnimator extends Animator {
                 updatesBeforeNextMoveFrame--;
                 if (updatesBeforeNextMoveFrame == 0) {
                     updatesBeforeNextMoveFrame = MAX_UPDATES_BEFORE_NEXT_MOVE_FRAME;
-                    idxMovingFrame = (++idxMovingFrame % 3) + 1;
+                    idxMovingFrame = (++idxMovingFrame % (SpriteSheet.PLAYER_SIZE - 1)) + 1;
                 }
                 float joystickX = (float) joystick.getActuatorX();
                 float joystickY = (float) joystick.getActuatorY();

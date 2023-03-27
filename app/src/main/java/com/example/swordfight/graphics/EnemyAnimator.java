@@ -4,6 +4,7 @@ import android.graphics.Canvas;
 
 import com.example.swordfight.GameDisplay;
 import com.example.swordfight.gameObject.Enemy;
+import com.example.swordfight.gameObject.GameObject;
 import com.example.swordfight.gameObject.Piece;
 
 public class EnemyAnimator extends Animator{
@@ -12,8 +13,9 @@ public class EnemyAnimator extends Animator{
         super(enemySpriteArray);
     }
 
-    public void draw(Canvas canvas, GameDisplay gameDisplay, Piece piece) {
-        Enemy enemy = (Enemy) piece;
+    @Override
+    public void draw(Canvas canvas, GameDisplay gameDisplay, GameObject gameObject) {
+        Enemy enemy = (Enemy) gameObject;
         switch (enemy.getEnemyState().getState()) {
             case IDLE:
                 drawRotatedFrame(canvas, gameDisplay, enemy, spriteArray[idxNotMovingFrame], angle);
@@ -22,7 +24,7 @@ public class EnemyAnimator extends Animator{
                 updatesBeforeNextMoveFrame--;
                 if (updatesBeforeNextMoveFrame == 0) {
                     updatesBeforeNextMoveFrame = MAX_UPDATES_BEFORE_NEXT_MOVE_FRAME;
-                    idxMovingFrame = (++idxMovingFrame % 1) + 1;
+                    idxMovingFrame = (++idxMovingFrame % (SpriteSheet.ENEMY_SIZE - 1)) + 1;
                 }
                 float velocityX = enemy.getDirectionX();
                 float velocityY = enemy.getDirectionY();
