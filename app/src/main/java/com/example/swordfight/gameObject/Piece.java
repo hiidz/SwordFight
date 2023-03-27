@@ -33,7 +33,6 @@ public class Piece extends GameObject{
 //                (float) gameDisplay.gameToDisplayCoordinatesY(position.getY()),
 //                (float) radius,
 //                paint);
-        healthBar.draw(canvas, gameDisplay);
     }
 
     public int getMaxHealth() { return maxHealth; }

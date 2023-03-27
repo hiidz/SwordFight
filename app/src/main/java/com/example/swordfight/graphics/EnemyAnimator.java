@@ -5,8 +5,6 @@ import android.graphics.Canvas;
 import com.example.swordfight.GameDisplay;
 import com.example.swordfight.gameObject.Enemy;
 import com.example.swordfight.gameObject.Piece;
-import com.example.swordfight.gameObject.Player;
-import com.example.swordfight.gamepanel.Joystick;
 
 public class EnemyAnimator extends Animator{
 

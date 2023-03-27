@@ -4,7 +4,6 @@ import android.graphics.Canvas;
 
 import com.example.swordfight.GameDisplay;
 import com.example.swordfight.gameObject.Piece;
-import com.example.swordfight.gameObject.Player;
 
 public abstract class Animator {
 
