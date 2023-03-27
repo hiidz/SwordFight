@@ -25,7 +25,7 @@ public class SpriteSheet {
     }
 
     public Sprite[] getEnemySpriteArray() {
-        return getSpriteArray(4, 5);
+        return getSpriteArray(2, 5);
     }
 
     public Sprite[] getSpriteArray(int size, int row) {

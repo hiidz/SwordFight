@@ -18,13 +18,13 @@ public class EnemyAnimator extends Animator{
         Enemy enemy = (Enemy) piece;
         switch (enemy.getEnemyState().getState()) {
             case IDLE:
-                drawRotatedFrame(canvas, gameDisplay, enemy, spriteArray[0], angle);
+                drawRotatedFrame(canvas, gameDisplay, enemy, spriteArray[idxNotMovingFrame], angle);
                 break;
             case CHASING:
                 updatesBeforeNextMoveFrame--;
                 if (updatesBeforeNextMoveFrame == 0) {
                     updatesBeforeNextMoveFrame = MAX_UPDATES_BEFORE_NEXT_MOVE_FRAME;
-                    idxMovingFrame = (++idxMovingFrame % 3) + 1;
+                    idxMovingFrame = (++idxMovingFrame % 1) + 1;
                 }
                 float velocityX = enemy.getDirectionX();
                 float velocityY = enemy.getDirectionY();

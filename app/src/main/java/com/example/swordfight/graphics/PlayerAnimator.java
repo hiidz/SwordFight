@@ -24,7 +24,7 @@ public class PlayerAnimator extends Animator {
         Player player = (Player) piece;
         switch (player.getPlayerState().getState()) {
             case NOT_MOVING:
-                drawRotatedFrame(canvas, gameDisplay, player, spriteArray[0], angle);
+                drawRotatedFrame(canvas, gameDisplay, player, spriteArray[idxNotMovingFrame], angle);
                 break;
             case IS_MOVING:
                 updatesBeforeNextMoveFrame--;
