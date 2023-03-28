@@ -2,6 +2,7 @@ package com.example.swordfight.gameObject;
 
 import android.content.Context;
 import android.graphics.Canvas;
+import android.graphics.Paint;
 import android.util.Log;
 
 import androidx.core.content.ContextCompat;
@@ -17,6 +18,7 @@ import java.util.Random;
 public class BossEnemy extends Enemy {
 
     private BossAnimator bossAnimator;
+    private static final float BOSS_SCALE = 3.0f;
     private BossOrb bossOrb;
 
     private float oscillationAngle = 0.0f;
@@ -25,13 +27,12 @@ public class BossEnemy extends Enemy {
     private int zigzagCounter;
 
     public BossEnemy(Context context, Player player) {
-        super(context, player);
-        this.spriteSheet = new SpriteSheet(context, R.drawable.boss_spritesheet);
-        this.bossAnimator = new BossAnimator(spriteSheet.getBossSpriteArray(5, 1));
+        super(context, player, 10, 10, 100, BOSS_SCALE);
+        this.bossAnimator = new BossAnimator(spriteSheet.getBossSpriteArray(), BOSS_SCALE);
         this.setCurrentSpeed(2f);
 
         // Initialize the BossOrb instance
-        this.bossOrb = new BossOrb(context, ContextCompat.getColor(context, R.color.orbColor), getPositionX(), getPositionY(), 15, player, this);
+        this.bossOrb = new BossOrb(context, ContextCompat.getColor(context, R.color.orbColor), getPositionX(), getPositionY(), player, this);
 
         // Initialize the zigzagDuration and zigzagCounter
         this.zigzagDuration = new Random().nextInt(60) + 30; // Random duration between 30 and 90 frames
@@ -40,6 +41,10 @@ public class BossEnemy extends Enemy {
 
     @Override
     public void draw(Canvas canvas, GameDisplay gameDisplay) {
+//        canvas.drawCircle((float) gameDisplay.gameToDisplayCoordinatesX(getPositionX()),
+//                (float) gameDisplay.gameToDisplayCoordinatesY(getPositionY()),
+//                (float) 16 * scalingFactor,
+//                new Paint());
         bossAnimator.draw(canvas, gameDisplay, this);
         bossOrb.draw(canvas, gameDisplay);
         healthBar.draw(canvas, gameDisplay);

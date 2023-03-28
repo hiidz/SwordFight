@@ -13,8 +13,8 @@ public class BossAnimator extends Animator {
     private long lastUpdateTime;
     private static final long ANIMATION_DELAY = 200; // 100 milliseconds delay between frames
 
-    public BossAnimator(Sprite[] bossSpriteArray) {
-        super(bossSpriteArray);
+    public BossAnimator(Sprite[] bossSpriteArray, float scalingFactor) {
+        super(bossSpriteArray, scalingFactor);
         lastUpdateTime = System.currentTimeMillis();
     }
 
@@ -24,15 +24,15 @@ public class BossAnimator extends Animator {
         long currentTime = System.currentTimeMillis();
         if (currentTime - lastUpdateTime >= ANIMATION_DELAY) {
             lastUpdateTime = currentTime;
-            idxMovingFrame = (++idxMovingFrame % 4) + 1;
+            idxMovingFrame = (++idxMovingFrame % (SpriteSheet.BOSS_SIZE - 1)) + 1;
         }
 
         switch (enemy.getEnemyState().getState()) {
             case IDLE:
-                drawFrame(canvas, gameDisplay, enemy, spriteArray[idxNotMovingFrame]);
+                drawScaledFrame(canvas, gameDisplay, enemy, spriteArray[idxNotMovingFrame]);
                 break;
             case CHASING:
-                drawFrame(canvas, gameDisplay, enemy, spriteArray[idxMovingFrame]);
+                drawScaledFrame(canvas, gameDisplay, enemy, spriteArray[idxMovingFrame]);
                 break;
             default:
                 break;

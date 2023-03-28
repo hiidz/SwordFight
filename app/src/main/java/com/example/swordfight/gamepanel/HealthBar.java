@@ -19,7 +19,7 @@ public class HealthBar {
     private Paint borderPaint;
     private Paint healthPaint;
 
-    private static final int maxWidth = 100;
+    private static final int maxWidth = 96;
 
     public HealthBar(Context context, Piece piece) {
         this.piece = piece;
@@ -36,7 +36,8 @@ public class HealthBar {
     }
 
     public void draw(Canvas canvas, GameDisplay gameDisplay) {
-        float x = (float) piece.getPositionX();
+//        float x = (float) piece.getPositionX() + piece.getScalingFactor();
+        float x = (float) piece.getPositionX() - (64 / piece.getScalingFactor());
         float y = (float) piece.getPositionY();
         float distanceToPiece = 30;
         float healthPointPercentage = (float) piece.getCurrentHealth() / piece.getMaxHealth();

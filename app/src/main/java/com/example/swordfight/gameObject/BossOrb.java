@@ -29,20 +29,21 @@ public class BossOrb extends GameObject {
     private BlockingQueue<Projectile> projectileQueue;
 
     private OrbAnimator orbAnimator;
+    private static final float ORB_SCALE = 1.0f;
 
     List<Float> usedAngles = new ArrayList<>();
 
     float minAngleDistance = 0.2f; // Define the minimum distance between angles (radians)
 
-    public BossOrb(Context context, int color, float positionX, float positionY, float radius, Player player, Enemy enemy) {
-        super(context, positionX, positionY, R.color.orbColor, radius);
+    public BossOrb(Context context, int color, float positionX, float positionY, Player player, Enemy enemy) {
+        super(context, positionX, positionY, R.color.orbColor);
         this.context = context;
         this.color = color;
         this.player = player;
         this.projectiles = new ConcurrentLinkedQueue<>();
         this.projectileQueue = new LinkedBlockingQueue<>();
         this.enemy = enemy;
-        this.orbAnimator = new OrbAnimator(new SpriteSheet(context, R.drawable.orb_spritesheet).getOrbSpriteArray(5, 1));
+        this.orbAnimator = new OrbAnimator(spriteSheet.getOrbSpriteArray(), ORB_SCALE);
 
         startProducerThread();
         startConsumerThread();

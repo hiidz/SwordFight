@@ -28,6 +28,7 @@ public class Enemy extends Piece{
     private static final float MAX_SPEED = 5;
     private float currentSpeed;
     private EnemyAnimator enemyAnimator;
+    private static final float ENEMY_SCALE = 2.0f;
     private EnemyState enemyState;
     protected Player player;
 
@@ -38,16 +39,23 @@ public class Enemy extends Piece{
 
     public Enemy() { enemyState.setState(EnemyState.State.SLEEPING); }
 
-    public Enemy(Context context, Player player, float positionX, float positionY, float radius, int maxHealth) {
-        super(context, positionX, positionY, ContextCompat.getColor(context, R.color.enemy), radius, maxHealth);
+    // Standard enemy spawn with scaling (for bosses)
+    public Enemy(Context context, Player player, float positionX, float positionY, int maxHealth, float scalingFactor) {
+        super(context, positionX, positionY, ContextCompat.getColor(context, R.color.enemy), maxHealth, scalingFactor);
         this.player = player;
         setCurrentSpeed(MAX_SPEED);
         enemyState = new EnemyState(this);
-        this.enemyAnimator = new EnemyAnimator(spriteSheet.getEnemySpriteArray());
+        this.enemyAnimator = new EnemyAnimator(spriteSheet.getEnemySpriteArray(), scalingFactor);
     }
 
+    // Spawn enemy with default scaling (ENEMY_SCALE)
+    public Enemy(Context context, Player player, float positionX, float positionY, int maxHealth) {
+        this(context, player, positionX, positionY, maxHealth, ENEMY_SCALE);
+    }
+
+    // randomised enemy spawn
     public Enemy(Context context, Player player) {
-        this(context, player, (float)Math.random() * MapLayout.NUMBER_OF_ROW_TILES*MapLayout.TILE_WIDTH_PIXELS, (float)Math.random() * MapLayout.NUMBER_OF_COLUMN_TILES * MapLayout.TILE_HEIGHT_PIXELS, 15, 100);
+        this(context, player, (float)Math.random() * MapLayout.NUMBER_OF_ROW_TILES*MapLayout.TILE_WIDTH_PIXELS, (float)Math.random() * MapLayout.NUMBER_OF_COLUMN_TILES * MapLayout.TILE_HEIGHT_PIXELS, 100);
         enemyState = new EnemyState(this);
     }
 

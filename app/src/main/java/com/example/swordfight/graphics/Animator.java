@@ -17,36 +17,32 @@ public abstract class Animator {
 
     protected float angle = 0f;
     protected float previousAngle = 0f;
+    private float scalingFactor;
 
-    public Animator(Sprite[] spriteArray) {
+    public Animator(Sprite[] spriteArray, float scalingFactor) {
         this.spriteArray = spriteArray;
+        this.scalingFactor = scalingFactor;
         updatesBeforeNextMoveFrame = MAX_UPDATES_BEFORE_NEXT_MOVE_FRAME;
     }
 
     public abstract void draw(Canvas canvas, GameDisplay gameDisplay, GameObject gameObject);
 
-    public void drawRotatedFrame(Canvas canvas, GameDisplay gameDisplay, Piece piece, Sprite sprite, float angle) {
+    public void drawRotatedFrame(Canvas canvas, GameDisplay gameDisplay, GameObject gameObject, Sprite sprite, float angle) {
         sprite.drawRotatedAngle(
                 canvas,
-                (int) gameDisplay.gameToDisplayCoordinatesX(piece.getPositionX()) - sprite.getWidth() / 2,
-                (int) gameDisplay.gameToDisplayCoordinatesY(piece.getPositionY()) - sprite.getHeight() / 2,
-                angle
+                (int) gameDisplay.gameToDisplayCoordinatesX(gameObject.getPositionX()) - (int) (sprite.getWidth()),
+                (int) gameDisplay.gameToDisplayCoordinatesY(gameObject.getPositionY()) - (int) (sprite.getHeight()),
+                angle,
+                scalingFactor
         );
     }
 
-    public void drawScaledFrame(Canvas canvas, GameDisplay gameDisplay, GameObject gameObject, Sprite sprite, float scalingFactor) {
+    public void drawScaledFrame(Canvas canvas, GameDisplay gameDisplay, GameObject gameObject, Sprite sprite) {
         sprite.draw(
                 canvas,
-                (int) gameDisplay.gameToDisplayCoordinatesX(gameObject.getPositionX()) - (int) (sprite.getWidth() * scalingFactor) / 2,
-                (int) gameDisplay.gameToDisplayCoordinatesY(gameObject.getPositionY()) - (int) (sprite.getHeight() * scalingFactor) / 2
-        );
-    }
-
-    public void drawFrame(Canvas canvas, GameDisplay gameDisplay, GameObject gameObject, Sprite sprite) {
-        sprite.draw(
-                canvas,
-                (int) gameDisplay.gameToDisplayCoordinatesX(gameObject.getPositionX()) - sprite.getWidth() / 2,
-                (int) gameDisplay.gameToDisplayCoordinatesY(gameObject.getPositionY()) - sprite.getHeight() / 2
+                (int) gameDisplay.gameToDisplayCoordinatesX(gameObject.getPositionX()),
+                (int) gameDisplay.gameToDisplayCoordinatesY(gameObject.getPositionY()),
+                scalingFactor
         );
     }
 }

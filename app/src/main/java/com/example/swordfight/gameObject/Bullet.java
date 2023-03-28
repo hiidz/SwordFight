@@ -15,7 +15,7 @@ public class Bullet extends GameObject {
     private float distanceTraveled = 0;
 
     public Bullet(Context context, Player shooter) {
-        super(context, shooter.getPositionX(), shooter.getPositionY(), ContextCompat.getColor(context, R.color.bullet), 10);
+        super(context, shooter.getPositionX(), shooter.getPositionY(), ContextCompat.getColor(context, R.color.bullet));
         setVelocity(new Vector2(shooter.getDirectionX() * MAX_SPEED, shooter.getDirectionY() * MAX_SPEED));
     }
 

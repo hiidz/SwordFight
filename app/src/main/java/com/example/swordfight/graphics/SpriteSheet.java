@@ -14,9 +14,13 @@ public class SpriteSheet {
     private static final int SPRITE_HEIGHT_PIXELS = 64;
     protected static final int ENEMY_ONE_ROW = 5;
     protected static final int ENEMY_TWO_ROW = 6;
-    protected static final int ENEMY_SIZE = 2;
+    protected static final int ENEMY_SIZE = 1;
     protected static final int PLAYER_ROW = 4;
     protected static final int PLAYER_SIZE = 4;
+    protected static final int BOSS_ROW = 7;
+    protected static final int BOSS_SIZE = 5;
+    protected static final int ORB_ROW = 8;
+    protected static final int ORB_SIZE = 5;
 
     private Bitmap bitmap;
 
@@ -34,6 +38,14 @@ public class SpriteSheet {
         return getSpriteArray(ENEMY_SIZE, Utils.randomBetween(ENEMY_ONE_ROW,ENEMY_TWO_ROW + 1));
     }
 
+    public Sprite[] getBossSpriteArray() {
+        return getSpriteArray(BOSS_SIZE, BOSS_ROW);
+    }
+
+    public Sprite[] getOrbSpriteArray() {
+        return getSpriteArray(ORB_SIZE, ORB_ROW);
+    }
+
     public Sprite[] getSpriteArray(int size, int row) {
         Sprite[] spriteArray = new Sprite[size];
         for (int i = 0; i < size; i++) {
@@ -41,30 +53,6 @@ public class SpriteSheet {
         }
         return spriteArray;
     }
-
-    public Sprite[] getBossSpriteArray(int size, int row) {
-        Sprite[] spriteArray = new Sprite[size];
-        for (int i = 0; i < size; i++) {
-            spriteArray[i] = new Sprite(this, new Rect(i*120, row*100, (i + 1)*120, (row + 1)*100));
-        }
-        return spriteArray;
-    }
-
-    public Sprite[] getOrbSpriteArray(int size, int row) {
-        Sprite[] spriteArray = new Sprite[size];
-        for (int i = 0; i < size; i++) {
-            spriteArray[i] = new Sprite(this, new Rect(i*192, row*192, (i + 1)*192, (row + 1)*192));
-        }
-        return spriteArray;
-    }
-
-//    public Sprite[] getSpriteArray(int size, int row) {
-//        Sprite[] spriteArray = new Sprite[size];
-//        for (int i = 0; i < size; i++) {
-//            spriteArray[i] = new Sprite(this, new Rect(i*SPRITE_WIDTH_PIXELS, row*SPRITE_HEIGHT_PIXELS, (i + 1)*SPRITE_WIDTH_PIXELS, (row + 1)*SPRITE_HEIGHT_PIXELS));
-//        }
-//        return spriteArray;
-//    }
 
     public Bitmap getBitmap() {
         return bitmap;

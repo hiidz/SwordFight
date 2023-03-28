@@ -20,7 +20,7 @@ public class Projectile extends GameObject {
     }
 
     public Projectile(Context context, int color, float positionX, float positionY, Vector2 direction, float speed, int damage) {
-        super(context, positionX, positionY, color, 50);
+        super(context, positionX, positionY, color);
         setDirection(direction);
         this.speed = speed;
         this.damage = 0;

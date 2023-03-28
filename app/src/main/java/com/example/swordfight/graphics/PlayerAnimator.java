@@ -12,8 +12,8 @@ public class PlayerAnimator extends Animator {
 
     Joystick joystick;
 
-    public PlayerAnimator(Sprite[] playerSpriteArray) {
-        super(playerSpriteArray);
+    public PlayerAnimator(Sprite[] playerSpriteArray, float scalingFactor) {
+        super(playerSpriteArray, scalingFactor);
     }
 
     public void draw(Canvas canvas, GameDisplay gameDisplay, Player player, Joystick joystick) {

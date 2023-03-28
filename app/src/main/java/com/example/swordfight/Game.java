@@ -48,7 +48,7 @@ class Game extends SurfaceView implements SurfaceHolder.Callback {
         performance = new Performance(context, gameLoop);
 
         joystick = new Joystick(275, 700, 70, 40);
-        player = new Player(getContext(), joystick, (MapLayout.NUMBER_OF_ROW_TILES * MapLayout.TILE_WIDTH_PIXELS)/2, (MapLayout.NUMBER_OF_COLUMN_TILES * MapLayout.TILE_HEIGHT_PIXELS)/2, 30.0f, 5000);
+        player = new Player(getContext(), joystick, (MapLayout.NUMBER_OF_ROW_TILES * MapLayout.TILE_WIDTH_PIXELS)/2, (MapLayout.NUMBER_OF_COLUMN_TILES * MapLayout.TILE_HEIGHT_PIXELS)/2, 5000);
         enemyManager = new EnemyManager(context, player);
         bulletManager = new BulletManager(context, player, enemyManager);
 

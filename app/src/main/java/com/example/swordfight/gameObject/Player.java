@@ -27,12 +27,13 @@ public class Player extends Piece{
     private Joystick joystick;
     private PlayerState playerState;
     private PlayerAnimator playerAnimator;
+    private static final float PLAYER_SCALE = 4.0f;
 
-    public Player(Context context, Joystick joystick, float positionX, float positionY, float radius, int maxHealth) {
-        super(context, positionX, positionY, ContextCompat.getColor(context, R.color.player),  radius, maxHealth);
+    public Player(Context context, Joystick joystick, float positionX, float positionY, int maxHealth) {
+        super(context, positionX, positionY, ContextCompat.getColor(context, R.color.player), maxHealth, PLAYER_SCALE);
         this.joystick = joystick;
         this.playerState = new PlayerState(this);
-        this.playerAnimator = new PlayerAnimator(spriteSheet.getPlayerSpriteArray());
+        this.playerAnimator = new PlayerAnimator(spriteSheet.getPlayerSpriteArray(), PLAYER_SCALE);
         this.spriteSheet = new SpriteSheet(context, R.drawable.javier_spritesheet_1);
     }
 

@@ -20,14 +20,17 @@ public class Piece extends GameObject{
 
     public Piece(){};
 
-    public Piece(Context context, float positionX, float positionY, int color,  float radius, int maxHealth) {
-        super(context, positionX, positionY, color, radius);
+    public Piece(Context context, float positionX, float positionY, int color, int maxHealth, float scalingFactor) {
+        super(context, positionX, positionY, color, scalingFactor);
 
         this.healthBar = new HealthBar(context, this);
         this.maxHealth = maxHealth;
         setCurrentHealth(maxHealth);
         this.currentHealth = maxHealth;
-        // Set color of Piece
+    }
+
+    public Piece(Context context, float positionX, float positionY, int color, int maxHealth) {
+        this(context, positionX, positionY, color, maxHealth, 1);
     }
 
     public boolean isColliding(Piece obj1, Piece obj2) {
@@ -57,6 +60,8 @@ public class Piece extends GameObject{
 //                (float) radius,
 //                paint);
     }
+
+    public float getScalingFactor() { return scalingFactor; }
 
     public int getMaxHealth() { return maxHealth; }
 

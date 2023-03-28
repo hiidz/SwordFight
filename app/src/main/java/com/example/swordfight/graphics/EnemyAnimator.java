@@ -9,8 +9,10 @@ import com.example.swordfight.gameObject.Piece;
 
 public class EnemyAnimator extends Animator{
 
-    public EnemyAnimator(Sprite[] enemySpriteArray) {
-        super(enemySpriteArray);
+
+    public EnemyAnimator(Sprite[] enemySpriteArray, float scalingFactor) {
+        super(enemySpriteArray, scalingFactor);
+        idxMovingFrame = 0;
     }
 
     @Override
@@ -24,7 +26,7 @@ public class EnemyAnimator extends Animator{
                 updatesBeforeNextMoveFrame--;
                 if (updatesBeforeNextMoveFrame == 0) {
                     updatesBeforeNextMoveFrame = MAX_UPDATES_BEFORE_NEXT_MOVE_FRAME;
-                    idxMovingFrame = (++idxMovingFrame % (SpriteSheet.ENEMY_SIZE - 1)) + 1;
+//                    idxMovingFrame = (++idxMovingFrame % (SpriteSheet.ENEMY_SIZE - 1)) + 1;
                 }
                 float velocityX = enemy.getDirectionX();
                 float velocityY = enemy.getDirectionY();

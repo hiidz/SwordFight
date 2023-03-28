@@ -21,22 +21,30 @@ public class GameObject {
     private Vector2 velocity = new Vector2(0, 0);
     private Vector2 direction = new Vector2(1, 0);
     protected SpriteSheet spriteSheet;
-    private float radius;
+    private float radius = 16;
     private Paint paint;
+    protected float scalingFactor = 1;
 
     public GameObject(){}
-    public GameObject(Context context, float positionX, float positionY, int color, float radius) {
+
+    public GameObject(Context context, float positionX, float positionY, int color, float scalingFactor) {
+        this(context, positionX, positionY, color);
+        this.scalingFactor = scalingFactor;
+        setRadius(getRadius() * scalingFactor);
+    }
+
+    public GameObject(Context context, float positionX, float positionY, int color) {
         position = new Vector2(positionX, positionY);
         startingLocation = position;
-        this.radius = radius;
+
         paint = new Paint();
         paint.setColor(color);
-        this.spriteSheet = new SpriteSheet(context, R.drawable.javier_spritesheet_1);
+        this.spriteSheet = new SpriteSheet(context, R.drawable.javier_spritesheet_2);
     }
 
     public void draw(Canvas canvas, GameDisplay gameDisplay) {
-        canvas.drawCircle((float) gameDisplay.gameToDisplayCoordinatesX(position.getX()),
-                (float) gameDisplay.gameToDisplayCoordinatesY(position.getY()),
+        canvas.drawCircle((float) gameDisplay.gameToDisplayCoordinatesX(getPositionX()),
+                (float) gameDisplay.gameToDisplayCoordinatesY(getPositionY()),
                 (float) radius,
                 paint);
     }
@@ -46,7 +54,7 @@ public class GameObject {
     protected float getRadius() {
         return radius;
     }
-    protected Paint getPaint() { return paint; }
+    protected void setRadius(float radius) { this.radius = radius; }
 
     public float getPositionX() {
         return position.getX();

@@ -14,10 +14,8 @@ public class OrbAnimator extends Animator {
     private long lastUpdateTime;
     private static final long ANIMATION_DELAY = 200; // 100 milliseconds delay between frames
 
-    private float scalingFactor = 0.5f; // Adjust this value to scale the sprite (0.5 = 50% size)
-
-    public OrbAnimator(Sprite[] orbSpriteArray) {
-        super(orbSpriteArray);
+    public OrbAnimator(Sprite[] orbSpriteArray, float scalingFactor) {
+        super(orbSpriteArray, scalingFactor);
         lastUpdateTime = System.currentTimeMillis();
     }
 
@@ -26,8 +24,8 @@ public class OrbAnimator extends Animator {
         long currentTime = System.currentTimeMillis();
         if (currentTime - lastUpdateTime >= ANIMATION_DELAY) {
             lastUpdateTime = currentTime;
-            index = (++index % 5);
+            index = (++index % SpriteSheet.ORB_SIZE);
         }
-        drawScaledFrame(canvas, gameDisplay, projectile, spriteArray[index], scalingFactor);
+        drawScaledFrame(canvas, gameDisplay, projectile, spriteArray[index]);
     }
 }
