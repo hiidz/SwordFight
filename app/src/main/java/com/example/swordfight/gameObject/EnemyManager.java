@@ -1,20 +1,11 @@
 package com.example.swordfight.gameObject;
 
 import android.content.Context;
-import android.os.Debug;
-import android.os.Handler;
 import android.util.Log;
-
-import com.example.swordfight.gameObject.Enemy;
-import com.example.swordfight.gameObject.Piece;
-import com.example.swordfight.gameObject.Player;
 
 import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
-import java.util.Timer;
-import java.util.TimerTask;
-import java.util.concurrent.CopyOnWriteArrayList;
 
 // this class will handle enemy creation
 // and its life cycle
@@ -26,20 +17,25 @@ public class EnemyManager {
     private final static int enemyPool = 10;
 
     private final static int minEnemyCount = 3;
-    private CopyOnWriteArrayList<Enemy> enemyList = new CopyOnWriteArrayList <Enemy>();
-    private CopyOnWriteArrayList <Enemy> poolOfSleepingEnemy = new CopyOnWriteArrayList <>();
+    private List<Enemy> enemyList = new ArrayList<Enemy>();
+    private List<Enemy> poolOfSleepingEnemy = new ArrayList<>();
+    private BossEnemy bossEnemy;
 
     public EnemyManager(Context context, Player player){
         this.context = context;
         this.player = player;
+        this.bossEnemy = new BossEnemy(context, player);
+        enemyList.add(bossEnemy);
+        bossEnemy.activateEnemy();
         // set up all the enemy but without using them ...
         setUpEnemyPool();
     }
 
     private void setUpEnemyPool(){
-        for(int i = 0; i < enemyPool; i++){
+        for(int i = 0; i < enemyPool - 1; i++){
             poolOfSleepingEnemy.add( new Enemy(this.context, player));
         }
+
     }
 
     public void removeEnemy(Enemy enemy){
@@ -54,11 +50,11 @@ public class EnemyManager {
         if(poolOfSleepingEnemy.size() < minEnemyCount) {
             Enemy enemy = poolOfSleepingEnemy.remove(0);
             enemyList.add(enemy);
-            enemy.activeEnemy();
+            enemy.activateEnemy();
         }else {
             Enemy enemy = new Enemy(context, player);
             enemyList.add(enemy);
-            enemy.activeEnemy();
+            enemy.activateEnemy();
         }
     }
 
@@ -96,6 +92,13 @@ public class EnemyManager {
 //                }
 //            }
 //        }
+    }
+
+    public synchronized void updateEnemyHealth(){
+        for (Enemy enemy: enemyList) {
+            enemy.multiplyHealth(2);
+            enemy.multiplyMaxHealth(2);
+        }
     }
 
 }

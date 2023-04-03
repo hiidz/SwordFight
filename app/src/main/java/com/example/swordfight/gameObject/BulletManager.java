@@ -4,6 +4,8 @@ import android.content.Context;
 import android.os.Debug;
 import android.util.Log;
 
+import com.example.swordfight.Vector2;
+
 import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
@@ -52,7 +54,7 @@ public class BulletManager {
             b  = new Bullet(context, player);
             bulletList.add(b);
         }
-        b.velocity.set(player.getDirectionX() * b.getMaxSpeed(), player.getDirectionY() * b.getMaxSpeed());
+        b.setVelocity(new Vector2(player.getDirectionX() * b.getMaxSpeed(), player.getDirectionY() * b.getMaxSpeed()));
 
     }
 

@@ -6,21 +6,47 @@ import android.graphics.BitmapFactory;
 import android.graphics.Rect;
 
 import com.example.swordfight.R;
+import com.example.swordfight.Utils;
 
 public class SpriteSheet {
 
     private static final int SPRITE_WIDTH_PIXELS = 64;
     private static final int SPRITE_HEIGHT_PIXELS = 64;
+    protected static final int ENEMY_ONE_ROW = 5;
+    protected static final int ENEMY_TWO_ROW = 6;
+    protected static final int ENEMY_SIZE = 1;
+    protected static final int PLAYER_ROW = 4;
+    protected static final int PLAYER_SIZE = 4;
+    protected static final int BOSS_ROW = 7;
+    protected static final int BOSS_SIZE = 5;
+    protected static final int ORB_ROW = 8;
+    protected static final int ORB_SIZE = 5;
 
     private Bitmap bitmap;
 
-    public SpriteSheet(Context context) {
+    public SpriteSheet(Context context, int id) {
         BitmapFactory.Options bitmapOptions = new BitmapFactory.Options();
         bitmapOptions.inScaled = false;
-        bitmap = BitmapFactory.decodeResource(context.getResources(), R.drawable.javier_spritesheet_1, bitmapOptions);
+        bitmap = BitmapFactory.decodeResource(context.getResources(), id, bitmapOptions);
     }
 
-    public Sprite[] getPlayerSpriteArray(int size, int row) {
+    public Sprite[] getPlayerSpriteArray() {
+        return getSpriteArray(PLAYER_SIZE, PLAYER_ROW);
+    }
+
+    public Sprite[] getEnemySpriteArray() {
+        return getSpriteArray(ENEMY_SIZE, Utils.randomBetween(ENEMY_ONE_ROW,ENEMY_TWO_ROW + 1));
+    }
+
+    public Sprite[] getBossSpriteArray() {
+        return getSpriteArray(BOSS_SIZE, BOSS_ROW);
+    }
+
+    public Sprite[] getOrbSpriteArray() {
+        return getSpriteArray(ORB_SIZE, ORB_ROW);
+    }
+
+    public Sprite[] getSpriteArray(int size, int row) {
         Sprite[] spriteArray = new Sprite[size];
         for (int i = 0; i < size; i++) {
             spriteArray[i] = new Sprite(this, new Rect(i*SPRITE_WIDTH_PIXELS, row*SPRITE_HEIGHT_PIXELS, (i + 1)*SPRITE_WIDTH_PIXELS, (row + 1)*SPRITE_HEIGHT_PIXELS));
@@ -28,26 +54,8 @@ public class SpriteSheet {
         return spriteArray;
     }
 
-//    public Sprite[] getSpriteArray(int size, int row) {
-//        Sprite[] spriteArray = new Sprite[size];
-//        for (int i = 0; i < size; i++) {
-//            spriteArray[i] = new Sprite(this, new Rect(i*SPRITE_WIDTH_PIXELS, row*SPRITE_HEIGHT_PIXELS, (i + 1)*SPRITE_WIDTH_PIXELS, (row + 1)*SPRITE_HEIGHT_PIXELS));
-//        }
-//        return spriteArray;
-//    }
-
     public Bitmap getBitmap() {
         return bitmap;
-    }
-
-
-    public Sprite getPlayerSprite() {
-//        Sprite[] spriteArray = new Sprite[3];
-//        spriteArray[0] = new Sprite(this, new Rect(0*64, 0, 1*64, 64));
-//        spriteArray[1] = new Sprite(this, new Rect(1*64, 0, 2*64, 64));
-//        spriteArray[2] = new Sprite(this, new Rect(2*64, 0, 3*64, 64));
-//        return spriteArray;
-        return new Sprite(this, new Rect(0, 0, 64, 64));
     }
 
     private Sprite getSpriteByIndex(int idxRow, int idxCol) {
@@ -68,7 +76,7 @@ public class SpriteSheet {
     }
 
     public Sprite getLeftWallSprite() {
-        return getSpriteByIndex(2, 4);
+        return getSpriteByIndex(2, 3);
     }
 
     public Sprite getTopWallSprite() {
@@ -76,7 +84,7 @@ public class SpriteSheet {
     }
 
     public Sprite getBottomWallSprite() {
-        return getSpriteByIndex(2, 3);
+        return getSpriteByIndex(2, 2);
     }
 
     public Sprite getRightWallSprite() {

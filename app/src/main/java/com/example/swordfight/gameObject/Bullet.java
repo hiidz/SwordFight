@@ -9,35 +9,27 @@ import androidx.core.content.ContextCompat;
 import com.example.swordfight.R;
 import com.example.swordfight.Vector2;
 
-public class Bullet extends Piece {
+public class Bullet extends GameObject {
     private final float MAX_SPEED = 30;
     private final float MAX_DISTANCE = 1500;
     private float distanceTraveled = 0;
 
-    private float damage = 5.0f;
-
-    public float getDamage(){return damage;}
-
+    public Bullet(Context context, Player shooter) {
+        super(context, shooter.getPositionX(), shooter.getPositionY(), ContextCompat.getColor(context, R.color.bullet));
+        setVelocity(new Vector2(shooter.getDirectionX() * MAX_SPEED, shooter.getDirectionY() * MAX_SPEED));
+    }
 
     public float getMaxSpeed(){return MAX_SPEED;}
-    public boolean timeToGoBackPool(){
-        return distanceTraveled > MAX_DISTANCE;
-    }
-
-    public Bullet(Context context, Player shooter) {
-        super(context, ContextCompat.getColor(context, R.color.bullet),  shooter.getPositionX(),
-                shooter.getPositionY(), 10,  0);
-        velocity.set(shooter.getDirectionX() * MAX_SPEED, shooter.getDirectionY() * MAX_SPEED);
-    }
+    public boolean timeToGoBackPool(){ return distanceTraveled > MAX_DISTANCE; }
 
     public void resetAllSettings(){
-        velocity = new Vector2(0,0);
+        setVelocity(new Vector2(0,0));
         distanceTraveled = 0;
     }
 
     @Override
     public void update() {
-        position = position.add(velocity);
-        distanceTraveled+= velocity.magnitude();
+        setPosition(getPosition().add(getVelocity()));
+        distanceTraveled += getVelocity().magnitude();
     }
 }

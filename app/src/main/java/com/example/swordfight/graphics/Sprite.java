@@ -13,7 +13,10 @@ public class Sprite {
     private final SpriteSheet spriteSheet;
     private final Rect rect;
 
-    private static final int PLAYER_SCALE = 2;
+    protected static final int SCALE_BY_ONE = 1;
+    protected static final int SCALE_BY_TWO = 2;
+    protected static final int SCALE_BY_THREE = 3;
+    protected static final int SCALE_BY_FOUR = 4;
 
     public Sprite(SpriteSheet spriteSheet, Rect rect) {
         this.spriteSheet = spriteSheet;
@@ -21,8 +24,8 @@ public class Sprite {
     }
 
     public void draw(Canvas canvas, int gameToDisplayCoordinatesX, int gameToDisplayCoordinatesY) {
-        int scaledWidth = (int) (getWidth() * PLAYER_SCALE);
-        int scaledHeight = (int) (getHeight() * PLAYER_SCALE);
+        int scaledWidth = (int) (getWidth());
+        int scaledHeight = (int) (getHeight());
         int scaledX = (int) (gameToDisplayCoordinatesX - (scaledWidth - getWidth()) / 2f);
         int scaledY = (int) (gameToDisplayCoordinatesY - (scaledHeight - getHeight()) / 2f);
 
@@ -34,9 +37,23 @@ public class Sprite {
         );
     }
 
-    public void drawRotatedAngle(Canvas canvas, int gameToDisplayCoordinatesX, int gameToDisplayCoordinatesY, float angle) {
-        int scaledWidth = (int) (getWidth() * PLAYER_SCALE);
-        int scaledHeight = (int) (getHeight() * PLAYER_SCALE);
+    public void draw(Canvas canvas, int gameToDisplayCoordinatesX, int gameToDisplayCoordinatesY, float scalingFactor) {
+        int scaledWidth = (int) (getWidth() * scalingFactor);
+        int scaledHeight = (int) (getHeight() * scalingFactor);
+        int scaledX = (int) (gameToDisplayCoordinatesX - (scaledWidth - getWidth()) / 2f);
+        int scaledY = (int) (gameToDisplayCoordinatesY - (scaledHeight - getHeight()) / 2f);
+
+        canvas.drawBitmap(
+                spriteSheet.getBitmap(),
+                rect,
+                new Rect(scaledX, scaledY, scaledX + scaledWidth, scaledY + scaledHeight),
+                null
+        );
+    }
+
+    public void drawRotatedAngle(Canvas canvas, int gameToDisplayCoordinatesX, int gameToDisplayCoordinatesY, float angle, float scalingFactor) {
+        int scaledWidth = (int) (getWidth() * scalingFactor);
+        int scaledHeight = (int) (getHeight() * scalingFactor);
         int scaledX = (int) (gameToDisplayCoordinatesX - (scaledWidth - getWidth()) / 2f);
         int scaledY = (int) (gameToDisplayCoordinatesY - (scaledHeight - getHeight()) / 2f);
 

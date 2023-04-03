@@ -13,19 +13,13 @@ import com.example.swordfight.gameObject.Bullet;
 import com.example.swordfight.gameObject.BulletManager;
 import com.example.swordfight.gameObject.Enemy;
 import com.example.swordfight.gameObject.EnemyManager;
-import com.example.swordfight.gameObject.EnemyState;
-import com.example.swordfight.gameObject.Piece;
 import com.example.swordfight.gameObject.Player;
 import com.example.swordfight.gamepanel.GameOver;
 import com.example.swordfight.gamepanel.Joystick;
 import com.example.swordfight.gamepanel.Performance;
-import com.example.swordfight.graphics.Animator;
 import com.example.swordfight.graphics.SpriteSheet;
+import com.example.swordfight.map.MapLayout;
 import com.example.swordfight.map.Tilemap;
-
-import java.util.ArrayList;
-import java.util.Iterator;
-import java.util.List;
 
 class Game extends SurfaceView implements SurfaceHolder.Callback {
 
@@ -54,7 +48,7 @@ class Game extends SurfaceView implements SurfaceHolder.Callback {
         performance = new Performance(context, gameLoop);
 
         joystick = new Joystick(275, 700, 70, 40);
-        player = new Player(getContext(), joystick,500.0f, 500.0f, 30.0f, 5000);
+        player = new Player(getContext(), joystick, (MapLayout.NUMBER_OF_ROW_TILES * MapLayout.TILE_WIDTH_PIXELS)/2, (MapLayout.NUMBER_OF_COLUMN_TILES * MapLayout.TILE_HEIGHT_PIXELS)/2, 5000);
         enemyManager = new EnemyManager(context, player);
         bulletManager = new BulletManager(context, player, enemyManager);
 
@@ -62,7 +56,7 @@ class Game extends SurfaceView implements SurfaceHolder.Callback {
         DisplayMetrics displayMetrics = new DisplayMetrics();
         ((Activity) getContext()).getWindowManager().getDefaultDisplay().getMetrics(displayMetrics);
         gameDisplay = new GameDisplay(displayMetrics.widthPixels, displayMetrics.heightPixels, player);
-        SpriteSheet spriteSheet = new SpriteSheet(context);
+        SpriteSheet spriteSheet = new SpriteSheet(context, R.drawable.javier_spritesheet_1);
         tilemap = new Tilemap(spriteSheet);
         setFocusable(true);
     }
@@ -109,6 +103,15 @@ class Game extends SurfaceView implements SurfaceHolder.Callback {
             gameLoop = new GameLoop(this, holder);
         }
         gameLoop.startLoop();
+
+        Runnable updateEnemyHealthEvent = new Runnable() {
+            @Override
+            public void run() {
+                enemyManager.updateEnemyHealth();
+            }
+        };
+        EventThread enemyHealthUpdater = new EventThread(updateEnemyHealthEvent, 30000);
+        enemyHealthUpdater.start(); // start the thread
     }
 
     @Override
@@ -136,14 +139,14 @@ class Game extends SurfaceView implements SurfaceHolder.Callback {
             bullet.draw(canvas, gameDisplay);
         }
 
-        if (player.getHealthPoints() <= 0) {
+        if (player.getCurrentHealth() <= 0) {
             gameOver.draw(canvas);
         }
     }
 
     public void update() {
 
-        if (player.getHealthPoints() <= 0) {
+        if (player.getCurrentHealth() <= 0) {
             return;
         }
 

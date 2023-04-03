@@ -1,70 +1,48 @@
 package com.example.swordfight.graphics;
 
-import android.graphics.Bitmap;
 import android.graphics.Canvas;
-import android.graphics.Matrix;
-import android.util.Log;
 
 import com.example.swordfight.GameDisplay;
-import com.example.swordfight.gameObject.Player;
-import com.example.swordfight.gamepanel.Joystick;
+import com.example.swordfight.gameObject.GameObject;
+import com.example.swordfight.gameObject.Piece;
 
-public class Animator {
-    private Sprite[] playerSpriteArray;
-    private int idxNotMovingFrame = 0;
-    private int idxMovingFrame = 1;
-    private int updatesBeforeNextMoveFrame;
-    private static final int MAX_UPDATES_BEFORE_NEXT_MOVE_FRAME = 5;
+public abstract class Animator {
 
-    private static float angle = 0f;
-    private float previousAngle = 0f;
+    protected Sprite[] spriteArray;
 
-    public Animator(Sprite[] playerSpriteArray) {
-        this.playerSpriteArray = playerSpriteArray;
+    protected int idxNotMovingFrame = 0;
+    protected int idxMovingFrame = 1;
+    protected int updatesBeforeNextMoveFrame;
+    protected static final int MAX_UPDATES_BEFORE_NEXT_MOVE_FRAME = 5;
+
+    protected float angle = 0f;
+    protected float previousAngle = 0f;
+    private float scalingFactor;
+
+    public Animator(Sprite[] spriteArray, float scalingFactor) {
+        this.spriteArray = spriteArray;
+        this.scalingFactor = scalingFactor;
         updatesBeforeNextMoveFrame = MAX_UPDATES_BEFORE_NEXT_MOVE_FRAME;
     }
 
-    public void draw(Canvas canvas, GameDisplay gameDisplay, Player player, Joystick joystick) {
-        switch (player.getPlayerState().getState()) {
-            case NOT_MOVING:
-                drawRotatedFrame(canvas, gameDisplay, player, playerSpriteArray[0], angle);
-                break;
-            case IS_MOVING:
-                updatesBeforeNextMoveFrame--;
-                if (updatesBeforeNextMoveFrame == 0) {
-                    updatesBeforeNextMoveFrame = MAX_UPDATES_BEFORE_NEXT_MOVE_FRAME;
-                    idxMovingFrame = (++idxMovingFrame % 3) + 1;
-                }
-                float joystickX = (float) joystick.getActuatorX();
-                float joystickY = (float) joystick.getActuatorY();
-                if (joystickX != 0f || joystickY != 0f) {
-                    angle = (float) Math.atan2(joystickY, joystickX);
-                    angle = (float) Math.toDegrees(angle) - 90f;
-                    previousAngle = angle;
-                } else {
-                    angle = previousAngle;
-                }
-                drawRotatedFrame(canvas, gameDisplay, player, playerSpriteArray[idxMovingFrame], angle);
-                break;
-            default:
-                break;
-        }
-    }
+    public abstract void draw(Canvas canvas, GameDisplay gameDisplay, GameObject gameObject);
 
-    public void drawFrame(Canvas canvas, GameDisplay gameDisplay, Player player, Sprite sprite) {
-        sprite.draw(
+    public void drawRotatedFrame(Canvas canvas, GameDisplay gameDisplay, GameObject gameObject, Sprite sprite, float angle) {
+        sprite.drawRotatedAngle(
                 canvas,
-                (int) gameDisplay.gameToDisplayCoordinatesX(player.getPositionX()) - sprite.getWidth() / 2,
-                (int) gameDisplay.gameToDisplayCoordinatesY(player.getPositionY()) - sprite.getHeight() / 2
+                (int) gameDisplay.gameToDisplayCoordinatesX(gameObject.getPositionX()) - (int) (sprite.getWidth()),
+                (int) gameDisplay.gameToDisplayCoordinatesY(gameObject.getPositionY()) - (int) (sprite.getHeight()),
+                angle,
+                scalingFactor
         );
     }
 
-    public void drawRotatedFrame(Canvas canvas, GameDisplay gameDisplay, Player player, Sprite sprite, float angle) {
-        sprite.drawRotatedAngle(
+    public void drawScaledFrame(Canvas canvas, GameDisplay gameDisplay, GameObject gameObject, Sprite sprite) {
+        sprite.draw(
                 canvas,
-                (int) gameDisplay.gameToDisplayCoordinatesX(player.getPositionX()) - sprite.getWidth() / 2,
-                (int) gameDisplay.gameToDisplayCoordinatesY(player.getPositionY()) - sprite.getHeight() / 2,
-                angle
+                (int) gameDisplay.gameToDisplayCoordinatesX(gameObject.getPositionX()),
+                (int) gameDisplay.gameToDisplayCoordinatesY(gameObject.getPositionY()),
+                scalingFactor
         );
     }
 }
