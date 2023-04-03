@@ -18,8 +18,8 @@ import com.example.swordfight.graphics.SpriteSheet;
 public abstract class Piece extends GameObject{
     protected float radius;
     protected Paint paint;
-    protected int maxHealth;
-    protected int currentHealth;
+    protected float maxHealth;
+    protected float currentHealth;
     protected SpriteSheet spriteSheet;
     protected Animator animator;
 
@@ -65,11 +65,11 @@ public abstract class Piece extends GameObject{
                 paint);
     }
 
-    public int getHealthPoints() {
+    public float getHealthPoints() {
         return currentHealth;
     }
 
-    public int getMaxHealth() {
+    public float getMaxHealth() {
         return maxHealth;
     }
 

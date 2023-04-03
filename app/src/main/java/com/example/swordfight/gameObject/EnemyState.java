@@ -7,6 +7,7 @@ public class EnemyState {
         STUN,
         CAST_SKILL,
         ATTACK,
+        TAKE_DAMAGE,
         DEAD,
         SLEEPING
     }

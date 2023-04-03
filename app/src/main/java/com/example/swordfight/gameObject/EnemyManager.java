@@ -14,6 +14,7 @@ import java.util.Iterator;
 import java.util.List;
 import java.util.Timer;
 import java.util.TimerTask;
+import java.util.concurrent.CopyOnWriteArrayList;
 
 // this class will handle enemy creation
 // and its life cycle
@@ -25,8 +26,8 @@ public class EnemyManager {
     private final static int enemyPool = 10;
 
     private final static int minEnemyCount = 3;
-    private List<Enemy> enemyList = new ArrayList<Enemy>();
-    private List<Enemy> poolOfSleepingEnemy = new ArrayList<>();
+    private CopyOnWriteArrayList<Enemy> enemyList = new CopyOnWriteArrayList <Enemy>();
+    private CopyOnWriteArrayList <Enemy> poolOfSleepingEnemy = new CopyOnWriteArrayList <>();
 
     public EnemyManager(Context context, Player player){
         this.context = context;
@@ -78,7 +79,7 @@ public class EnemyManager {
         while (iterator.hasNext()) {
             Enemy e = iterator.next();
             if(e.getEnemyState().getState() == EnemyState.State.DEAD){
-
+                removeEnemy(e);
             }else {
                 e.update();
             }

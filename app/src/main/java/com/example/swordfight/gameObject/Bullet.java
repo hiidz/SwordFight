@@ -14,6 +14,10 @@ public class Bullet extends Piece {
     private final float MAX_DISTANCE = 1500;
     private float distanceTraveled = 0;
 
+    private float damage = 5.0f;
+
+    public float getDamage(){return damage;}
+
 
     public float getMaxSpeed(){return MAX_SPEED;}
     public boolean timeToGoBackPool(){

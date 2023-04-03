@@ -75,6 +75,12 @@ public class Enemy extends Piece{
         }
     }
 
+    public void takeDamage(float damage){
+        currentHealth = currentHealth-= damage;
+        // flashing animation
+        enemyState.setState (EnemyState.State.CHASING);
+    }
+
     public void chase(Vector2 target, EnemyState.State targetState){
         Vector2 direction = target.subtract(getPosition()).normalized();
 

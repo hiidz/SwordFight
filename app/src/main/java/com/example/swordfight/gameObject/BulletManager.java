@@ -16,10 +16,10 @@ public class BulletManager {
     private EnemyManager enemyManager;
     private final static int bulletPool = 50;
     private final static int minBulletCount = 5;
-    private List<Bullet> bulletList = new ArrayList<>();
-    private List<Bullet> poolOfBullet = new ArrayList<>();
+    private CopyOnWriteArrayList <Bullet> bulletList = new CopyOnWriteArrayList <>();
+    private CopyOnWriteArrayList <Bullet> poolOfBullet = new CopyOnWriteArrayList <>();
 
-    public List<Bullet> getBulletList(){return bulletList;}
+    public List <Bullet> getBulletList(){return bulletList;}
 
 
     public BulletManager(Context context, Player player, EnemyManager enemyManager){
@@ -61,7 +61,6 @@ public class BulletManager {
         while (iterator.hasNext()) {
             Bullet b = iterator.next();
             if(b.timeToGoBackPool() || currentBulletCollidingWithAnyEnemy(b)){
-                iterator.remove();
                 removeBullet(b);
             }else {
                 b.update();
@@ -72,6 +71,7 @@ public class BulletManager {
     public boolean currentBulletCollidingWithAnyEnemy(Bullet b){
         for(Enemy e: enemyManager.getEnemyList()){
             if(e.isColliding(e,b)){
+                e.takeDamage(b.getDamage());
                 return true;
             }
         }
