@@ -36,7 +36,40 @@ public class Enemy extends Piece{
     private static int maxEnemy = 10;
     private float enemyDetectionRange = 200f; // 2 * for chasing range
 
+    ////////////////// timer stuff
+    private Timer timer;
+    private int regenAmount = 5;
+    private float interval = 5.0f; // interval in seconds
+    private float timeElapsed = 0.0f;
 
+    public void startTimer() {
+        timer = new Timer();
+        timer.scheduleAtFixedRate(new TimerTask() {
+            @Override
+            public void run() {
+                // call the function to update interval elements
+                updateIntervalElements(interval);
+            }
+        }, 0L, (long) (interval * 1000));
+    }
+
+    public void stopTimer() {
+        timer.cancel();
+    }
+
+    public void updateIntervalElements(float deltaTime) {
+        // update interval elements using deltaTime as the fixed time delta
+        // for example, you can implement health regeneration here
+        timeElapsed += deltaTime;
+
+        if (timeElapsed >= 5.0f) { // if idle for more than 5 seconds
+           addCurrentHealth(regenAmount);
+        }
+        else {
+            timeElapsed = 0.0f; // reset time elapsed since idle
+        }
+    }
+    //////////////
     public Enemy() { enemyState.setState(EnemyState.State.SLEEPING); }
 
     // Standard enemy spawn with scaling (for bosses)
@@ -105,8 +138,8 @@ public class Enemy extends Piece{
         }
     }
 
-    public void takeDamage(float damage){
-        currentHealth = currentHealth-= damage;
+    public void takeDamage(int damage){
+        setDamageDealt(damage);
         // flashing animation
         enemyState.setState (EnemyState.State.CHASING);
     }

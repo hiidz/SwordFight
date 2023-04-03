@@ -66,7 +66,17 @@ public class Piece extends GameObject{
     public int getMaxHealth() { return maxHealth; }
 
     public int getCurrentHealth() { return currentHealth; }
-    protected void setCurrentHealth( int healthPoints) { this.currentHealth = healthPoints; }
+    protected void setCurrentHealth( int healthPoints) {
+        this.currentHealth = healthPoints;
+    }
+
+    protected void addCurrentHealth(int healthPoints){
+        if(this.currentHealth + healthPoints > maxHealth){
+            this.currentHealth = maxHealth;
+        }else {
+            this.currentHealth = healthPoints;
+        }
+    }
 
     //multiply health
     public void multiplyHealth(int multiplier) {
