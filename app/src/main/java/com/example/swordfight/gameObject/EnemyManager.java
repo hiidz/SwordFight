@@ -6,6 +6,7 @@ import android.util.Log;
 import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
+import java.util.concurrent.CopyOnWriteArrayList;
 
 // this class will handle enemy creation
 // and its life cycle
@@ -17,8 +18,8 @@ public class EnemyManager {
     private final static int enemyPool = 10;
 
     private final static int minEnemyCount = 3;
-    private List<Enemy> enemyList = new ArrayList<Enemy>();
-    private List<Enemy> poolOfSleepingEnemy = new ArrayList<>();
+    private CopyOnWriteArrayList<Enemy> enemyList = new CopyOnWriteArrayList<Enemy>();
+    private CopyOnWriteArrayList<Enemy> poolOfSleepingEnemy = new CopyOnWriteArrayList<>();
     private BossEnemy bossEnemy;
 
     public EnemyManager(Context context, Player player){

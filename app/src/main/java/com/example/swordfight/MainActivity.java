@@ -4,20 +4,61 @@ import android.app.Activity;
 import android.media.MediaPlayer;
 import android.os.Bundle;
 import android.util.Log;
+import android.view.View;
+import android.widget.Button;
+import android.widget.ImageView;
+import com.bumptech.glide.Glide;
 
 // MainActivity is the entry point to our application
 public class MainActivity extends Activity {
     private Game game;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         Log.d("MainActivity.java", "onCreate()");
         super.onCreate(savedInstanceState);
 
+        setContentView(R.layout.activity_main);
+
+        ImageView backgroundImageView = findViewById(R.id.background_image);
+
+        Glide.with(this)
+                .load("https://i.pinimg.com/originals/82/88/e9/8288e9eec7c66c0790ee546462b8e204.gif")
+                .centerCrop()
+                .placeholder(R.drawable.placeholder_image)
+                .into(backgroundImageView);
+
+        Button startButton = findViewById(R.id.startButton);
+        Button settingsButton = findViewById(R.id.settingsButton);
+        Button exitButton = findViewById(R.id.exitButton);
+
+        startButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Game game = new Game(view.getContext());
+                setContentView(game);
+            }
+        });
+
+        settingsButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                // TODO: Add code to launch settings activity
+            }
+        });
+
+        exitButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                finish();
+            }
+        });
+
 //        // Set fullscreen
 //        WindowInsets window = new  WindowInsetsController ();
 //        window.insetsController.hide(WindowInsets.Type.statusBars());
-        game = new Game(this);
-        setContentView(game);
+//        game = new Game(this);
+//        setContentView(game);
     }
 
     @Override
