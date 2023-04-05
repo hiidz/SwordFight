@@ -38,6 +38,8 @@ class Game extends SurfaceView implements SurfaceHolder.Callback {
     private GameOver gameOver;
     private GameDisplay gameDisplay;
     private final Tilemap tilemap;
+
+    private  MusicPlayer musicPlayer;
     public Game(Context context) {
         super(context);
         SurfaceHolder surfaceHolder = getHolder();
@@ -59,6 +61,10 @@ class Game extends SurfaceView implements SurfaceHolder.Callback {
         SpriteSheet spriteSheet = new SpriteSheet(context, R.drawable.javier_spritesheet_1);
         tilemap = new Tilemap(spriteSheet);
         setFocusable(true);
+
+        // music player
+        musicPlayer = new MusicPlayer(context, R.raw.bgm);
+        musicPlayer.run();
     }
 
     @Override
