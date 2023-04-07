@@ -49,6 +49,10 @@ public class GameObject {
                 paint);
     }
 
+    public void setAlpha(float alpha) {
+        paint.setAlpha((int) (alpha * 255)); // set alpha value between 0 and 255
+    }
+
     public void update() {};
 
     protected float getRadius() {

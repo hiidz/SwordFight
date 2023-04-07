@@ -2,6 +2,8 @@ package com.example.swordfight.gameObject;
 
 import android.content.Context;
 import android.graphics.Canvas;
+import android.os.Handler;
+import android.os.Vibrator;
 
 import androidx.core.content.ContextCompat;
 
@@ -29,12 +31,42 @@ public class Player extends Piece{
     private PlayerAnimator playerAnimator;
     private static final float PLAYER_SCALE = 4.0f;
 
+    private Vibrator vibrator; // add Vibrator instance variable
+
+    private boolean isBlinking = false; // add isBlinking flag
+    private Handler handler = new Handler(); // add Handler instance
+    private static final int BLINK_DURATION_MS = 200; // set blink duration in milliseconds
+
     public Player(Context context, Joystick joystick, float positionX, float positionY, int maxHealth) {
         super(context, positionX, positionY, ContextCompat.getColor(context, R.color.player), maxHealth, PLAYER_SCALE);
         this.joystick = joystick;
         this.playerState = new PlayerState(this);
         this.playerAnimator = new PlayerAnimator(spriteSheet.getPlayerSpriteArray(), PLAYER_SCALE);
         this.spriteSheet = new SpriteSheet(context, R.drawable.javier_spritesheet_1);
+        vibrator = (Vibrator) context.getSystemService(Context.VIBRATOR_SERVICE); // initialize Vibrator instance
+    }
+
+    @Override
+    public void setDamageDealt(int damageDealt) {
+        if (getCurrentHealth() > 0) {
+            setCurrentHealth(getCurrentHealth() - damageDealt);
+            vibrator.vibrate(500);
+            blink();
+        }
+    }
+
+    private void blink() {
+        if (!isBlinking) {
+            isBlinking = true;
+            setAlpha(0.5f); // set alpha to 50%
+            handler.postDelayed(new Runnable() {
+                @Override
+                public void run() {
+                    setAlpha(1.0f); // restore alpha to 100%
+                    isBlinking = false;
+                }
+            }, BLINK_DURATION_MS); // set delay to restore alpha value
+        }
     }
 
     @Override
