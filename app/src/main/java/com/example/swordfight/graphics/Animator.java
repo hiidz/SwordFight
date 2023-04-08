@@ -1,6 +1,7 @@
 package com.example.swordfight.graphics;
 
 import android.graphics.Canvas;
+import android.graphics.Paint;
 
 import com.example.swordfight.GameDisplay;
 import com.example.swordfight.gameObject.GameObject;
@@ -25,17 +26,19 @@ public abstract class Animator {
         updatesBeforeNextMoveFrame = MAX_UPDATES_BEFORE_NEXT_MOVE_FRAME;
     }
 
-    public abstract void draw(Canvas canvas, GameDisplay gameDisplay, GameObject gameObject);
+    public abstract void draw(Canvas canvas, GameDisplay gameDisplay, GameObject gameObject, Paint paint);
 
-    public void drawRotatedFrame(Canvas canvas, GameDisplay gameDisplay, GameObject gameObject, Sprite sprite, float angle) {
+    public void drawRotatedFrame(Canvas canvas, GameDisplay gameDisplay, GameObject gameObject, Sprite sprite, float angle, Paint paint) {
         sprite.drawRotatedAngle(
                 canvas,
                 (int) gameDisplay.gameToDisplayCoordinatesX(gameObject.getPositionX()) - (int) (sprite.getWidth()),
                 (int) gameDisplay.gameToDisplayCoordinatesY(gameObject.getPositionY()) - (int) (sprite.getHeight()),
                 angle,
-                scalingFactor
+                scalingFactor,
+                paint
         );
     }
+
 
     public void drawScaledFrame(Canvas canvas, GameDisplay gameDisplay, GameObject gameObject, Sprite sprite) {
         sprite.draw(

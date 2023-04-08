@@ -45,7 +45,7 @@ public class BossEnemy extends Enemy {
 //                (float) gameDisplay.gameToDisplayCoordinatesY(getPositionY()),
 //                (float) 16 * scalingFactor,
 //                new Paint());
-        bossAnimator.draw(canvas, gameDisplay, this);
+        bossAnimator.draw(canvas, gameDisplay, this, getPaint());
         bossOrb.draw(canvas, gameDisplay);
         healthBar.draw(canvas, gameDisplay);
     }
@@ -89,6 +89,17 @@ public class BossEnemy extends Enemy {
                 // do nothing and de-active thread and ... wait to be revive // reset all settings .. and prepare to be resued
                 break;
 
+        }
+    }
+
+    @Override
+    public void takeDamage(int damage){
+        setDamageDealt(damage);
+        if(getCurrentHealth() <= 0){
+            getEnemyState().setState (EnemyState.State.DEAD);
+            // display game over ui
+        }else {
+            getEnemyState().setState (EnemyState.State.CHASING);
         }
     }
 

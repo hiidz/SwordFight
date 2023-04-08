@@ -1,6 +1,7 @@
 package com.example.swordfight.graphics;
 
 import android.graphics.Canvas;
+import android.graphics.Paint;
 import android.util.Log;
 
 import com.example.swordfight.GameDisplay;
@@ -19,7 +20,7 @@ public class BossAnimator extends Animator {
     }
 
     @Override
-    public void draw(Canvas canvas, GameDisplay gameDisplay, GameObject gameObject) {
+    public void draw(Canvas canvas, GameDisplay gameDisplay, GameObject gameObject, Paint paint) {
         Enemy enemy = (Enemy) gameObject;
         long currentTime = System.currentTimeMillis();
         if (currentTime - lastUpdateTime >= ANIMATION_DELAY) {

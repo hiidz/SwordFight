@@ -147,7 +147,7 @@ public class BossOrb extends GameObject {
         List<Projectile> projectileList = new ArrayList<>(projectileQueue); //temp list to store the projectiles in the queue
         int numCircles = projectileList.size();
         for (int i = 0; i < numCircles; i++) {
-            orbAnimator.draw(canvas, gameDisplay, projectileList.get(i));
+            orbAnimator.draw(canvas, gameDisplay, projectileList.get(i), getPaint());
         }
 
         // Draw the projectiles

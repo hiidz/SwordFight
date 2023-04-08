@@ -9,6 +9,7 @@ package com.example.swordfight.gameObject;
 
 import android.content.Context;
 import android.graphics.Canvas;
+import android.graphics.Paint;
 
 import androidx.core.content.ContextCompat;
 
@@ -140,8 +141,11 @@ public class Enemy extends Piece{
 
     public void takeDamage(int damage){
         setDamageDealt(damage);
-        // flashing animation
-        enemyState.setState (EnemyState.State.CHASING);
+        if(getCurrentHealth() <= 0){
+            enemyState.setState (EnemyState.State.DEAD);
+        }else {
+            enemyState.setState (EnemyState.State.CHASING);
+        }
     }
 
     public void chase(Vector2 target, EnemyState.State targetState){
@@ -208,7 +212,7 @@ public class Enemy extends Piece{
 //                (float) gameDisplay.gameToDisplayCoordinatesY(getPositionY()),
 //                (float) getRadius(),
 //                getPaint());
-        enemyAnimator.draw(canvas, gameDisplay, this);
+        enemyAnimator.draw(canvas, gameDisplay, this, getPaint());
         healthBar.draw(canvas, gameDisplay);
     }
 

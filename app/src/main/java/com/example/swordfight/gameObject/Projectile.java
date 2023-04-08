@@ -44,7 +44,7 @@ public class Projectile extends GameObject {
     }
 
     public void draw(Canvas canvas, GameDisplay gameDisplay, OrbAnimator orbAnimator) {
-        orbAnimator.draw(canvas, gameDisplay, this);
+        orbAnimator.draw(canvas, gameDisplay, this, getPaint());
     }
 
     //set slot offset

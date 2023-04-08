@@ -3,6 +3,7 @@ package com.example.swordfight.graphics;
 import android.graphics.Bitmap;
 import android.graphics.Canvas;
 import android.graphics.Matrix;
+import android.graphics.Paint;
 import android.graphics.Rect;
 import android.graphics.RectF;
 
@@ -51,7 +52,7 @@ public class Sprite {
         );
     }
 
-    public void drawRotatedAngle(Canvas canvas, int gameToDisplayCoordinatesX, int gameToDisplayCoordinatesY, float angle, float scalingFactor) {
+    public void drawRotatedAngle(Canvas canvas, int gameToDisplayCoordinatesX, int gameToDisplayCoordinatesY, float angle, float scalingFactor, Paint paint) {
         int scaledWidth = (int) (getWidth() * scalingFactor);
         int scaledHeight = (int) (getHeight() * scalingFactor);
         int scaledX = (int) (gameToDisplayCoordinatesX - (scaledWidth - getWidth()) / 2f);
@@ -65,12 +66,13 @@ public class Sprite {
         matrix.setRotate(angle, scaledX + scaledWidth / 2f, scaledY + scaledHeight / 2f);
         canvas.setMatrix(matrix);
 
+
         // Draw the character with the rotation applied
         canvas.drawBitmap(
                 spriteSheet.getBitmap(),
                 rect,
                 new Rect(scaledX, scaledY, scaledX + scaledWidth, scaledY + scaledHeight),
-                null
+                paint
         );
 
         // Restore the canvas state to its original state before the rotation

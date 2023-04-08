@@ -1,6 +1,7 @@
 package com.example.swordfight.graphics;
 
 import android.graphics.Canvas;
+import android.graphics.Paint;
 
 import com.example.swordfight.GameDisplay;
 import com.example.swordfight.gameObject.GameObject;
@@ -16,17 +17,17 @@ public class PlayerAnimator extends Animator {
         super(playerSpriteArray, scalingFactor);
     }
 
-    public void draw(Canvas canvas, GameDisplay gameDisplay, Player player, Joystick joystick) {
+    public void draw(Canvas canvas, GameDisplay gameDisplay, Player player, Joystick joystick, Paint paint) {
         this.joystick = joystick;
-        draw(canvas, gameDisplay, player);
+        draw(canvas, gameDisplay, player, paint);
     }
 
     @Override
-    public void draw(Canvas canvas, GameDisplay gameDisplay, GameObject gameObject) {
+    public void draw(Canvas canvas, GameDisplay gameDisplay, GameObject gameObject, Paint paint) {
         Player player = (Player) gameObject;
         switch (player.getPlayerState().getState()) {
             case NOT_MOVING:
-                drawRotatedFrame(canvas, gameDisplay, player, spriteArray[idxNotMovingFrame], angle);
+                drawRotatedFrame(canvas, gameDisplay, player, spriteArray[idxNotMovingFrame], angle, paint);
                 break;
             case IS_MOVING:
                 updatesBeforeNextMoveFrame--;
@@ -43,7 +44,7 @@ public class PlayerAnimator extends Animator {
                 } else {
                     angle = previousAngle;
                 }
-                drawRotatedFrame(canvas, gameDisplay, player, spriteArray[idxMovingFrame], angle);
+                drawRotatedFrame(canvas, gameDisplay, player, spriteArray[idxMovingFrame], angle, paint);
                 break;
             default:
                 break;

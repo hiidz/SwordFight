@@ -1,6 +1,7 @@
 package com.example.swordfight.graphics;
 
 import android.graphics.Canvas;
+import android.graphics.Paint;
 import android.util.Log;
 
 import com.example.swordfight.GameDisplay;
@@ -19,7 +20,7 @@ public class OrbAnimator extends Animator {
         lastUpdateTime = System.currentTimeMillis();
     }
 
-    public void draw(Canvas canvas, GameDisplay gameDisplay, GameObject gameObject) {
+    public void draw(Canvas canvas, GameDisplay gameDisplay, GameObject gameObject, Paint paint) {
         Projectile projectile = (Projectile) gameObject;
         long currentTime = System.currentTimeMillis();
         if (currentTime - lastUpdateTime >= ANIMATION_DELAY) {

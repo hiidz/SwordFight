@@ -1,6 +1,7 @@
 package com.example.swordfight.graphics;
 
 import android.graphics.Canvas;
+import android.graphics.Paint;
 
 import com.example.swordfight.GameDisplay;
 import com.example.swordfight.gameObject.Enemy;
@@ -16,11 +17,11 @@ public class EnemyAnimator extends Animator{
     }
 
     @Override
-    public void draw(Canvas canvas, GameDisplay gameDisplay, GameObject gameObject) {
+    public void draw(Canvas canvas, GameDisplay gameDisplay, GameObject gameObject, Paint paint) {
         Enemy enemy = (Enemy) gameObject;
         switch (enemy.getEnemyState().getState()) {
             case IDLE:
-                drawRotatedFrame(canvas, gameDisplay, enemy, spriteArray[idxNotMovingFrame], angle);
+                drawRotatedFrame(canvas, gameDisplay, enemy, spriteArray[idxNotMovingFrame], angle, paint);
                 break;
             case CHASING:
                 updatesBeforeNextMoveFrame--;
@@ -37,7 +38,7 @@ public class EnemyAnimator extends Animator{
                 } else {
                     angle = previousAngle;
                 }
-                drawRotatedFrame(canvas, gameDisplay, enemy, spriteArray[idxMovingFrame], angle);
+                drawRotatedFrame(canvas, gameDisplay, enemy, spriteArray[idxMovingFrame], angle, paint);
                 break;
             default:
                 break;

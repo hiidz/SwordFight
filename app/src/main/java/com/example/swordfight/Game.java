@@ -21,6 +21,7 @@ import com.example.swordfight.graphics.SpriteSheet;
 import com.example.swordfight.map.MapLayout;
 import com.example.swordfight.map.Tilemap;
 
+
 class Game extends SurfaceView implements SurfaceHolder.Callback {
 
     // Game Objects
@@ -38,8 +39,9 @@ class Game extends SurfaceView implements SurfaceHolder.Callback {
     private GameOver gameOver;
     private GameDisplay gameDisplay;
     private final Tilemap tilemap;
-
     private  MusicPlayer musicPlayer;
+
+    private Timer timer;
     public Game(Context context) {
         super(context);
         SurfaceHolder surfaceHolder = getHolder();
@@ -65,6 +67,10 @@ class Game extends SurfaceView implements SurfaceHolder.Callback {
         // music player
         musicPlayer = new MusicPlayer(context, R.raw.bgm);
         musicPlayer.run();
+
+        // timer
+        timer = new Timer(context);
+        timer.start();
     }
 
     @Override
@@ -148,6 +154,8 @@ class Game extends SurfaceView implements SurfaceHolder.Callback {
         if (player.getCurrentHealth() <= 0) {
             gameOver.draw(canvas);
         }
+
+        timer.draw(canvas);
     }
 
     public void update() {

@@ -3,6 +3,7 @@ package com.example.swordfight.gameObject;
 import android.content.Context;
 import android.graphics.Canvas;
 import android.graphics.Paint;
+import android.util.Log;
 
 import com.example.swordfight.GameDisplay;
 import com.example.swordfight.R;
@@ -23,6 +24,7 @@ public class GameObject {
     protected SpriteSheet spriteSheet;
     private float radius = 16;
     private Paint paint;
+
     protected float scalingFactor = 1;
 
     public GameObject(){}
@@ -42,6 +44,7 @@ public class GameObject {
         this.spriteSheet = new SpriteSheet(context, R.drawable.javier_spritesheet_2);
     }
 
+    public Paint getPaint(){return paint;}
     public void draw(Canvas canvas, GameDisplay gameDisplay) {
         canvas.drawCircle((float) gameDisplay.gameToDisplayCoordinatesX(getPositionX()),
                 (float) gameDisplay.gameToDisplayCoordinatesY(getPositionY()),
@@ -51,6 +54,7 @@ public class GameObject {
 
     public void setAlpha(float alpha) {
         paint.setAlpha((int) (alpha * 255)); // set alpha value between 0 and 255
+        Log.d("hahahaaa"," " + paint.getAlpha());
     }
 
     public void update() {};

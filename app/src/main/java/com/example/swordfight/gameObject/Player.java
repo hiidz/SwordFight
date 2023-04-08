@@ -2,6 +2,7 @@ package com.example.swordfight.gameObject;
 
 import android.content.Context;
 import android.graphics.Canvas;
+import android.graphics.Paint;
 import android.os.Handler;
 import android.os.Vibrator;
 
@@ -36,6 +37,7 @@ public class Player extends Piece{
     private boolean isBlinking = false; // add isBlinking flag
     private Handler handler = new Handler(); // add Handler instance
     private static final int BLINK_DURATION_MS = 200; // set blink duration in milliseconds
+    private Paint paint;
 
     public Player(Context context, Joystick joystick, float positionX, float positionY, int maxHealth) {
         super(context, positionX, positionY, ContextCompat.getColor(context, R.color.player), maxHealth, PLAYER_SCALE);
@@ -58,11 +60,11 @@ public class Player extends Piece{
     private void blink() {
         if (!isBlinking) {
             isBlinking = true;
-            setAlpha(0.5f); // set alpha to 50%
+            setAlpha(0.5f);
             handler.postDelayed(new Runnable() {
                 @Override
                 public void run() {
-                    setAlpha(1.0f); // restore alpha to 100%
+                    setAlpha(1f);
                     isBlinking = false;
                 }
             }, BLINK_DURATION_MS); // set delay to restore alpha value
@@ -111,7 +113,7 @@ public class Player extends Piece{
     @Override
     public void draw(Canvas canvas, GameDisplay gameDisplay) {
 //        sprite.draw(canvas, (int) gameDisplay.gameToDisplayCoordinatesX(getPositionX()) - sprite.getWidth()/2, (int) gameDisplay.gameToDisplayCoordinatesY(getPositionY()) - sprite.getHeight()/2);
-        playerAnimator.draw(canvas, gameDisplay, this, joystick);
+        playerAnimator.draw(canvas, gameDisplay, this, joystick, getPaint());
         healthBar.draw(canvas, gameDisplay);
     }
 
