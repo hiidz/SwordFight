@@ -54,7 +54,7 @@ public class GameObject {
 
     public void setAlpha(float alpha) {
         paint.setAlpha((int) (alpha * 255)); // set alpha value between 0 and 255
-        Log.d("hahahaaa"," " + paint.getAlpha());
+//        Log.d("hahahaaa"," " + paint.getAlpha());
     }
 
     public void update() {};

@@ -37,7 +37,7 @@ public class GameLoop extends Thread {
 
     public void startLoop() {
         Log.d("GameLoop.java", "startLoop()");
-        isRunning = true;
+        Game.IS_GAME_OVER = false;
         start();
     }
 
@@ -46,7 +46,7 @@ public class GameLoop extends Thread {
         long lastLoopTime = System.nanoTime();
         long lastLogTime = System.nanoTime();
 
-        while (isRunning) {
+        while (!Game.IS_GAME_OVER) {
 
             long now = System.nanoTime();
             long elapsedUpdateTime = now - lastUpdateTime;
@@ -129,5 +129,9 @@ public class GameLoop extends Thread {
         } catch (InterruptedException e) {
             e.printStackTrace();
         }
+    }
+
+    public void setIsRunning(boolean isRunning) {
+        this.isRunning = isRunning;
     }
 }

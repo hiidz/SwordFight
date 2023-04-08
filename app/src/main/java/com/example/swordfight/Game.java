@@ -39,20 +39,27 @@ class Game extends SurfaceView implements SurfaceHolder.Callback {
     private GameOver gameOver;
     private GameDisplay gameDisplay;
     private final Tilemap tilemap;
-    private  MusicPlayer musicPlayer;
+    private MusicPlayer musicPlayer;
+
+    public static boolean IS_GAME_OVER = false;
 
     private Timer timer;
+
     public Game(Context context) {
         super(context);
         SurfaceHolder surfaceHolder = getHolder();
         surfaceHolder.addCallback(this);
 
+        // timer
+        timer = new Timer(context);
+        timer.start();
+
         gameLoop = new GameLoop(this, surfaceHolder);
-        gameOver = new GameOver(getContext());
+        gameOver = new GameOver(getContext(), timer);
         performance = new Performance(context, gameLoop);
 
         joystick = new Joystick(275, 700, 70, 40);
-        player = new Player(getContext(), joystick, (MapLayout.NUMBER_OF_ROW_TILES * MapLayout.TILE_WIDTH_PIXELS)/2, (MapLayout.NUMBER_OF_COLUMN_TILES * MapLayout.TILE_HEIGHT_PIXELS)/2, 5000);
+        player = new Player(getContext(), joystick, (MapLayout.NUMBER_OF_ROW_TILES * MapLayout.TILE_WIDTH_PIXELS) / 2, (MapLayout.NUMBER_OF_COLUMN_TILES * MapLayout.TILE_HEIGHT_PIXELS) / 2, 5000);
         enemyManager = new EnemyManager(context, player);
         bulletManager = new BulletManager(context, player, enemyManager);
 
@@ -68,9 +75,6 @@ class Game extends SurfaceView implements SurfaceHolder.Callback {
         musicPlayer = new MusicPlayer(context, R.raw.bgm);
         musicPlayer.run();
 
-        // timer
-        timer = new Timer(context);
-        timer.start();
     }
 
     @Override
@@ -81,7 +85,7 @@ class Game extends SurfaceView implements SurfaceHolder.Callback {
                 if (joystick.getIsPressed()) {
                     // Joystick was pressed before this event -> cast spell
                     bulletManager.addBullet();
-                } else if(joystick.isPressed(event.getX(), event.getY())) {
+                } else if (joystick.isPressed(event.getX(), event.getY())) {
                     // Joystick is being pressed during this event -> cast spell
                     joystickPointerId = event.getPointerId(event.getActionIndex());
                     joystick.setIsPressed(true);
@@ -91,7 +95,7 @@ class Game extends SurfaceView implements SurfaceHolder.Callback {
                 }
                 return true;
             case MotionEvent.ACTION_MOVE:
-                if(joystick.getIsPressed()) {
+                if (joystick.getIsPressed()) {
                     joystick.setActuator(event.getX(), event.getY());
                 }
                 return true;
@@ -139,20 +143,35 @@ class Game extends SurfaceView implements SurfaceHolder.Callback {
 
     @Override
     public void draw(Canvas canvas) {
+
         super.draw(canvas);
         tilemap.draw(canvas, gameDisplay);
         performance.draw(canvas);
         player.draw(canvas, gameDisplay);
         joystick.draw(canvas);
-        for(Enemy enemy: enemyManager.getEnemyList()) {
+        for (Enemy enemy : enemyManager.getEnemyList()) {
             enemy.draw(canvas, gameDisplay);
         }
-        for(Bullet bullet: bulletManager.getBulletList()) {
+        for (Bullet bullet : bulletManager.getBulletList()) {
             bullet.draw(canvas, gameDisplay);
         }
 
         if (player.getCurrentHealth() <= 0) {
-            gameOver.draw(canvas);
+            IS_GAME_OVER = true;
+        }
+
+        //Draw end ending screen
+        if (IS_GAME_OVER) {
+
+            boolean isBossAlive = true;
+
+            //check if bossenemy is dead
+            if (enemyManager.getEnemyList().size() == 0) {
+                isBossAlive = false;
+            }
+
+            gameOver.draw(canvas, isBossAlive);
+            timer.stop();
         }
 
         timer.draw(canvas);

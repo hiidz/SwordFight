@@ -91,4 +91,15 @@ public class Timer {
             // File does not exist or could not be read
         }
     }
+
+    public int getTimeSeconds() {
+        int time = 0;
+        for (int i = 0; i < startTimeList.size(); i++) {
+            long startTime = startTimeList.get(i);
+            long endTime = (i < endTimeList.size()) ? endTimeList.get(i) : System.currentTimeMillis();
+            int seconds = (int) ((endTime - startTime) / 1000);
+            time += seconds;
+        }
+        return time;
+    }
 }

@@ -23,7 +23,7 @@ public class Projectile extends GameObject {
         super(context, positionX, positionY, color);
         setDirection(direction);
         this.speed = speed;
-        this.damage = 0;
+        this.damage = 5000;
 //        maxX = gameDisplay.getWidthPixels();
         maxX = 2560;
 //        maxY = gameDisplay.getHeightPixels();
