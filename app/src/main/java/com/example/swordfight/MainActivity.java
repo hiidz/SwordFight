@@ -1,6 +1,7 @@
 package com.example.swordfight;
 
 import android.app.Activity;
+import android.content.Intent;
 import android.media.MediaPlayer;
 import android.os.Bundle;
 import android.util.Log;
@@ -10,8 +11,10 @@ import android.widget.ImageView;
 import com.bumptech.glide.Glide;
 
 // MainActivity is the entry point to our application
+
+
 public class MainActivity extends Activity {
-    private Game game;
+    private Game game = null;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -35,7 +38,7 @@ public class MainActivity extends Activity {
         startButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Game game = new Game(view.getContext());
+                game = new Game(view.getContext());
                 setContentView(game);
             }
         });
@@ -43,7 +46,9 @@ public class MainActivity extends Activity {
         settingsButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                // TODO: Add code to launch settings activity
+                Log.d("tes", "1");
+                Intent intent = new Intent(MainActivity.this, SettingsActivity.class);
+                startActivity(intent);
             }
         });
 
@@ -76,7 +81,7 @@ public class MainActivity extends Activity {
     @Override
     protected void onPause() {
         Log.d("MainActivity.java", "onPause()");
-        game.pause();
+        // game.pause();
         super.onPause();
     }
 
