@@ -26,6 +26,8 @@ public class BossEnemy extends Enemy {
     private int zigzagDuration;
     private int zigzagCounter;
 
+    private float enemyDetectionRange = 400f; // 2 * for chasing range
+
     public BossEnemy(Context context, Player player) {
         super(context, player, 10, 10, 100, BOSS_SCALE);
         this.bossAnimator = new BossAnimator(spriteSheet.getBossSpriteArray(), BOSS_SCALE);
@@ -62,13 +64,27 @@ public class BossEnemy extends Enemy {
         switch (getEnemyState().getState()) {
             case IDLE:
                 // PLAY animation
-                getEnemyState().setState(EnemyState.State.CHASING);
+                if(this.getPosition().subtract(player.getPosition()).magnitude()<= enemyDetectionRange){
+                    getEnemyState().setState(EnemyState.State.CHASING);
+                }
                 break;
             case CHASING:
 //                int maxValue = 500;
 //                double skew = 0.8;
 //                int randomValue = generateSkewedRandomValue(maxValue, skew);
-                chase(player.getPosition(), EnemyState.State.ATTACK, this.getRadius() + player.getRadius());
+//                chase(player.getPosition(), EnemyState.State.ATTACK, this.getRadius() + player.getRadius());
+//                if (this.getPosition().subtract(player.getPosition()).magnitude() > enemyDetectionRange) {
+//                    getEnemyState().setState(EnemyState.State.IDLE);
+//                }
+
+                if(this.getPosition().subtract(player.getPosition()).magnitude() <= enemyDetectionRange * 2){
+                    // continue chasing
+                    chase(player.getPosition(), EnemyState.State.ATTACK, this.getRadius() + player.getRadius());
+
+                }else {
+                    // move back to original spot
+                    chase(getStartingPosition(), EnemyState.State.IDLE);
+                }
                 break;
             case STUN:
                 // if stun ... stop moving and ... un stun after sometime // after done go to chasing state

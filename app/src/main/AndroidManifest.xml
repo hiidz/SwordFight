@@ -28,6 +28,12 @@
             android:theme="@style/Theme.AppCompat.Light.NoActionBar">
 
         </activity>
+        <activity android:name=".ScoreActivity"
+            android:label="@string/settings_title"
+            android:screenOrientation="landscape"
+            android:theme="@style/Theme.AppCompat.Light.NoActionBar">
+
+        </activity>
     </application>
 
     <uses-permission android:name="android.permission.INTERNET" />

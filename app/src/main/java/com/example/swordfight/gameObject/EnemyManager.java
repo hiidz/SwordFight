@@ -81,25 +81,20 @@ public class EnemyManager {
                 e.update();
             }
         }
-
-//        for (Enemy enemy1: enemyList) {
-//            for (Enemy enemy2: enemyList) {
-//                if (enemy1 != enemy2) {
-//                    if(Piece.isColliding(enemy1, enemy2)) {
-//                        enemy1.setState(Enemy.EnemyState.CHASING);
-//                        enemy2.setState(Enemy.EnemyState.IDLE);
-//
-//                    }
-//                }
-//            }
-//        }
     }
 
     public synchronized void updateEnemyHealth(){
         for (Enemy enemy: enemyList) {
+            Log.d("Enemy", "updateEnemyHealth: " + enemy.getCurrentHealth());
             enemy.multiplyHealth(2);
             enemy.multiplyMaxHealth(2);
         }
+    }
+
+
+    public boolean isBossDead(){
+//        Log.d("Boss", "isBossDead: " + bossEnemy.getEnemyState().getState());
+        return bossEnemy.getEnemyState().getState() == EnemyState.State.DEAD;
     }
 
 }

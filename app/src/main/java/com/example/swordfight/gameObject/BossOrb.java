@@ -178,7 +178,7 @@ public class BossOrb extends GameObject {
                 iterator.remove();
             } else if (isColliding(projectile, player)) {
                 player.setDamageDealt(projectile.getDamage());
-                Log.d("Projectile", "Player hit by projectile");
+//                Log.d("Projectile", "Player hit by projectile");
                 iterator.remove();
             }
         }

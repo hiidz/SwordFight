@@ -2,7 +2,6 @@ package com.example.swordfight;
 
 import android.app.Activity;
 import android.content.Intent;
-import android.media.MediaPlayer;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
@@ -33,6 +32,7 @@ public class MainActivity extends Activity {
 
         Button startButton = findViewById(R.id.startButton);
         Button settingsButton = findViewById(R.id.settingsButton);
+        Button scoreButton = findViewById(R.id.scoreButton);
         Button exitButton = findViewById(R.id.exitButton);
 
         startButton.setOnClickListener(new View.OnClickListener() {
@@ -48,6 +48,14 @@ public class MainActivity extends Activity {
             public void onClick(View view) {
                 Log.d("tes", "1");
                 Intent intent = new Intent(MainActivity.this, SettingsActivity.class);
+                startActivity(intent);
+            }
+        });
+
+        scoreButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent intent = new Intent(MainActivity.this, ScoreActivity.class);
                 startActivity(intent);
             }
         });

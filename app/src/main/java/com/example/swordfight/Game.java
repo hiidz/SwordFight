@@ -126,7 +126,7 @@ class Game extends SurfaceView implements SurfaceHolder.Callback {
                 enemyManager.updateEnemyHealth();
             }
         };
-        EventThread enemyHealthUpdater = new EventThread(updateEnemyHealthEvent, 30000);
+        EventThread enemyHealthUpdater = new EventThread(updateEnemyHealthEvent, 15000);
         enemyHealthUpdater.start(); // start the thread
     }
 
@@ -156,25 +156,21 @@ class Game extends SurfaceView implements SurfaceHolder.Callback {
             bullet.draw(canvas, gameDisplay);
         }
 
-        if (player.getCurrentHealth() <= 0) {
+        if (player.getCurrentHealth() <= 0 || enemyManager.isBossDead()) {
             IS_GAME_OVER = true;
         }
 
         //Draw end ending screen
         if (IS_GAME_OVER) {
 
-            boolean isBossAlive = true;
-
-            //check if bossenemy is dead
-            if (enemyManager.getEnemyList().size() == 0) {
-                isBossAlive = false;
-            }
-
-            gameOver.draw(canvas, isBossAlive);
             timer.stop();
+
+            gameOver.draw(canvas, !enemyManager.isBossDead());
+
+            timer.writeTimingData(!enemyManager.isBossDead());
         }
 
-        timer.draw(canvas);
+//        timer.draw(canvas);
     }
 
     public void update() {

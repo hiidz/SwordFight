@@ -40,10 +40,19 @@ public class GameOver {
         int scoreMultiplier = 10;
 
         if (isBossAlive) {
-            scoreMultiplier = 0;
+            String time = "You lose noob";
+            float timeX = 800;
+            float timeY = 400;
+            Paint timePaint = new Paint();
+            int timeColor = ContextCompat.getColor(context, R.color.gameOver);
+            timePaint.setColor(timeColor);
+            float timeTextSize = 100;
+            timePaint.setTextSize(timeTextSize);
+            canvas.drawText(time, timeX, timeY, timePaint);
+            return;
         }
 
-        String time = "Score: " + (MAX_TIME - timer.getTimeSeconds()) * scoreMultiplier;
+        String time = "Finished in: " + timer.getCurrentTimeSeconds();
         float timeX = 800;
         float timeY = 400;
         Paint timePaint = new Paint();

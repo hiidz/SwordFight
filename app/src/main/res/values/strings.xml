@@ -2,6 +2,7 @@
     <string name="app_name">SwordFight</string>
     <string name="start_button_name">Start Game</string>
     <string name="settings_button_name">Settings</string>
+    <string name="score_button_name">View scores</string>
     <string name="exit_button_name">Exit</string>
     <string name="settings_title">Settings</string>
 </resources>
