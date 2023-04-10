@@ -15,7 +15,7 @@ import com.example.swordfight.gamepanel.HealthBar;
 
 public class Piece extends GameObject{
     private int maxHealth;
-    private int currentHealth;
+    private Integer currentHealth;
     protected HealthBar healthBar;
 
     public Piece(){};
@@ -80,7 +80,9 @@ public class Piece extends GameObject{
 
     //multiply health
     public void multiplyHealth(int multiplier) {
-        this.currentHealth *= multiplier;
+        synchronized (this.currentHealth) {
+            this.currentHealth *= multiplier;
+        }
     }
 
     public void multiplyMaxHealth(int i) {

@@ -83,7 +83,7 @@ public class EnemyManager {
         }
     }
 
-    public synchronized void updateEnemyHealth(){
+    public void updateEnemyHealth(){
         for (Enemy enemy: enemyList) {
             Log.d("Enemy", "updateEnemyHealth: " + enemy.getCurrentHealth());
             enemy.multiplyHealth(2);
