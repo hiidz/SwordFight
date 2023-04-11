@@ -32,6 +32,7 @@ public class Enemy extends Piece{
     private static final float ENEMY_SCALE = 2.0f;
     private EnemyState enemyState;
     protected Player player;
+    private static int damagePower = 50;
 
     private static int totalEnemySpawn = 0;
     private static int maxEnemy = 10;
@@ -203,6 +204,10 @@ public class Enemy extends Piece{
         if (this.getCurrentHealth() <= 0) {
             enemyState.setState(EnemyState.State.DEAD);
         }
+    }
+
+    protected int getDamagePower() {
+        return damagePower;
     }
 
     @Override

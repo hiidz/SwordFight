@@ -61,6 +61,5 @@ public class GameOver {
         float timeTextSize = 100;
         timePaint.setTextSize(timeTextSize);
         canvas.drawText(time, timeX, timeY, timePaint);
-
     }
 }

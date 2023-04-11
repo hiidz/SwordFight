@@ -33,16 +33,6 @@ public class Piece extends GameObject{
         this(context, positionX, positionY, color, maxHealth, 1);
     }
 
-    public boolean isColliding(Piece obj1, Piece obj2) {
-        double distance = obj1.getDistanceBetweenObjects(obj1, obj2);
-        double distanceToCollision = obj1.getRadius() + obj2.getRadius();
-
-        if (distance < distanceToCollision) {
-            return true;
-        }
-        return false;
-    }
-
     public void setDamageDealt(int damageDealt) {
         if (currentHealth > 0) {
             this.currentHealth -= damageDealt;

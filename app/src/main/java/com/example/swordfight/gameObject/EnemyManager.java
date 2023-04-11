@@ -75,6 +75,9 @@ public class EnemyManager {
         Iterator<Enemy> iterator = getEnemyList().iterator();
         while (iterator.hasNext()) {
             Enemy e = iterator.next();
+            if (e.isColliding(player, e)) {
+                player.setDamageDealt(e.getDamagePower());
+            }
             if(e.getEnemyState().getState() == EnemyState.State.DEAD){
                 removeEnemy(e);
             }else {
